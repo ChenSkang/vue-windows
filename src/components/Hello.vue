@@ -18,7 +18,7 @@
     padding: 0;
   }
   body{
-    background-image: url("../img/wallpaper.jpg");
+    background-image: url("../img/pexels-photo-505674.jpeg");
     background-size: cover;
   }
 
@@ -33,6 +33,6 @@
     width: 50px;
   }
   #start:hover{
-    opacity: 0.2;
+    opacity: 0.6;
   }
 </style>
