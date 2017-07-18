@@ -3,12 +3,22 @@
     <div id="start">
       <img src="../img/start.png" v-on:click="" style="float: left">
     </div>
+    <div id="Time"></div>
+    <div id="Date"></div>
   </div>
 </template>
 
 <script>
-
-
+  function setTime () {
+    var time = new Date().toLocaleTimeString()
+    document.getElementById('Time').innerHTML = time
+  }
+  setInterval(setTime, 1000)
+  function setDate () {
+    var date = new Date().toLocaleDateString()
+    document.getElementById('Date').innerHTML = date
+  }
+  setInterval(setDate, 1000)
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -21,7 +31,6 @@
     background-image: url("../img/pexels-photo-505674.jpeg");
     background-size: cover;
   }
-
   #window {
     width: 100%;
     background-color: black;
@@ -34,5 +43,18 @@
   }
   #start:hover{
     opacity: 0.6;
+  }
+  #Time{
+    color: white;
+    font-size: 15px;
+    position: absolute;
+    right: 0;
+  }
+  #Date{
+    color: white;
+    font-size: 15px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 </style>
