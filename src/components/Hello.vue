@@ -1,10 +1,16 @@
 <template>
   <div id="window">
-    <div id="start">
-      <img src="../img/start.png" v-on:click="" style="float: left">
+    <div id="footer">
+      <div id="start">
+        <img src="../img/start.png" v-on:click="" style="float: left">
+      </div>
+      <div id="Time"></div>
+      <div id="Date"></div>
     </div>
-    <div id="Time"></div>
-    <div id="Date"></div>
+    <div id="DhtmlxGantt"></div>
+    <div id="Filemanager"></div>
+    <div id="DtmlScheduler"></div>
+    <div id="WindowsMenu"></div>
   </div>
 </template>
 
@@ -31,7 +37,7 @@
     background-image: url("../img/pexels-photo-505674.jpeg");
     background-size: cover;
   }
-  #window {
+  #footer {
     width: 100%;
     background-color: black;
     opacity: 0.85;
