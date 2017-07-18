@@ -35,7 +35,7 @@ new Vue({
   components: { DtmlxScheduler }
 })
 new Vue({
-  el: 'Filemanager',
+  el: '#Filemanager',
   router,
   template: '<Filemanager/>',
   components: { Filemanager }
