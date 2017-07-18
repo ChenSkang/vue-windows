@@ -7,10 +7,18 @@
       <div id="Time"></div>
       <div id="Date"></div>
     </div>
-    <div id="DhtmlxGantt"></div>
-    <div id="Filemanager"></div>
-    <div id="DtmlScheduler"></div>
-    <div id="WindowsMenu"></div>
+    <div id="DhtmlxGantt">
+      <router-view></router-view>
+    </div>
+    <div id="Filemanager">
+      <router-view></router-view>
+    </div>
+    <div id="DtmlScheduler">
+      <router-view></router-view>
+    </div>
+    <div id="WindowsMenu">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

@@ -4,7 +4,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import WindowsMenu from './components/WindowsMenu.vue'
-
+import Filemanager from './components/Filemanager.vue'
+import DtmlxScheduler from './components/DtmlxScheduler.vue'
+import DhtmlxGantt from './components/DhtmlxGantt.vue'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -17,6 +19,24 @@ new Vue({
 new Vue({
   el: '#WindowsMenu',
   router,
-  template: 'WindowsMenu/>',
+  template: '<WindowsMenu/>',
   components: { WindowsMenu }
+})
+new Vue({
+  el: '#DhtmlxGantt',
+  router,
+  template: '<DhtmlxGantt/>',
+  components: { DhtmlxGantt }
+})
+new Vue({
+  el: '#DtmlxScheduler',
+  router,
+  template: '<DtmlxScheduler/>',
+  components: { DtmlxScheduler }
+})
+new Vue({
+  el: 'Filemanager',
+  router,
+  template: '<Filemanager/>',
+  components: { Filemanager }
 })
