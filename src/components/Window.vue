@@ -27,7 +27,9 @@
     var time = new Date()
     var hour = time.getHours()
     var minute = time.getMinutes()
+    if (minute <= 9) { minute = '0' + minute }
     var second = time.getSeconds()
+    if (second <= 9) { second = '0' + second }
     var times = hour + ':' + minute + ':' + second
     document.getElementById('Time').innerHTML = times
   }
@@ -66,13 +68,13 @@
     color: white;
     font-size: 15px;
     position: absolute;
-    right: 0;
+    right: 20px;
   }
   #Date{
     color: white;
     font-size: 15px;
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 13px;
   }
 </style>
