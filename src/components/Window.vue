@@ -26,7 +26,7 @@
   function setTime () {
     var time = new Date()
     var hour = time.getHours()
-    if (hour <= 9) { hour = '0' + hour}
+    if (hour <= 9) { hour = '0' + hour }
     var minute = time.getMinutes()
     if (minute <= 9) { minute = '0' + minute }
     var second = time.getSeconds()

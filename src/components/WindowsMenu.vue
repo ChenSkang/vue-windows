@@ -67,6 +67,7 @@
 </template>
 <style>
   #Menu{
+    display: none;
     background-color: black;
     width: 840px;
     height: 380px;
