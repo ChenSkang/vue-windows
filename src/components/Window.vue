@@ -24,8 +24,12 @@
 
 <script>
   function setTime () {
-    var time = new Date().toLocaleTimeString()
-    document.getElementById('Time').innerHTML = time
+    var time = new Date()
+    var hour = time.getHours()
+    var minute = time.getMinutes()
+    var second = time.getSeconds()
+    var times = hour + ':' + minute + ':' + second
+    document.getElementById('Time').innerHTML = times
   }
   setInterval(setTime, 1000)
   function setDate () {
