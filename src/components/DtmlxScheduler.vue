@@ -10,7 +10,7 @@
 </template>
 <style>
   #Scheduler{
-
+  display: none;
   }
   #scheduler-icon {
     width: 81px;

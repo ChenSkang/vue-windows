@@ -35,7 +35,7 @@
                 <span class="add"></span>
               </div>
             </li>
-          </ul>  
+          </ul>
         </div>
       </div>
 
@@ -49,7 +49,7 @@
 </template>
 <style>
   #Gantt{
-
+  display: none;
   }
   #gantt-icon {
     width: 81px;

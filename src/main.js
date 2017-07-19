@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import WindowsMenu from './components/WindowsMenu.vue'
 import Filemanager from './components/Filemanager.vue'
 import DtmlxScheduler from './components/DtmlxScheduler.vue'
 import DhtmlxGantt from './components/DhtmlxGantt.vue'
@@ -15,11 +14,6 @@ new Vue({
   router,
   template: '<App/>',
   components: { App }
-})
-new Vue({
-  el: '#WindowsMenu',
-  template: '<WindowsMenu/>',
-  components: { WindowsMenu }
 })
 new Vue({
   el: '#DhtmlxGantt',
