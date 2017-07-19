@@ -18,25 +18,21 @@ new Vue({
 })
 new Vue({
   el: '#WindowsMenu',
-  router,
   template: '<WindowsMenu/>',
   components: { WindowsMenu }
 })
 new Vue({
   el: '#DhtmlxGantt',
-  router,
   template: '<DhtmlxGantt/>',
   components: { DhtmlxGantt }
 })
 new Vue({
   el: '#DtmlxScheduler',
-  router,
   template: '<DtmlxScheduler/>',
   components: { DtmlxScheduler }
 })
 new Vue({
   el: '#Filemanager',
-  router,
   template: '<Filemanager/>',
   components: { Filemanager }
 })

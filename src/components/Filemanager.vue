@@ -1,18 +1,17 @@
 <template>
   <div id="File">
-    <div id="file-icon" v-on:dbclick="show-window">
+    <div id="file-icon" v-on:click="showWindow">
       <img src="../img/filemanager.png">
       <p class="icon-name">Filemanager</p>
     </div>
 
-    <div id="file-window">
+    <div id="file-window" v-show="seen">
       <div id="file-title"><img src="../img/window-icon.png">     Filemanager</div>
       <div id="file-window-left">
-
       </div>
       <div id="file-window-right"></div>
       <div class="file-show">
-        <div id="close"><li id="close-show"><img src="../img/close_button.png"></li></div>
+        <div id="close" v-on:click="closeWindow"><li id="close-show"><img src="../img/close_button.png"></li></div>
         <div id="resize"><li id="resize-show"><img src="../img/resize_button.png"></li></div>
         <div id="hide"><li id="hide-show"><img src="../img/hide_button.png"></li></div>
       </div>
@@ -116,5 +115,19 @@
   #close:hover{  background-color: red  }
 </style>
 <script>
-
+  export default{
+    data () {
+      return {
+        seen: false
+      }
+    },
+    methods: {
+      showWindow () {
+        this.seen = true
+      },
+      closeWindow () {
+        this.seen = false
+      }
+    }
+  }
 </script>
