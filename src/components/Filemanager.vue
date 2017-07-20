@@ -17,8 +17,8 @@
       </div>
       <div class="file-button">
         <button class="more"></button>
-        <button class="arrow-left"><img src="../imgs_flat/arrow_left.png"></button>
-        <button class="arrow-right"><img src="../imgs_flat/arrow_right.png"></button>
+        <button class="arrow-left"><img src="../img/arrow_left.png"></button>
+        <button class="arrow-right"><img src="../img/arrow_right.png"></button>
         <button class="return"></button>
         <input type="search" class="file-search">
         <button class="icons-view"></button>
