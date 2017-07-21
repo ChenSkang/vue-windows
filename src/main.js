@@ -6,7 +6,10 @@ import router from './router'
 import Filemanager from './components/Filemanager.vue'
 import DtmlxScheduler from './components/DtmlxScheduler.vue'
 import DhtmlxGantt from './components/DhtmlxGantt.vue'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
 Vue.config.productionTip = false
+Vue.use(ElementUI)
 
 /* eslint-disable no-new */
 new Vue({

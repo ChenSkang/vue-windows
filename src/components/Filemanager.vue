@@ -16,23 +16,31 @@
         <div class="arrow-left" :title="leftView"><img src="../img/left.png" style="width: 18px; height: 18px;"></div>
         <div class="arrow-right" :title="rightView"><img src="../img/right.png" style="width: 18px; height: 18px;"></div>
         <div class="return" :title="upView"><img src="../img/up.png" style="width: 18px; height: 18px;"></div>
-        <input type="search" class="file-search">
-        <div class="icons-view" :title="iconsView"><img src="../img/ViewGallery.png" style="width: 18px; height: 18px; "></div>
-        <div class="table-view" :title="tableView"><img src="../img/Viewlist.png" style="width: 18px; height: 18px; "></div>
+        <div class="icons-view" :title="iconsView" v-on:click="iconsFile"><img src="../img/ViewGallery.png" style="width: 18px; height: 18px; "></div>
+        <div class="table-view" :title="tableView" v-on:click="tableFlie"><img src="../img/Viewlist.png" style="width: 18px; height: 18px; "></div>
       </div>
+      <el-input icon="search" v-model="filterText" class="search"></el-input>
       <div id="file-window-left" v-show="leftSee">
-        <div id="file" is="file-tree" :key="id" :default-expanded-keys="[2, 3]" :default-checked-keys="[5]" :props="defaultProps">
-        </div>
         <div id="tree-manager">
           <div class="put" v-on:click="letleftsee"  v-show="leftSee" :title="putMessage"><img src="../img/put.png" style="width: 13px; height: 13px; "></div>
           <div class="expand" :title="expandTree"><img src="../img/window-icon.png" style="width: 13px; height: 13px; "></div>
           <div class="collapse" :title="collapseTree"><img src="../img/window-icon.png" style="width: 13px; height: 13px; "></div>
         </div>
         <div id="tree">
+          <el-tree
+            class="filter-tree"
+            :data="data"
+            :props="defaultProps"
+            default-expand-all
+            :filter-node-method="filterNode"
+            @node-click="handleNodeClick"
+            ref="tree2">
+          </el-tree>
         </div>
-      <div class="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px; "></div>
       </div>
-      <div id="file-window-right"></div>
+      <div class="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px; "></div>
+      <div id="file-window-tableView" v-show="viewTable"></div>
+      <div id="file-window-iconsView" v-show="viewIcons"></div>
     </div>
   </div>
 </template>
@@ -84,15 +92,28 @@
   .file-button div{
     width: 24px;
     height: 24px;
-    border: 1px ;
+    border: 1px solid aqua;
+    border-radius: 10%;
   }
-  .more{ position: absolute;left: 10px;}
-  .arrow-left{ position: absolute;left: 126px;}
-  .arrow-right{ position: absolute;left: 150px;}
-  .return{ position: absolute;left: 187px;}
-  .file-search{ position: absolute;height: 24px; }
-  .icons-view{ position: absolute;right: 34px;}
-  .table-view{ position: absolute;right: 10px;}
+  .file-button img{
+    padding: 3px;
+  }
+  .more{ position: absolute;left: 10px;  }
+  .arrow-left{ position: absolute;left: 126px; }
+  .arrow-right{ position: absolute;left: 150px; }
+  .return{ position: absolute;left: 187px; }
+  .icons-view{ position: absolute;right: 34px; }
+  .table-view{ position: absolute;right: 10px; }
+  .search input{
+    height: 26px;
+    border-radius: 13px;
+  }
+  .search{
+    width: 80px;
+    position: absolute;
+    right: 70px;
+    top: 24px;
+  }
 
   #file-window-left{
     background-color: honeydew;
@@ -143,16 +164,29 @@
   }
   .collapse:hover{ box-shadow: inset 2px 2px 0 0 aqua; }
   #tree{
-
+    height: 268px;
+    width: 211px;
+    position: absolute;
+    bottom: 0;
   }
 
-  #file-window-right{
+  #file-window-tableView{
     border: solid 1px aqua;
     height: 293px;
     width: 431px;
     position: absolute;
     right: 0;
     bottom: 0;
+    background-color: powderblue;
+  }
+  #file-window-iconsView{
+    border: solid 1px aqua;
+    height: 293px;
+    width: 431px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: orange;
   }
 
   .file-show{
@@ -178,13 +212,20 @@
   #close:hover{  background-color: red  }
 </style>
 <script>
-  let id = 1000
   export default{
+    watch: {
+      filterText (val) {
+        this.$refs.tree2.filter(val)
+      }
+    },
     data () {
       return {
         seen: false,
         leftSee: true,
         putOnSee: false,
+        viewTable: true,
+        viewIcons: false,
+        input2: '',
         putMessage: 'Hide Tree',
         putOnMessage: 'Show Tree',
         actions: 'Actions',
@@ -195,7 +236,8 @@
         upView: 'Level up',
         expandTree: 'Expand Tree',
         collapseTree: 'Collapse Tree',
-        data2: [{
+        filterText: '',
+        data: [{
           id: 1,
           label: '一级 1',
           children: [{
@@ -208,26 +250,6 @@
               id: 10,
               label: '三级 1-1-2'
             }]
-          }]
-        }, {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
           }]
         }],
         defaultProps: {
@@ -247,11 +269,20 @@
         this.leftSee = !this.leftSee
         this.putOnSee = !this.putOnSee
       },
-      append (store, data) {
-        store.append({ id: id++, label: 'testtest', children: [] }, data)
+      tableFlie () {
+        this.viewTable = true
+        this.viewIcons = false
       },
-      remove (store, data) {
-        store.remove(data)
+      iconsFile () {
+        this.viewTable = false
+        this.viewIcons = true
+      },
+      filterNode (value, data) {
+        if (!value) return true
+        return data.label.indexOf(value) !== -1
+      },
+      handleNodeClick (data) {
+        console.log(data)
       }
     }
   }
