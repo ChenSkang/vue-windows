@@ -1,7 +1,7 @@
 <template>
   <div id="Gantt">
     <!--桌面图标-->
-    <div id="gantt-icon" @click="showWindow">
+    <div id="gantt-icon" v-on:click="showWindow">
       <img src="../img/gantt.png">
       <p class="icon-name">Dhtmlx Gantt</p>
     </div>
@@ -31,17 +31,7 @@
         </div>
 
         <!--列表树-->
-        <div id="task-tree">
-          <el-tree
-          :data="data2"
-          :props="defaultProps"
-          show-checkbox
-          node-key="id"
-          default-expand-all
-          :expand-on-click-node="false"
-          :render-content="renderContent">
-        </el-tree>
-        </div>
+
       </div>
 
       <!--右边部分-->
@@ -90,96 +80,11 @@
     overflow: auto;
   }
 </style>
-
 <script>
-  /* eslint-disable indent */
-
-// eslint-disable-next-line indent
-  let id = 1000
-
   export default {
     data () {
       return {
-        seen: false,
-        data2: [{
-          id: 1,
-          label{
-            taskName: 'Level one 1',
-            startTime: '2015-01-01',
-            duration: '1'
-          },
-          children: [{
-            id: 4,
-            label{
-              taskName: 'Level one 1',
-              startTime: '2015-01-01',
-              duration: '1'
-            },
-            children: [{
-              id: 9,
-              label{
-                taskName: 'Level one 1',
-                startTime: '2015-01-01',
-                duration: '1'
-              }
-            }, {
-              id: 10,
-              label{
-                taskName: 'Level one 1',
-                startTime: '2015-01-01',
-                duration: '1'
-              }
-            }]
-          }]
-        }, {
-          id: 2,
-          label{
-            taskName: 'Level one 1',
-            startTime: '2015-01-01',
-            duration: '1'
-          },
-          children: [{
-            id: 5,
-            label{
-              taskName: 'Level one 1',
-              startTime: '2015-01-01',
-              duration: '1'
-            }
-          }, {
-            id: 6,
-            label{
-              taskName: 'Level one 1',
-              startTime: '2015-01-01',
-              duration: '1'
-            }
-          }]
-        }, {
-          id: 3,
-          label{
-            taskName: 'Level one 1',
-            startTime: '2015-01-01',
-            duration: '1'
-          },
-          children: [{
-            id: 7,
-            label{
-              taskName: 'Level one 1',
-              startTime: '2015-01-01',
-              duration: '1'
-            }
-          }, {
-            id: 8,
-            label{
-              taskName: 'Level one 1',
-              startTime: '2015-01-01',
-              duration: '1'
-            }
-          }]
-        }],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
-        }
+        seen: false
       }
     },
     methods: {
@@ -188,26 +93,6 @@
       },
       closeWindow () {
         this.seen = false
-      },
-      append(store, data) {
-        store.append({ id: id++, label: 'testtest', children: [] }, data);
-      },
-
-      remove(store, data) {
-        store.remove(data)
-      },
-
-      renderContent(h, { node, data, store }) {
-        return (
-          <span>
-          <span>
-          <span>{node.label}</span>
-        </span>
-        <span style="float: right; margin-right: 20px">
-          <el-button size="mini" on-click={ () => this.append(store, data) }>Append</el-button>
-          <el-button size="mini" on-click={ () => this.remove(store, data) }>Delete</el-button>
-        </span>
-        </span>);
       }
     }
   }
