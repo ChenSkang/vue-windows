@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <div id="window">
     <div id="footer">
       <div id="start" v-on:click="showWindow">
@@ -19,74 +19,203 @@
     <div id="WindowsMenu" v-show="seen">
       <div id="Menu" >
         <div id="User">
-          <img  id="User_logo" src="../img/user_logo.png"/>
+          <img  id="User_logo" src="../img/user_logo.png" />
           <div id="User_name">Yan Tsishko</div>
         </div>
         <div id="Life">
           <div id="Life_title">Life at a glance</div>
-          <div id="Calendar">
-            <img id="Calendar_png" src="../img/calendar.png"/>
+          <div id="Calendar" v-on:click="showCalendar" class="border" >
+            <img id="Calendar_png" src="../img/calendar.png" />
             <div id="Calendar_name">Calendar</div>
           </div>
-          <div id="Email">
-            <img id="Email_png" src="../img/20.png"/>
+          <div id="Email" class="border" v-on:click="showEmail">
+            <img id="Email_png" src="../img/20.png" />
             <div id="Email_name">Email</div>
           </div>
-          <div id="Photos">
+          <div id="Photos" class="border" v-on:click="showPhotos">
             <div id="Photos_name">Photos</div>
           </div>
-          <div id="Friend">
-            <img id="Friend_png" src="../img/34.png"/>
+          <div id="Friend" class="border" v-on:click="showFriend">
+            <img id="Friend_png" src="../img/34.png" />
             <div id="Friend_name">Friend</div>
           </div>
-          <div id="Install">
-            <img id="Install_png" src="../img/06.png"/>
+          <div id="Install" class="border" v-on:click="showInstall">
+            <img id="Install_png" src="../img/06.png" />
             <div id="Install_name">Install</div>
           </div>
-          <div id="Video">
-            <img id="Video_png" src="../img/31.png"/>
+          <div id="Video" class="border" v-on:click="showVideo">
+            <img id="Video_png" src="../img/31.png" />
             <div id="Video_name">Video</div>
           </div>
         </div>
         <div id="Play">
           <div id="Play_title">Play and Explore</div>
-          <div id="Game">
-            <img id="Game_png" src="../img/games.png"/>
+          <div id="Game" class="border" v-on:click="showGame">
+            <img id="Game_png" src="../img/games.png" />
             <div id="Game_name">Games</div>
           </div>
-          <div id="Music">
-            <img id="Music_png" src="../img/music.png"/>
+          <div id="Music" class="border" v-on:click="showMusic">
+            <img id="Music_png" src="../img/music.png" />
             <div id="Music_name">Music</div>
           </div>
-          <div id="Camera">
-            <img id="Camera_png" src="../img/camera.png"/>
+          <div id="Camera" class="border" v-on:click="showCamera">
+            <img id="Camera_png" src="../img/camera.png" />
             <div id="Camera_name">Camera</div>
           </div>
-          <div id="Sports">
+          <div id="Sports" class="border" v-on:click="showSports">
             <div id="Sports_name">Sports</div>
           </div>
-          <div id="News">
+          <div id="News" class="border" v-on:click="showNews">
             <div id="News_name">News</div>
           </div>
-          <div id="Store">
-            <img id="Store_png" src="../img/shop.png"/>
+          <div id="Store" class="border" v-on:click="showStore">
+            <img id="Store_png" src="../img/shop.png" />
             <div id="Store_name">Store</div>
           </div>
-          <div id="Money">
-            <img id="Money_png" src="../img/graph.png"/>
+          <div id="Money" class="border" v-on:click="showMoney">
+            <img id="Money_png" src="../img/graph.png" />
             <div id="Money_name">Money</div>
           </div>
-          <div id="Travel">
-            <img id="Travel_png" src="../img/24.png"/>
+          <div id="Travel" class="border" v-on:click="showTravel">
+            <img id="Travel_png" src="../img/24.png" />
             <div id="Travel_name">Travel</div>
           </div>
         </div>
+      </div>
+    </div>
+    <div id="Calendar_content" v-show="seen_calendar" >
+      <div class="title">
+        <div class="close" v-on:click="closeCalendar">
+          <img class="close_png" src="../img/close_button.png" />
+        </div>
+        <div class="name">Calendar</div>
+      </div>
+        <img class="content_body" src="../img/calendar.png" />
+    </div>
+    <div id="Email_content" v-show="seen_email">
+      <div class="title">
+        <div class="close" v-on:click="closeEmail">
+          <img class="close_png" src="../img/close_button.png" />
+        </div>
+        <div class="name">Email</div>
+      </div>
+      <img class="content_body" src="../img/20.png" />
+    </div>
+    <div id="Photos_content" v-show="seen_photos">
+      <div class="title">
+        <div class="close" v-on:click="closePhotos">
+          <img class="close_png" src="../img/close_button.png" />
+        </div>
+        <div class="name">Photos</div>
+      </div>
+      <img class="content_body_png" src="../img/photos.png" />
+    </div>
+    <div id="Friend_content" v-show="seen_friend">
+      <div class="title">
+        <div class="close" v-on:click="closeFriend">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Friend</div>
+      </div>
+      <img class="content_body" src="../img/34.png"/>
+    </div>
+    <div id="Install_content" v-show="seen_install">
+      <div class="title">
+        <div class="close" v-on:click="closeInstall">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Install</div>
+      </div>
+      <img class="content_body" src="../img/06.png"/>
+    </div>
+    <div id="Video_content" v-show="seen_video">
+      <div class="title">
+        <div class="close" v-on:click="closeVideo">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Video/div>
+        </div>
+        <img class="content_body" src="../img/video.png"/>
+      </div>
+    </div>
+    <div id="Game_content" v-show="seen_game">
+      <div class="title">
+        <div class="close" v-on:click="closeGame">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Games/div>
+        </div>
+        <img class="content_body" src="../img/games.png"/>
+      </div>
+    </div>
+    <div id="Music_content" v-show="seen_music">
+      <div class="title">
+        <div class="close" v-on:click="closeMusic">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Music</div>
+        </div>
+      <img class="content_body" src="../img/music.png"/>
+    </div>
+    <div id="Camera_content" v-show="seen_camera">
+      <div class="title">
+        <div class="close" v-on:click="closeCamera">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Camera</div>
+        <img class="content_body" src="../img/camera.png"/>
+      </div>
+    </div>
+    <div id="Sports_content" v-show="seen_sports">
+      <div class="title">
+        <div class="close" v-on:click="closeSports">
+          <img class="close_png" src="../img/close_button.png" />
+        </div>
+        <div class="name">Sports</div>
+      </div>
+      <img class="content_body_png" src="../img/sports.png" />
+    </div>
+    <div id="News_content" v-show="seen_news">
+      <div class="title">
+        <div class="close" v-on:click="closeNews">
+          <img class="close_png" src="../img/close_button.png" />
+        </div>
+        <div class="name">News</div>
+      </div>
+      <img class="content_body_png" src="../img/news.png" />
+    </div>
+    <div id="Store_content" v-show="seen_store">
+      <div class="title">
+        <div class="close" v-on:click="closeStore">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Store</div>
+        <img class="content_body" src="../img/shop.png"/>
+      </div>
+    </div>
+    <div id="Money_content" v-show="seen_money">
+      <div class="title">
+        <div class="close" v-on:click="closeMoney">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Money</div>
+      </div>
+        <img class="content_body" src="../img/graph.png"/>
+    </div>
+    <div id="Travel_content" v-show="seen_travel">
+      <div class="title">
+        <div class="close" v-on:click="closeTravel">
+          <img class="close_png" src="../img/close_button.png"/>
+        </div>
+        <div class="name">Travel</div>
+        <img class="content_body" src="../img/24.png"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Filemanager from './Filemanager.vue'
   function setTime () {
     var time = new Date()
     var hour = time.getHours()
@@ -107,13 +236,127 @@
   export default{
     data () {
       return {
-        seen: false
+        seen: false,
+        seen_calendar: false,
+        seen_email: false,
+        seen_photos: false,
+        seen_friend: false,
+        seen_install: false,
+        seen_video: false,
+        seen_game: false,
+        seen_music: false,
+        seen_camera: false,
+        seen_sports: false,
+        seen_news: false,
+        seen_store: false,
+        seen_money: false,
+        seen_travel: false
       }
+    },
+    components: {
+      Filemanager
     },
     methods: {
       showWindow () {
         this.seen = !this.seen
-        console.log(this.seen)
+      },
+      showCalendar () {
+        this.seen_calendar = true
+        this.seen = !this.seen
+      },
+      closeCalendar () {
+        this.seen_calendar = false
+      },
+      showEmail () {
+        this.seen = !this.seen
+        this.seen_email = true
+      },
+      closeEmail () {
+        this.seen_email = false
+      },
+      showPhotos () {
+        this.seen = !this.seen
+        this.seen_photos = true
+      },
+      closePhotos () {
+        this.seen_photos = false
+      },
+      showFriend () {
+        this.seen = !this.seen
+        this.seen_friend = true
+      },
+      closeFriend () {
+        this.seen_friend = false
+      },
+      showInstall () {
+        this.seen = !this.seen
+        this.seen_install = true
+      },
+      closeInstall () {
+        this.seen_install = false
+      },
+      showVideo () {
+        this.seen = !this.seen
+        this.seen_video = true
+      },
+      closeVideo () {
+        this.seen_video = false
+      },
+      showGame () {
+        this.seen = !this.seen
+        this.seen_game = true
+      },
+      closeGame () {
+        this.seen_game = false
+      },
+      showMusic () {
+        this.seen = !this.seen
+        this.seen_music = true
+      },
+      closeMusic () {
+        this.seen_music = false
+      },
+      showCamera () {
+        this.seen = !this.seen
+        this.seen_camera = true
+      },
+      closeCamera () {
+        this.seen_camera = false
+      },
+      showSports () {
+        this.seen = !this.seen
+        this.seen_sports = true
+      },
+      closeSports () {
+        this.seen_sports = false
+      },
+      showNews () {
+        this.seen = !this.seen
+        this.seen_news = true
+      },
+      closeNews () {
+        this.seen_news = false
+      },
+      showStore () {
+        this.seen = !this.seen
+        this.seen_store = true
+      },
+      closeStore () {
+        this.seen_store = false
+      },
+      showMoney () {
+        this.seen = !this.seen
+        this.seen_money = true
+      },
+      closeMoney () {
+        this.seen_money = false
+      },
+      showTravel () {
+        this.seen = !this.seen
+        this.seen_travel = true
+      },
+      closeTravel () {
+        this.seen_travel = false
       }
     }
   }
@@ -125,10 +368,12 @@
     margin: 0;
     padding: 0;
   }
+
   body{
     background-image: url("../img/pexels-photo-505674.jpeg");
     background-size: cover;
   }
+
   #footer {
     width: 100%;
     background-color: black;
@@ -136,18 +381,22 @@
     position: absolute;
     bottom: 0;
   }
+
   #start{
     width: 50px;
   }
+
   #start:hover{
     opacity: 0.6;
   }
+
   #Time{
     color: white;
     font-size: 15px;
     position: absolute;
     right: 20px;
   }
+
   #Date{
     color: white;
     font-size: 15px;
@@ -155,6 +404,7 @@
     bottom: 0;
     right: 13px;
   }
+
   #Menu{
     background-color: black;
     width: 840px;
@@ -163,18 +413,21 @@
     bottom: 41px;
     opacity: 0.8;
   }
+
   #User_logo{
     border-radius: 50px;
     float: left;
     margin-left: 10px;
     margin-top: 10px;
   }
+
   #User_name{
     color: white;
     float: left;
     margin-top: 25px;
     margin-left: 5px;
   }
+
   #Life{
     position: relative;
     height: 300px;
@@ -182,6 +435,7 @@
     margin-left: 240px;
     margin-top: 20px;
   }
+
   #Play{
     position: relative;
     height: 300px;
@@ -189,18 +443,21 @@
     margin-left: 540px;
     margin-top: -300px;
   }
+
   #Life_title{
     margin-left: 0;
     position: absolute;
     margin-top: 5px;
     color: white;
   }
+
   #Play_title{
     margin-left: 0;
     position: absolute;
     margin-top: 5px;
     color: white;
   }
+
   #Calendar{
     background: #107c10;
     width: 90px;
@@ -209,15 +466,18 @@
     position: absolute;
     float: left;
   }
+
   #Calendar_png{
     width: 50px;
     height: 50px;
     margin-top:10px;
   }
+
   #Calendar_name{
     color: white;
     font-size: 12px;
   }
+
   #Email{
     background-color: #00b1f0;
     width: 185px;
@@ -226,15 +486,18 @@
     margin-top: 30px;
     position: absolute;
   }
+
   #Email_png{
     width: 50px;
     height: 50px;
     margin-top:10px;
   }
+
   #Email_name{
     color: white;
     font-size: 12px;
   }
+
   #Photos{
     background-image: url("../img/photos.png");
     width: 185px;
@@ -242,11 +505,13 @@
     position: absolute;
     margin-top: 125px;
   }
+
   #Photos_name{
     color: white;
     font-size: 12px;
     padding-top: 65px;
   }
+
   #Friend{
     position: absolute;
     margin-top: 125px;
@@ -255,15 +520,18 @@
     margin-left: 190px;
     background-color: #00b1f0;
   }
+
   #Friend_png{
     width: 50px;
     height: 50px;
     margin-top: 10px;
   }
+
   #Friend_name{
     color: white;
     font-size: 12px;
   }
+
   #Install{
     position: absolute;
     width: 90px;
@@ -271,15 +539,18 @@
     background-color: #2143af;
     margin-top: 220px;
   }
+
   #Install_png{
     width: 50px;
     height: 50px;
     margin-top: 10px;
   }
+
   #Install_name{
     color: white;
     font-size: 12px;
   }
+
   #Video{
     position: absolute;
     width:185px;
@@ -288,15 +559,18 @@
     background-color: #90228a;
     margin-left: 95px;
   }
+
   #Video_png{
     width: 50px;
     height: 50px;
     margin-top: 10px;
   }
+
   #Video_name{
     color: white;
     font-size: 12px;
   }
+
   #Game{
     background: #2143af;
     width: 90px;
@@ -304,15 +578,18 @@
     margin-top: 30px;
     position: absolute
   }
+
   #Game_png{
     width: 50px;
     height: 50px;
     margin-top:10px;
   }
+
   #Game_name{
     color: white;
     font-size: 12px;
   }
+
   #Music{
     width: 90px;
     height: 90px;
@@ -321,15 +598,18 @@
     margin-left: 95px;
     background-color: #e12429;
   }
+
   #Music_png{
     width: 50px;
     height: 50px;
     margin-top:10px;
   }
+
   #Music_name{
     color: white;
     font-size: 12px;
   }
+
   #Camera{
     width: 90px;
     height: 90px;
@@ -338,15 +618,18 @@
     margin-left: 190px;
     background-color: #90228a;
   }
+
   #Camera_png{
     width: 50px;
     height: 50px;
     margin-top:10px;
   }
+
   #Camera_name{
     color: white;
     font-size: 12px;
   }
+
   #Sports{
     margin-top: 125px;
     width: 90px;
@@ -354,11 +637,13 @@
     position: absolute;
     background-image: url("../img/sports.png");
   }
+
   #Sports_name{
     color: white;
     font-size: 12px;
     padding-top: 65px;
   }
+
   #News{
     width: 185px;
     height: 90px;
@@ -367,11 +652,13 @@
     margin-left: 95px;
     background-image: url("../img/news.png");
   }
+
   #News_name{
     color: white;
     font-size: 12px;
     padding-top: 65px;
   }
+
   #Store{
     position: absolute;
     width: 90px;
@@ -379,32 +666,38 @@
     background-color: #107c10;
     margin-top: 220px;
   }
+
   #Store_png{
     width: 50px;
     height: 50px;
     margin-top:10px;
   }
+
   #Store_name{
     color: white;
     font-size: 12px;
   }
+
   #Money{
     position: absolute;
     margin-left: 95px;
     margin-top: 220px;
     width: 90px;
     height: 90px;
-    background-color:#2143af ;
+    background-color: #2143af;
   }
+
   #Money_png{
     width: 50px;
     height: 50px;
     margin-top:10px;
   }
+
   #Money_name{
     color: white;
     font-size: 12px;
   }
+
   #Travel{
     margin-left: 190px;
     margin-top: 220px;
@@ -413,13 +706,186 @@
     position: absolute;
     background-color: #00b1f0;
   }
+
   #Travel_png{
     width: 50px;
     height: 50px;
     margin-top:10px;
   }
+
   #Travel_name{
     color: white;
     font-size: 12px;
+  }
+
+  #Calendar_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #107c10;
+  }
+
+  .title{
+    height: 25px;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+  }
+
+  .name{
+    font-size: 12px;
+    position: absolute;
+    margin-left: 15px;
+    margin-top: 5px;
+  }
+
+  .close{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    margin-left: 726px;
+  }
+
+  .close_png{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    margin-top: 7.5px;
+    margin-left: -5px;
+  }
+
+  .content_body{
+    position: absolute;
+    margin-top: 150px;
+    margin-left: -50px;
+  }
+
+  .close:hover{
+    background-color: red;
+  }
+
+  .border:hover{
+    box-shadow: inset 0px 0px 5px 5px rgba(255,255,255,0.5);
+  }
+
+  #Email_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #00b1f0;
+  }
+
+  #Photos_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+  }
+
+  .content_body_png{
+    width: 100%;
+    height: 100%;
+  }
+
+  #Friend_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #00b1f0;
+  }
+
+  #Install_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #2143af ;
+  }
+
+  #Video_content{
+    background-color: #90228a;
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+  }
+
+  #Game_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #2143af ;
+  }
+
+  #Music_content{
+     width: 750px;
+     height: 450px;
+     margin-left: 400px;
+     margin-top: 100px;
+     position: relative;
+     background-color: #2143af ;
+   }
+
+  #Camera_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #e12429 ;
+  }
+
+  #Sports_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+  }
+
+  #News_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+  }
+
+  #Store_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #107c10;
+  }
+
+  #Money_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #2143af;
+  }
+
+  #Travel_content{
+    width: 750px;
+    height: 450px;
+    margin-left: 400px;
+    margin-top: 100px;
+    position: relative;
+    background-color: #00b1f0;
   }
 </style>

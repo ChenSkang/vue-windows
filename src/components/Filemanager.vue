@@ -295,7 +295,8 @@
   #close:hover{  background-color: red  }
 </style>
 <script>
-  let id = 1000
+  var table = document.getElementById('file-window-tableView')
+  var icons = document.getElementById('file-window-iconsView')
   export default{
     watch: {
       filterText (val) {
@@ -373,6 +374,8 @@
       letleftsee () {
         this.leftSee = !this.leftSee
         this.putOnSee = !this.putOnSee
+        table.style.width = '100%'
+        icons.style.width = '100%'
       },
       tableFlie () {
         this.viewTable = true
@@ -387,14 +390,6 @@
         return data.label.indexOf(value) !== -1
       },
       handleNodeClick (data) {
-        console.log(data)
-      },
-      append (store, data) {
-        store.append({ id: id++, label: 'testtest', children: [] }, data)
-      },
-
-      remove (store, data) {
-        store.remove(data)
       }
     }
   }
