@@ -11,19 +11,18 @@ export default new Router({
     {
       path: '/',
       name: 'Window',
-      component: Window
-    },
-    {
-      path: '/Filemanager',
-      component: Filemanager
-    },
-    {
-      path: '/DtmlxScheduler',
-      component: DtmlxScheduler
-    },
-    {
-      path: '/DhtmlxGantt',
-      component: DhtmlxGantt
+      component: Window,
+      subRoutes: {
+        '/Filemanager': {
+          component: Filemanager
+        },
+        '/DtmlxScheduler': {
+          component: DtmlxScheduler
+        },
+        '/DhtmlxGantt': {
+          component: DhtmlxGantt
+        }
+      }
     }
   ]
 })

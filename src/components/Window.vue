@@ -1,5 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div id="window">
+    <router-view></router-view>
     <div id="footer">
       <div id="start" v-on:click="showWindow">
         <img src="../img/start.png"  style="float: left">
@@ -8,22 +9,24 @@
       <div id="Date"></div>
     </div>
     <div id="DhtmlxGantt">
-      <div id="Dhtml-icon" class="icon" v-on:dblclick="showDhtmlxGantt">
+      <div id="Dhtml-icon" class="icon">
         <img src="../img/gantt.png">
         <p class="icon-name">DhtmlxGantt</p>
       </div>
     </div>
-    <div id="Filemanager">
-      <div id="file-icon" class="icon" v-on:dblclick="showFilemanager">
+    <div id="Filemanager" v-on:dblclick="showFilemanager">
+      <div id="file-icon" class="icon" >
         <img src="../img/filemanager.png">
         <p class="icon-name">Filemanager</p>
+        <file-manager v-if="seen_filemanager"></file-manager>
       </div>
     </div>
-    <div id="DtmlScheduler">
-      <div id="Dtml-icon" class="icon" v-on:dblclick="showDtmlxScheduler">
+    <div id="DtmlScheduler" v-on:dblclick="showDtmlxScheduler">
+      <div id="Dtml-icon" class="icon">
         <img src="../img/scheduler.png">
         <p class="icon-name">DtmlxScheduler</p>
       </div>
+      <dtmlx-scheduler v-if="seen_dtmlx"></dtmlx-scheduler>
     </div>
     <div id="WindowsMenu" v-show="seen">
       <div id="Menu" >
@@ -201,7 +204,8 @@
 </template>
 
 <script>
-  import Filemanager from './Filemanager.vue'
+  import fileManager from './Filemanager.vue'
+  import dtmlxScheduler from './DtmlxScheduler.vue'
   function setTime () {
     var time = new Date()
     var hour = time.getHours()
@@ -236,11 +240,14 @@
         seen_news: false,
         seen_store: false,
         seen_money: false,
-        seen_travel: false
+        seen_travel: false,
+        seen_filemanager: false,
+        seen_dtmlx: false
       }
     },
     components: {
-      Filemanager
+      fileManager,
+      dtmlxScheduler
     },
     methods: {
       showWindow () {
@@ -343,6 +350,12 @@
       },
       closeTravel () {
         this.seen_travel = false
+      },
+      showFilemanager () {
+        this.seen_filemanager = !this.seen_filemanager
+      },
+      showDtmlxScheduler () {
+        this.seen_dtmlx = !this.seen_dtmlx
       }
     }
   }

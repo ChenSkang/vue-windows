@@ -4,9 +4,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import ElementUI from 'element-ui'
+import fileManager from './components/Filemanager'
 import 'element-ui/lib/theme-default/index.css'
+import dtmlxScheduler from './components/DtmlxScheduler.vue'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(fileManager)
+Vue.use(dtmlxScheduler)
 
 /* eslint-disable no-new */
 new Vue({
