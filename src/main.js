@@ -3,9 +3,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import Filemanager from './components/Filemanager.vue'
-import DtmlxScheduler from './components/DtmlxScheduler.vue'
-import DhtmlxGantt from './components/DhtmlxGantt.vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 Vue.config.productionTip = false
@@ -18,18 +15,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-new Vue({
-  el: '#DhtmlxGantt',
-  template: '<DhtmlxGantt/>',
-  components: { DhtmlxGantt }
-})
-new Vue({
-  el: '#DtmlxScheduler',
-  template: '<DtmlxScheduler/>',
-  components: { DtmlxScheduler }
-})
-new Vue({
-  el: '#Filemanager',
-  template: '<Filemanager/>',
-  components: { Filemanager }
-})
+
