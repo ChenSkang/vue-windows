@@ -1,11 +1,7 @@
 <template>
   <div id="File">
-    <div id="file-icon" v-on:dblclick="showWindow">
-      <img src="../img/filemanager.png">
-      <p class="icon-name">Filemanager</p>
-    </div>
     <div id="file-window" v-show="seen">
-      <div id="file-title"><img src="../img/window-icon.png">     Filemanager</div>
+      <div id="file-title"><img src="../img/window-icon.png">   Filemanager</div>
       <div class="file-show">
         <div id="close" v-on:click="closeWindow"><li id="close-show"><img src="../img/close_button.png"></li></div>
         <div id="resize"><li id="resize-show"><img src="../img/resize_button.png"></li></div>
@@ -295,7 +291,8 @@
   #close:hover{  background-color: red  }
 </style>
 <script>
-  let id = 1000
+  var table = document.getElementById('file-window-tableView')
+  var icons = document.getElementById('file-window-iconsView')
   export default{
     watch: {
       filterText (val) {
@@ -304,7 +301,7 @@
     },
     data () {
       return {
-        seen: false,
+        seen: true,
         leftSee: true,
         putOnSee: false,
         viewTable: true,
@@ -373,6 +370,8 @@
       letleftsee () {
         this.leftSee = !this.leftSee
         this.putOnSee = !this.putOnSee
+        table.style.width = '100%'
+        icons.style.width = '100%'
       },
       tableFlie () {
         this.viewTable = true
@@ -387,14 +386,6 @@
         return data.label.indexOf(value) !== -1
       },
       handleNodeClick (data) {
-        console.log(data)
-      },
-      append (store, data) {
-        store.append({ id: id++, label: 'testtest', children: [] }, data)
-      },
-
-      remove (store, data) {
-        store.remove(data)
       }
     }
   }
