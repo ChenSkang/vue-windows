@@ -1,11 +1,5 @@
 <template>
   <div id="Gantt">
-    <!--桌面图标-->
-    <div id="gantt-icon" v-on:click="showWindow">
-      <img src="../img/gantt.png">
-      <p class="icon-name">Dhtmlx Gantt</p>
-    </div>
-
     <!--窗口-->
     <div id="gantt-window" v-show="seen">
 
@@ -84,7 +78,7 @@
   export default {
     data () {
       return {
-        seen: false
+        seen: true
       }
     },
     methods: {

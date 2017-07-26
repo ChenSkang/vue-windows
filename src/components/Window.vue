@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template xmlns="http://www.w3.org/1999/html" xmlns:v-drag="http://www.w3.org/1999/xhtml">
   <div id="window">
     <router-view></router-view>
     <div id="footer">
@@ -8,10 +8,11 @@
       <div id="Time"></div>
       <div id="Date"></div>
     </div>
-    <div id="DhtmlxGantt">
+    <div id="DhtmlxGantt" v-on:dblclick="showDhtmlxGantt">
       <div id="Dhtml-icon" class="icon">
         <img src="../img/gantt.png">
         <p class="icon-name">DhtmlxGantt</p>
+        <dhtmlx-gantt v-if="seen_dhtmlxGantt"></dhtmlx-gantt>
       </div>
     </div>
     <div id="Filemanager" v-on:dblclick="showFilemanager">
@@ -72,17 +73,17 @@
         </div>
       </div>
     </div>
-    <div id="Calendar_content" v-show="seen_calendar" >
+    <div id="Calendar_content" v-show="seen_calendar">
       <div class="title">
         <div class="close" v-on:click="closeCalendar">
           <img class="close_png" src="../img/close_button.png" />
         </div>
         <div class="name">Calendar</div>
       </div>
-        <img class="content_body" src="../img/calendar.png" />
+        <img class="content_body" id="content" src="../img/calendar.png" />
     </div>
-    <div id="Email_content" v-show="seen_email">
-      <div class="title">
+    <div id="Email_content" v-show="seen_email" v-drag:dragable>
+      <div class="title" id="dragable">
         <div class="close" v-on:click="closeEmail">
           <img class="close_png" src="../img/close_button.png" />
         </div>
@@ -206,6 +207,7 @@
 <script>
   import fileManager from './Filemanager.vue'
   import dtmlxScheduler from './DtmlxScheduler.vue'
+  import dhtmlxGantt from './DhtmlxGantt.vue'
   function setTime () {
     var time = new Date()
     var hour = time.getHours()
@@ -242,12 +244,14 @@
         seen_money: false,
         seen_travel: false,
         seen_filemanager: false,
-        seen_dtmlx: false
+        seen_dtmlx: false,
+        seen_dhtmlxGantt: false
       }
     },
     components: {
       fileManager,
-      dtmlxScheduler
+      dtmlxScheduler,
+      dhtmlxGantt
     },
     methods: {
       showWindow () {
@@ -356,6 +360,9 @@
       },
       showDtmlxScheduler () {
         this.seen_dtmlx = !this.seen_dtmlx
+      },
+      showDhtmlxGantt () {
+        this.seen_dhtmlxGantt = !this.seen_dhtmlxGantt
       }
     }
   }
@@ -371,6 +378,7 @@
   body{
     background-image: url("../img/pexels-photo-505674.jpeg");
     background-size: cover;
+    overflow: hidden;
   }
 
   #file-icon{
@@ -672,7 +680,6 @@
   }
 
   .content_body{
-    position: absolute;
     margin-top: 150px;
     margin-left: -50px;
   }
@@ -688,6 +695,7 @@
   .content_body_png{
     width: 100%;
     height: 100%;
+    position: absolute;
   }
 
   #Calendar_content{
@@ -695,7 +703,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
     background-color: #107c10;
   }
 
@@ -704,7 +712,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
     background-color: #00b1f0;
   }
 
