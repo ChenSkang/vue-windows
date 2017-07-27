@@ -1,40 +1,42 @@
 <template xmlns="http://www.w3.org/1999/html" xmlns:v-drag="http://www.w3.org/1999/xhtml">
-  <div id="window">
+  <div id="Window">
     <router-view></router-view>
-    <div id="footer">
+    <div id="footer" v-if="footerVisible">
       <div id="start" v-on:click="showWindow">
         <img src="../img/start.png"  style="float: left">
       </div>
       <div id="Time"></div>
       <div id="Date"></div>
     </div>
-    <div id="DhtmlxGantt" v-on:dblclick="showDhtmlxGantt">
+    <div id="DhtmlxGantt" v-on:dblclick="showDhtmlxGantt" v-if="dhtmlVisible">
       <div id="Dhtml-icon" class="icon">
         <img src="../img/gantt.png">
         <p class="icon-name">DhtmlxGantt</p>
         <dhtmlx-gantt v-if="seen_dhtmlxGantt"></dhtmlx-gantt>
       </div>
     </div>
-    <div id="Filemanager" v-on:dblclick="showFilemanager">
+    <div id="Filemanager" v-on:dblclick="showFilemanager" v-if="fileVisible">
       <div id="file-icon" class="icon" >
         <img src="../img/filemanager.png">
         <p class="icon-name">Filemanager</p>
         <file-manager v-if="seen_filemanager"></file-manager>
       </div>
     </div>
-    <div id="DtmlScheduler" v-on:dblclick="showDtmlxScheduler">
+    <div id="DtmlScheduler" v-on:dblclick="showDtmlxScheduler" v-if="dtmlVisible">
       <div id="Dtml-icon" class="icon">
         <img src="../img/scheduler.png">
         <p class="icon-name">DtmlxScheduler</p>
       </div>
       <dtmlx-scheduler v-if="seen_dtmlx"></dtmlx-scheduler>
     </div>
-    <div id="WindowsMenu" v-show="seen">
+    <transition name="el-fade-in-linear">
+      <div id="WindowsMenu" v-show="seen">
       <div id="Menu" >
         <div id="User">
           <img  id="User_logo" src="../img/user_logo.png" />
           <div id="User_name">Yan Tsishko</div>
         </div>
+        <el-button type="text" @click="signOut" id="SignOut"><img src="../img/signout.png"/><span id="SignText">sign out</span></el-button>
         <div id="Life">
           <div id="Life_title">Life at a glance</div>
           <div id="Life_content">
@@ -73,17 +75,18 @@
         </div>
       </div>
     </div>
-    <div id="Calendar_content" v-show="seen_calendar">
+    </transition>
+    <div id="Calendar_content" v-show="seen_calendar" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeCalendar">
           <img class="close_png" src="../img/close_button.png" />
         </div>
         <div class="name">Calendar</div>
       </div>
-        <img class="content_body" id="content" src="../img/calendar.png" />
+      <img class="content_body" id="content" src="../img/calendar.png" />
     </div>
-    <div id="Email_content" v-show="seen_email" v-drag:dragable>
-      <div class="title" id="dragable">
+    <div id="Email_content" v-show="seen_email">
+      <div class="title">
         <div class="close" v-on:click="closeEmail">
           <img class="close_png" src="../img/close_button.png" />
         </div>
@@ -91,7 +94,7 @@
       </div>
       <img class="content_body" src="../img/20.png" />
     </div>
-    <div id="Photos_content" v-show="seen_photos">
+    <div id="Photos_conent" v-show="seen_photos">
       <div class="title">
         <div class="close" v-on:click="closePhotos">
           <img class="close_png" src="../img/close_button.png" />
@@ -201,6 +204,11 @@
         <img class="content_body" src="../img/24.png"/>
       </div>
     </div>
+    <div id="SignIn" v-if="signinVisible">
+      <img id="UserLogo" src="../img/user_logo.png"/>
+      <span id="UserName">Yan Tsishko</span>
+      <el-button type="success" id="SigninButton" v-on:click="signIn">Sign In</el-button>
+    </div>
   </div>
 </template>
 
@@ -208,6 +216,7 @@
   import fileManager from './Filemanager.vue'
   import dtmlxScheduler from './DtmlxScheduler.vue'
   import dhtmlxGantt from './DhtmlxGantt.vue'
+
   function setTime () {
     var time = new Date()
     var hour = time.getHours()
@@ -245,7 +254,12 @@
         seen_travel: false,
         seen_filemanager: false,
         seen_dtmlx: false,
-        seen_dhtmlxGantt: false
+        seen_dhtmlxGantt: false,
+        footerVisible: true,
+        dhtmlVisible: true,
+        fileVisible: true,
+        dtmlVisible: true,
+        signinVisible: false
       }
     },
     components: {
@@ -363,6 +377,21 @@
       },
       showDhtmlxGantt () {
         this.seen_dhtmlxGantt = !this.seen_dhtmlxGantt
+      },
+      signOut () {
+        this.footerVisible = false
+        this.dhtmlVisible = false
+        this.fileVisible = false
+        this.dtmlVisible = false
+        this.seen = false
+        this.signinVisible = true
+      },
+      signIn () {
+        this.footerVisible = true
+        this.dhtmlVisible = true
+        this.fileVisible = true
+        this.dtmlVisible = true
+        this.signinVisible = false
       }
     }
   }
@@ -376,9 +405,11 @@
   }
 
   body{
-    background-image: url("../img/pexels-photo-505674.jpeg");
+    background-image: url("../img/background.jpeg");
     background-size: cover;
     overflow: hidden;
+    min-width: 1520px;
+    min-height: 1080px;
   }
 
   #file-icon{
@@ -470,6 +501,19 @@
     float: left;
     margin-top: 25px;
     margin-left: 5px;
+  }
+
+  #SignOut{
+    position: absolute;
+    top: 330px;
+    left: 20px;
+  }
+
+  #SignText{
+    font-size: 16px;
+    color: white;
+    position: absolute;
+    left: 20px;
   }
 
   #Life{
@@ -819,5 +863,28 @@
     margin-top: 100px;
     position: relative;
     background-color: #00b1f0;
+  }
+
+  #UserLogo{
+    border-radius: 100px;
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 250px;
+    left: 850px;
+  }
+
+  #UserName{
+    position: absolute;
+    top: 340px;
+    left: 835px;
+    color: white;
+    font-size: 20px;
+  }
+
+  #SigninButton{
+    position: absolute;
+    top: 390px;
+    left: 850px;
   }
 </style>
