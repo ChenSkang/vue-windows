@@ -9,10 +9,10 @@
       </div>
       <div id="gantt-left">
         <div class="list-title">
-          <div id="task-name">Task name</div>
-          <div id="start-time">Start time</div>
-          <div id="duration">Duration</div>
-          <button class="plus-icon"><div id="plus"><img id="plus-icon" src="../img/plus_icon.png"></div></button>
+          <li id="task-name">Task name</li>
+          <li id="start-time">Start time</li>
+          <li id="duration">Duration</li>
+          <li class="plus-button"></li>
         </div>
         <div id="task-tree">
           <el-tree
@@ -36,124 +36,88 @@
   #Gantt{
 
   }
-  #gantt-icon {
-    width: 81px;
-    height: 81px;
-    position: absolute;
-    left: 10px;
-    top: 119px
-  }
-  .icon-name{
-    font-size: 13px;
-    height: auto;
-    color: #FFFFFF;
-  }
-  #gantt-icon:hover{  background: url("../img/icon_bg_full.png");  }
   #gantt-window{
-    width: 650px;
-    height: 1000px;
+    width: 800px;
+    height: 450px;
     background-color: white;
-    border: solid 1px black;
+    border: solid 1px powderblue;
     box-shadow: 0 1px 1px #000;
     position: relative;
-    top: 160px;
-    left: 400px;
+    top: 225px;
+    left: 440px;
   }
   #gantt-title{
-    height: auto;
+    width: auto;
+    height: 29px;
     font-size: 13px;
     position: absolute;
     left: 3px;
-    top: 3px;
+    top: 8px;
   }
   .gantt-show{
-    height: 24px;
-    width: 96px;
+    height: 29px;
+    width: 120px;
     position: absolute;
     top: 0;
     right: 0;
   }
   .gantt-show div{
-    width: 32px;
+    width: 40px;
+    height: 29px;
     float: right;
-    height: auto;
   }
   .gantt-show li{
-    display: inline;
+    display: inline-block;
   }
   #hide:hover{  background-color: powderblue  }
   #resize:hover{  background-color: powderblue  }
   #close:hover{  background-color: red  }
 
   #gantt-left{
-    width: 350px;
-    height:1000px;
+    width: 360px;
+    height: auto;
     position: absolute;
     left: 0;
-    top: 24px;
-    border-style: solid solid solid solid;
-    border-width: 1px;
+    top: 29px;
+    border-style: none solid solid solid;
+    border-width: 0.5px;
     border-color: gray;
   }
   .list-title{
-    display: inline-flex;
     font-size: 11px;
-    width: 350px;
-    height: 32px;
+    width: 360px;
+    height: 35px;
     left: 0;
     top: 0;
-    border-style: solid none solid none;
-    border-width: 1px;
-    border-color: gray;
   }
-  #task-name{
-    position: absolute;
-    left: 50px;
-    top: 8px;
+  .list-title > li{
+    height: 35px;
+    float: left;
+    display: inline;
+    line-height: 35px;
   }
-  #start-time{
-    position: absolute;
-    left: 155px;
-    top: 8px;
-  }
-  #duration{
-    position: absolute;
-    left: 240px;
-    top: 8px;
-  }
-  .plus-icon{
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    right:10px;
-    top: 1px;
-  }
-  .plus-icon img{
-    width: 32px;
-    height:auto;
-    position:absolute;
-    top: 0;
-    left: -2px;
-  }
-  .plus-icon div:hover{ background-color: powderblue }
+  #task-name{  width: 150px;  }
+  #start-time{  width: 100px;  }
+  #duration{  width: 65px;  }
+  .plus-button{  width: 45px; right: 0; background-image: url(../img/plus_iconxx.png) }
   #task-tree{
-    width: 350px;
+    width: 360px;
     height: auto;
     position: absolute;
-    left: 0px;
+    left: 0;
     top: 32px;
   }
   #task-tree > el-tree{
-    position: absolute;
-    left: -50px;
-    text-align: left;
+
   }
   #gantt-right{
-    width: 500px;
+    width: auto;
+    height: auto;
     position: absolute;
-    left: 400px;
-    top: 24px;
-    overflow: auto;
+    left: 360px;
+    top: 29px;
+    border: solid 1px powderblue;
+    float: left;
   }
 </style>
 <script>
@@ -218,7 +182,7 @@
         <span>{node.time}</span>
         </span>
         <span style="float: right; margin-right: 20px">
-          <el-button size="small" on-click={ () => this.append(store, data) }> <i src="../img/plus-icon.png"></i></el-button>
+          <li class="plus-button"></li>
           </span>
           </span>
         )
