@@ -41,16 +41,40 @@
           <div id="Life_title">Life at a glance</div>
           <div id="Life_content">
             <el-row :gutter="5">
-              <el-col :span="8"><div class="grid-content border text" id="Calendar" v-on:click="showCalendar">Calendar</div></el-col>
-              <el-col :span="16"><div class="grid-content border text" id="Email" v-on:click="showEmail">E-mail</div></el-col>
+              <el-col :span="8">
+                <div class="grid-content border text" id="Calendar" v-on:click="showCalendar">
+                  <span class="content_title">Calendar</span>
+                </div>
+              </el-col>
+              <el-col :span="16">
+                <div class="grid-content border text" id="Email" v-on:click="showEmail">
+                  <span class="content_title">E-mail</span>
+                </div>
+              </el-col>
             </el-row>
             <el-row :gutter="5">
-              <el-col :span="16"><div class="grid-content border text" id="Photos" v-on:click="showPhotos">Photos</div></el-col>
-              <el-col :span="8"><div class="grid-content border text" id="Friend" v-on:click="showFriend">Friend</div></el-col>
+              <el-col :span="16">
+                <div class="grid-content border text" id="Photos" v-on:click="showPhotos">
+                  <span class="content_title">Photos</span>
+                </div>
+              </el-col>
+              <el-col :span="8">
+                <div class="grid-content border text" id="Friend" v-on:click="showFriend">
+                  <span class="content_title">Friend</span>
+                </div>
+              </el-col>
             </el-row>
             <el-row :gutter="5">
-              <el-col :span="8"><div class="grid-content border text" id="Install" v-on:click="showInstall">Install</div></el-col>
-              <el-col :span="16"><div class="grid-content border text" id="Video" v-on:click="showVideo">Video</div></el-col>
+              <el-col :span="8">
+                <div class="grid-content border text" id="Install" v-on:click="showInstall">
+                  <span class="content_title">Install</span>
+                </div>
+              </el-col>
+              <el-col :span="16">
+                <div class="grid-content border text" id="Video" v-on:click="showVideo">
+                  <span class="content_title">Video</span>
+                </div>
+              </el-col>
             </el-row>
           </div>
         </div>
@@ -58,18 +82,50 @@
           <div id="Play_title">Play and Explore</div>
           <div id="Play_content">
           <el-row :gutter="5">
-            <el-col :span="8"><div class="grid-content border text" id="Game" v-on:click="showGame">Game</div></el-col>
-            <el-col :span="8"><div class="grid-content border text" id="Music" v-on:click="showMusic">Music</div></el-col>
-            <el-col :span="8"><div class="grid-content border text" id="Camera" v-on:click="showCamera">Camera</div></el-col>
+            <el-col :span="8">
+              <div class="grid-content border text" id="Game" v-on:click="showGame">
+                <span class="content_title">Game</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="grid-content border text" id="Music" v-on:click="showMusic">
+                <span class="content_title">Music</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="grid-content border text" id="Camera" v-on:click="showCamera">
+                <span class="content_title">Camera</span>
+              </div>
+            </el-col>
           </el-row>
           <el-row :gutter="5">
-            <el-col :span="8"><div class="grid-content border text" id="Sports" v-on:click="showSports">Sports</div></el-col>
-            <el-col :span="16"><div class="grid-content border text" id="News" v-on:click="showNews">News</div></el-col>
+            <el-col :span="8">
+              <div class="grid-content border text" id="Sports" v-on:click="showSports">
+                <span class="content_title">Sports</span>
+              </div>
+            </el-col>
+            <el-col :span="16">
+              <div class="grid-content border text" id="News" v-on:click="showNews">
+                <span class="content_title">News</span>
+              </div>
+            </el-col>
           </el-row>
           <el-row :gutter="5">
-            <el-col :span="8"><div class="grid-content border text" id="Store" v-on:click="showStore">Store</div></el-col>
-            <el-col :span="8"><div class="grid-content border text" id="Money" v-on:click="showMoney">Money</div></el-col>
-            <el-col :span="8"><div class="grid-content border text" id="Travel" v-on:click="showTravel">Travel</div></el-col>
+            <el-col :span="8">
+              <div class="grid-content border text" id="Store" v-on:click="showStore">
+                <span class="content_title">Store</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="grid-content border text" id="Money" v-on:click="showMoney">
+                <span class="content_title">Money</span>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="grid-content border text" id="Travel" v-on:click="showTravel">
+                <span class="content_title">Travel</span>
+              </div>
+            </el-col>
           </el-row>
           </div>
         </div>
@@ -94,14 +150,14 @@
       </div>
       <img class="content_body" src="../img/20.png" />
     </div>
-    <div id="Photos_conent" v-show="seen_photos">
+    <div id="Photos_content" v-show="seen_photos">
       <div class="title">
         <div class="close" v-on:click="closePhotos">
           <img class="close_png" src="../img/close_button.png" />
         </div>
         <div class="name">Photos</div>
+        <img class="content_body" src="../img/shop.png"/>
       </div>
-      <img class="content_body_png" src="../img/photos.png" />
     </div>
     <div id="Friend_content" v-show="seen_friend">
       <div class="title">
@@ -165,8 +221,8 @@
           <img class="close_png" src="../img/close_button.png" />
         </div>
         <div class="name">Sports</div>
+        <img class="content_body" src="../img/shop.png"/>
       </div>
-      <img class="content_body_png" src="../img/sports.png" />
     </div>
     <div id="News_content" v-show="seen_news">
       <div class="title">
@@ -174,8 +230,8 @@
           <img class="close_png" src="../img/close_button.png" />
         </div>
         <div class="name">News</div>
+        <img class="content_body" src="../img/shop.png"/>
       </div>
-      <img class="content_body_png" src="../img/news.png" />
     </div>
     <div id="Store_content" v-show="seen_store">
       <div class="title">
@@ -370,13 +426,13 @@
         this.seen_travel = false
       },
       showFilemanager () {
-        this.seen_filemanager = !this.seen_filemanager
+        this.seen_filemanager = true
       },
       showDtmlxScheduler () {
-        this.seen_dtmlx = !this.seen_dtmlx
+        this.seen_dtmlx = true
       },
       showDhtmlxGantt () {
-        this.seen_dhtmlxGantt = !this.seen_dhtmlxGantt
+        this.seen_dhtmlxGantt = true
       },
       signOut () {
         this.footerVisible = false
@@ -557,12 +613,18 @@
     color: white;
   }
 
+  .content_title{
+    position: absolute;
+    bottom: 3px;
+  }
+
   #Calendar{
     background: #107c10;
     background-image : url("../img/calendar.png");
     background-repeat: no-repeat;
     background-size: 55% 55%;
     background-position: center center;
+    position: relative;
   }
 
   #Email{
@@ -571,12 +633,14 @@
     background-repeat: no-repeat;
     background-size: 32% 58%;
     background-position: center center;
+    position: relative;
   }
 
   #Photos{
     background-image: url("../img/photos.png");
     background-repeat: no-repeat;
     background-position: center center;
+    position: relative;
   }
 
   #Friend{
@@ -585,6 +649,7 @@
     background-size: 65% 65%;
     background-position: center center;
     background-color: #00b1f0;
+    position: relative;
   }
 
   .text{
@@ -602,6 +667,7 @@
     background-size: 50% 50%;
     background-position: center center;
     background-image: url("../img/06.png");
+    position: relative;
   }
 
   #Video{
@@ -610,6 +676,7 @@
     background-position: center center;
     background-color: #90228a;
     background-image: url("../img/31.png");
+    position: relative;
   }
 
   #Play{
@@ -640,6 +707,7 @@
     background-size: 50% 50%;
     background-position: center center;
     background-image: url("../img/games.png");
+    position: relative;
   }
 
   #Music{
@@ -648,6 +716,7 @@
     background-position: center center;
     background-color: #e12429;
     background-image: url("../img/music.png");
+    position: relative;
   }
 
   #Camera{
@@ -656,18 +725,21 @@
     background-position: center center;
     background-color: #90228a;
     background-image: url("../img/camera.png");
+    position: relative;
   }
 
   #Sports{
     background-repeat: no-repeat;
     background-position: center center;
     background-image: url("../img/sports.png");
+    position: relative;
   }
 
   #News{
     background-repeat: no-repeat;
     background-position: center center;
     background-image: url("../img/news.png");
+    position: relative;
   }
 
   #Store{
@@ -676,6 +748,7 @@
     background-position: center center;
     background-color: #107c10;
     background-image: url("../img/shop.png");
+    position: relative;
   }
 
   #Money{
@@ -684,6 +757,7 @@
     background-position: center center;
     background-image: url("../img/graph.png");
     background-color: #2143af;
+    position: relative;
   }
 
   #Travel{
@@ -692,6 +766,7 @@
     background-position: center center;
     background-color: #00b1f0;
     background-image: url("../img/24.png");
+    position: relative;
   }
 
   .title{
@@ -736,12 +811,6 @@
     box-shadow: inset 0px 0px 2px 2px rgba(255,255,255,0.8);
   }
 
-  .content_body_png{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
-
   #Calendar_content{
     width: 750px;
     height: 450px;
@@ -765,7 +834,8 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
+    background-color: #00b1f0;
   }
 
   #Friend_content{
@@ -773,7 +843,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
     background-color: #00b1f0;
   }
 
@@ -782,7 +852,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
     background-color: #2143af ;
   }
 
@@ -792,7 +862,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
   }
 
   #Game_content{
@@ -800,7 +870,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position:absolute;
     background-color: #2143af ;
   }
 
@@ -809,8 +879,8 @@
      height: 450px;
      margin-left: 400px;
      margin-top: 100px;
-     position: relative;
-     background-color: #2143af ;
+     position: absolute;
+     background-color: #e12429 ;
    }
 
   #Camera_content{
@@ -818,8 +888,8 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
-    background-color: #e12429 ;
+    position: absolute;
+    background-color: #90228a ;
   }
 
   #Sports_content{
@@ -827,7 +897,8 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position:absolute;
+    background-color: #00b1f0;
   }
 
   #News_content{
@@ -835,7 +906,8 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
+    background-color: #00b1f0;
   }
 
   #Store_content{
@@ -843,7 +915,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
     background-color: #107c10;
   }
 
@@ -852,7 +924,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
     background-color: #2143af;
   }
 
@@ -861,7 +933,7 @@
     height: 450px;
     margin-left: 400px;
     margin-top: 100px;
-    position: relative;
+    position: absolute;
     background-color: #00b1f0;
   }
 
