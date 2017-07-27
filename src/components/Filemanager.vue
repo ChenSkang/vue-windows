@@ -1,6 +1,6 @@
 <template>
   <div id="file-window" v-show="seen">
-    <div id="file-title"><img src="../img/window-icon.png"/> Filemanager</div>
+    <el-row id="file-title"><img src="../img/window-icon.png"/> Filemanager</el-row>
     <el-row id="file-show" type="flex" justify="between">
       <el-col :span="8">
         <div class="grid-content" @click="closeWindow"><img src="../img/hide_button.png" /></div>
@@ -22,7 +22,7 @@
       <span id="icons-view" :title="iconsView" @click="iconsFile"><img src="../img/ViewGallery.png" /></span>
       <span id="table-view" :title="tableView" @click="tableFlie"><img src="../img/Viewlist.png" /></span>
     </el-row>
-    <el-input icon="search" v-model="filterText" class="search"></el-input>
+    <el-input icon="search" v-model="filterText" class="search" size="small"></el-input>
     <span id="el-dropdown-link" :title="actions" v-on:click="showFunction">
       <i class="el-icon-setting"></i>
     </span>
@@ -36,23 +36,23 @@
       <el-row @click="upload"><i class="el-icon-upload2"></i>&nbsp;Upload</el-row>
     </el-row>
     <div id="file-window-left" v-show="leftSee">
-      <div id="tree-manager">
+      <el-row id="tree-manager">
         <div id="put" @click="letleftsee"  v-show="leftSee" :title="putMessage"><img src="../img/put.png" /></div>
         <div id="expand" :title="expandTree"><img src="../img/window-icon.png" /></div>
         <div id="collapse" :title="collapseTree"><img src="../img/window-icon.png" /></div>
-      </div>
-      <div id="tree">
+      </el-row>
+      <el-row id="tree">
         <el-tree
           class="filter-tree"
           :data="data"
           :props="defaultProps"
           indent="14"
+          node-key="id"
           :filter-node-method="filterNode"
-          @node-click="handleNodeClick"
-          @click="showFunction"
+          :render-content="renderContent"
           ref="tree2">
         </el-tree>
-      </div>
+      </el-row>
     </div>
     <div id="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px; "></div>
     <div id="file-window-tableView" v-show="viewTable" :style="viewObject">
@@ -87,7 +87,7 @@
     <div id="file-window-iconsView" v-show="viewIcons" :style="viewObject"></div>
   </div>
 </template>
-<style>
+<style scoped>
   #file-window{
     width: 800px;
     height: 450px;
@@ -205,16 +205,11 @@
     border-top: solid 1px gainsboro;
   }
 
-  .search input{
-    height: 30px;
-    border-radius: 13px;
-    border: 1px solid gainsboro;
-  }
   .search{
     width: 12.5%;
     position: absolute;
     right: 80px;
-    top: 37px;
+    top: 36px;
     cursor: pointer;
   }
 
@@ -352,6 +347,7 @@
 
 </style>
 <script>
+  let id = 1000
   import ElRow from 'element-ui/packages/row/src/row'
   document.oncontextmenu = function () {
     return false
@@ -463,7 +459,11 @@
         if (!value) return true
         return data.label.indexOf(value) !== -1
       },
-      handleNodeClick (data) {
+      append (store, data) {
+        store.append({ id: id++, label: 'testtest', children: [] }, data)
+      },
+      remove (store, data) {
+        store.remove(data)
       }
     }
   }
