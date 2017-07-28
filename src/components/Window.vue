@@ -36,42 +36,41 @@
           <img  id="User_logo" src="../img/user_logo.png" />
           <div id="User_name">Yan Tsishko</div>
         </div>
-        <el-button type="text" @click="signOut" id="SignOut"><img src="../img/signout.png"/><span id="SignText">sign out</span></el-button>
         <div id="Life">
           <div id="Life_title">Life at a glance</div>
           <div id="Life_content">
             <el-row :gutter="5">
               <el-col :span="8">
-                <div class="grid-content border text" id="Calendar" v-on:click="showCalendar">
+                <div class="grid-content border text" id="Calendar" v-on:click="showCalendar('Calendar_content')">
                   <span class="content_title">Calendar</span>
                 </div>
               </el-col>
               <el-col :span="16">
-                <div class="grid-content border text" id="Email" v-on:click="showEmail">
+                <div class="grid-content border text" id="Email" v-on:click="showEmail('Email_content')">
                   <span class="content_title">E-mail</span>
                 </div>
               </el-col>
             </el-row>
             <el-row :gutter="5">
               <el-col :span="16">
-                <div class="grid-content border text" id="Photos" v-on:click="showPhotos">
+                <div class="grid-content border text" id="Photos" v-on:click="showPhotos('Photos_content')">
                   <span class="content_title">Photos</span>
                 </div>
               </el-col>
               <el-col :span="8">
-                <div class="grid-content border text" id="Friend" v-on:click="showFriend">
+                <div class="grid-content border text" id="Friend" v-on:click="showFriend('Friend_content')">
                   <span class="content_title">Friend</span>
                 </div>
               </el-col>
             </el-row>
             <el-row :gutter="5">
               <el-col :span="8">
-                <div class="grid-content border text" id="Install" v-on:click="showInstall">
+                <div class="grid-content border text" id="Install" v-on:click="showInstall('Install_content')">
                   <span class="content_title">Install</span>
                 </div>
               </el-col>
               <el-col :span="16">
-                <div class="grid-content border text" id="Video" v-on:click="showVideo">
+                <div class="grid-content border text" id="Video" v-on:click="showVideo('Video_content')">
                   <span class="content_title">Video</span>
                 </div>
               </el-col>
@@ -83,52 +82,63 @@
           <div id="Play_content">
           <el-row :gutter="5">
             <el-col :span="8">
-              <div class="grid-content border text" id="Game" v-on:click="showGame">
+              <div class="grid-content border text" id="Game" v-on:click="showGame('Game_content')">
                 <span class="content_title">Game</span>
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content border text" id="Music" v-on:click="showMusic">
+              <div class="grid-content border text" id="Music" v-on:click="showMusic('Music_content')">
                 <span class="content_title">Music</span>
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content border text" id="Camera" v-on:click="showCamera">
+              <div class="grid-content border text" id="Camera" v-on:click="showCamera('Camera_content')">
                 <span class="content_title">Camera</span>
               </div>
             </el-col>
           </el-row>
           <el-row :gutter="5">
             <el-col :span="8">
-              <div class="grid-content border text" id="Sports" v-on:click="showSports">
+              <div class="grid-content border text" id="Sports" v-on:click="showSports('Sports_content')">
                 <span class="content_title">Sports</span>
               </div>
             </el-col>
             <el-col :span="16">
-              <div class="grid-content border text" id="News" v-on:click="showNews">
+              <div class="grid-content border text" id="News" v-on:click="showNews('News_content')">
                 <span class="content_title">News</span>
               </div>
             </el-col>
           </el-row>
           <el-row :gutter="5">
             <el-col :span="8">
-              <div class="grid-content border text" id="Store" v-on:click="showStore">
+              <div class="grid-content border text" id="Store" v-on:click="showStore('Store_content')">
                 <span class="content_title">Store</span>
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content border text" id="Money" v-on:click="showMoney">
+              <div class="grid-content border text" id="Money" v-on:click="showMoney('Money_content')">
                 <span class="content_title">Money</span>
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content border text" id="Travel" v-on:click="showTravel">
+              <div class="grid-content border text" id="Travel" v-on:click="showTravel('Travel_content')">
                 <span class="content_title">Travel</span>
               </div>
             </el-col>
           </el-row>
           </div>
         </div>
+        <div id="Mostused">
+          <span id="Mostuesd_title">Most used</span>
+        </div>
+        <el-button type="text" @click="signOut" id="SignOut">
+          <img src="../img/signout.png"/>
+          <span class="buttonText">sign out</span>
+        </el-button>
+        <el-button type="text" @click="requestFullscreen('Window')" id="FullScreen">
+          <img src="../img/fullscreen.png"/>
+          <span class="buttonText">Full screen</span>
+        </el-button>
       </div>
     </div>
     </transition>
@@ -141,7 +151,7 @@
       </div>
       <img class="content_body" id="content" src="../img/calendar.png" />
     </div>
-    <div id="Email_content" v-show="seen_email">
+    <div id="Email_content" v-show="seen_email" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeEmail">
           <img class="close_png" src="../img/close_button.png" />
@@ -150,7 +160,7 @@
       </div>
       <img class="content_body" src="../img/20.png" />
     </div>
-    <div id="Photos_content" v-show="seen_photos">
+    <div id="Photos_content" v-show="seen_photos" v-drag>
       <div class="title">
         <div class="close" v-on:click="closePhotos">
           <img class="close_png" src="../img/close_button.png" />
@@ -159,7 +169,7 @@
         <img class="content_body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Friend_content" v-show="seen_friend">
+    <div id="Friend_content" v-show="seen_friend" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeFriend">
           <img class="close_png" src="../img/close_button.png"/>
@@ -168,7 +178,7 @@
       </div>
       <img class="content_body" src="../img/34.png"/>
     </div>
-    <div id="Install_content" v-show="seen_install">
+    <div id="Install_content" v-show="seen_install" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeInstall">
           <img class="close_png" src="../img/close_button.png"/>
@@ -177,7 +187,7 @@
       </div>
       <img class="content_body" src="../img/06.png"/>
     </div>
-    <div id="Video_content" v-show="seen_video">
+    <div id="Video_content" v-show="seen_video" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeVideo">
           <img class="close_png" src="../img/close_button.png"/>
@@ -187,7 +197,7 @@
         <img class="content_body" src="../img/video.png"/>
       </div>
     </div>
-    <div id="Game_content" v-show="seen_game">
+    <div id="Game_content" v-show="seen_game" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeGame">
           <img class="close_png" src="../img/close_button.png"/>
@@ -197,7 +207,7 @@
         <img class="content_body" src="../img/games.png"/>
       </div>
     </div>
-    <div id="Music_content" v-show="seen_music">
+    <div id="Music_content" v-show="seen_music" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeMusic">
           <img class="close_png" src="../img/close_button.png"/>
@@ -206,7 +216,7 @@
         </div>
       <img class="content_body" src="../img/music.png"/>
     </div>
-    <div id="Camera_content" v-show="seen_camera">
+    <div id="Camera_content" v-show="seen_camera" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeCamera">
           <img class="close_png" src="../img/close_button.png"/>
@@ -215,7 +225,7 @@
         <img class="content_body" src="../img/camera.png"/>
       </div>
     </div>
-    <div id="Sports_content" v-show="seen_sports">
+    <div id="Sports_content" v-show="seen_sports" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeSports">
           <img class="close_png" src="../img/close_button.png" />
@@ -224,7 +234,7 @@
         <img class="content_body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="News_content" v-show="seen_news">
+    <div id="News_content" v-show="seen_news" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeNews">
           <img class="close_png" src="../img/close_button.png" />
@@ -233,7 +243,7 @@
         <img class="content_body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Store_content" v-show="seen_store">
+    <div id="Store_content" v-show="seen_store" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeStore">
           <img class="close_png" src="../img/close_button.png"/>
@@ -242,7 +252,7 @@
         <img class="content_body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Money_content" v-show="seen_money">
+    <div id="Money_content" v-show="seen_money" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeMoney">
           <img class="close_png" src="../img/close_button.png"/>
@@ -251,7 +261,7 @@
       </div>
         <img class="content_body" src="../img/graph.png"/>
     </div>
-    <div id="Travel_content" v-show="seen_travel">
+    <div id="Travel_content" v-show="seen_travel" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeTravel">
           <img class="close_png" src="../img/close_button.png"/>
@@ -315,7 +325,8 @@
         dhtmlVisible: true,
         fileVisible: true,
         dtmlVisible: true,
-        signinVisible: false
+        signinVisible: false,
+        Zindex: 10
       }
     },
     components: {
@@ -327,100 +338,128 @@
       showWindow () {
         this.seen = !this.seen
       },
-      showCalendar () {
+      showCalendar (id) {
         this.seen_calendar = true
         this.seen = !this.seen
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeCalendar () {
         this.seen_calendar = false
       },
-      showEmail () {
+      showEmail (id) {
         this.seen = !this.seen
         this.seen_email = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeEmail () {
         this.seen_email = false
       },
-      showPhotos () {
+      showPhotos (id) {
         this.seen = !this.seen
         this.seen_photos = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closePhotos () {
         this.seen_photos = false
       },
-      showFriend () {
+      showFriend (id) {
         this.seen = !this.seen
         this.seen_friend = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeFriend () {
         this.seen_friend = false
       },
-      showInstall () {
+      showInstall (id) {
         this.seen = !this.seen
         this.seen_install = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeInstall () {
         this.seen_install = false
       },
-      showVideo () {
+      showVideo (id) {
         this.seen = !this.seen
         this.seen_video = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeVideo () {
         this.seen_video = false
       },
-      showGame () {
+      showGame (id) {
         this.seen = !this.seen
         this.seen_game = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeGame () {
         this.seen_game = false
       },
-      showMusic () {
+      showMusic (id) {
         this.seen = !this.seen
         this.seen_music = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeMusic () {
         this.seen_music = false
       },
-      showCamera () {
+      showCamera (id) {
         this.seen = !this.seen
         this.seen_camera = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeCamera () {
         this.seen_camera = false
       },
-      showSports () {
+      showSports (id) {
         this.seen = !this.seen
         this.seen_sports = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeSports () {
         this.seen_sports = false
       },
-      showNews () {
+      showNews (id) {
         this.seen = !this.seen
         this.seen_news = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeNews () {
         this.seen_news = false
       },
-      showStore () {
+      showStore (id) {
         this.seen = !this.seen
         this.seen_store = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeStore () {
         this.seen_store = false
       },
-      showMoney () {
+      showMoney (id) {
         this.seen = !this.seen
         this.seen_money = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeMoney () {
         this.seen_money = false
       },
-      showTravel () {
+      showTravel (id) {
         this.seen = !this.seen
         this.seen_travel = true
+        this.Zindex = this.Zindex + 1
+        document.getElementById(id).style.zIndex = this.Zindex
       },
       closeTravel () {
         this.seen_travel = false
@@ -511,6 +550,7 @@
     opacity: 0.85;
     position: absolute;
     bottom: 0;
+    z-index: 1000;
   }
 
   #start{
@@ -559,13 +599,29 @@
     margin-left: 5px;
   }
 
+  #Mostused{
+    position: absolute;
+    top: 80px;
+    left: 20px;
+  }
+
+  #Mostuesd_title{
+    color: #8c939d;
+  }
+
   #SignOut{
     position: absolute;
     top: 330px;
     left: 20px;
   }
 
-  #SignText{
+  #FullScreen{
+    position: absolute;
+    top: 300px;
+    left: 9px;
+  }
+
+  .buttonText{
     font-size: 16px;
     color: white;
     position: absolute;
@@ -814,8 +870,8 @@
   #Calendar_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
+    left: 400px;
+    top: 100px;
     position: absolute;
     background-color: #107c10;
   }
@@ -823,8 +879,6 @@
   #Email_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
     background-color: #00b1f0;
   }
@@ -832,8 +886,6 @@
   #Photos_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
     background-color: #00b1f0;
   }
@@ -841,8 +893,6 @@
   #Friend_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
     background-color: #00b1f0;
   }
@@ -850,8 +900,6 @@
   #Install_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
     background-color: #2143af ;
   }
@@ -860,16 +908,12 @@
     background-color: #90228a;
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
   }
 
   #Game_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position:absolute;
     background-color: #2143af ;
   }
@@ -877,8 +921,6 @@
   #Music_content{
      width: 750px;
      height: 450px;
-     margin-left: 400px;
-     margin-top: 100px;
      position: absolute;
      background-color: #e12429 ;
    }
@@ -886,17 +928,13 @@
   #Camera_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
-    background-color: #90228a ;
+    background-color: #90228a;
   }
 
   #Sports_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position:absolute;
     background-color: #00b1f0;
   }
@@ -904,8 +942,6 @@
   #News_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
     background-color: #00b1f0;
   }
@@ -913,8 +949,6 @@
   #Store_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
     background-color: #107c10;
   }
@@ -922,8 +956,6 @@
   #Money_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
     background-color: #2143af;
   }
@@ -931,8 +963,6 @@
   #Travel_content{
     width: 750px;
     height: 450px;
-    margin-left: 400px;
-    margin-top: 100px;
     position: absolute;
     background-color: #00b1f0;
   }
