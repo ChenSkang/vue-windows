@@ -1,100 +1,279 @@
 <template>
-  <div id="file-window" v-show="seen">
-    <el-row id="file-title"><img src="../img/window-icon.png"/> Filemanager</el-row>
-    <el-row id="file-show" type="flex" justify="between">
-      <el-col :span="8">
-        <div class="grid-content" @click="closeWindow"><img src="../img/hide_button.png" /></div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content"><img src="../img/resize_button.png" /></div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content closed" @click="closeWindow"><img src="../img/close_button.png" /></div>
-      </el-col>
-    </el-row>
-    <el-row class="file-button">
+  <div id="file-window" v-show="seen" v-drag>
+    <el-button @click="change" id="change" size="mini">Change</el-button>
+    <div v-show="original">
+      <el-row id="file-title"><img src="../img/window-icon.png"/> Filemanager</el-row>
+      <el-row id="file-show" type="flex" justify="between">
+        <el-col :span="8">
+          <div class="grid-content" @click="closeWindow"><img src="../img/hide_button.png" /></div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content"><img src="../img/resize_button.png" /></div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content closed" @click="closeWindow"><img src="../img/close_button.png" /></div>
+        </el-col>
+      </el-row>
+      <el-row class="file-button">
       <span id="tree-title">
         <p>{{treeMessage}}</p>
       </span>
-      <span id="arrow-left" :title="leftView"><img src="../img/left.png" /></span>
-      <span id="arrow-right" :title="rightView"><img src="../img/right.png" /></span>
-      <span id="return" :title="upView"><img src="../img/up.png" /></span>
-      <span id="icons-view" :title="iconsView" @click="iconsFile"><img src="../img/ViewGallery.png" /></span>
-      <span id="table-view" :title="tableView" @click="tableFlie"><img src="../img/Viewlist.png" /></span>
-    </el-row>
-    <el-input icon="search" v-model="filterText" class="search" size="small"></el-input>
-    <span id="el-dropdown-link" :title="actions" v-on:click="showFunction">
-      <i class="el-icon-setting"></i>
-    </span>
-    <el-row class="fileFunction" v-show="seenFunction">
-      <el-row @click="copy"><i class="el-icon-setting"></i>&nbsp;Copy</el-row>
-      <el-row @click="cut"><i class="el-icon-setting"></i>&nbsp;Cut</el-row>
-      <el-row @click="paste"><i class="el-icon-setting"></i>&nbsp;Paste</el-row>
-      <el-row @click="create-file" class="createFolder"><i class="el-icon-document"></i>&nbsp;Create Folder</el-row>
-      <el-row @click="cut-off"><i class="el-icon-delete2"></i>&nbsp;Delete</el-row>
-      <el-row @click="rename"><i class="el-icon-edit"></i>&nbsp;Rename</el-row>
-      <el-row @click="upload"><i class="el-icon-upload2"></i>&nbsp;Upload</el-row>
-    </el-row>
-    <div id="file-window-left" v-show="leftSee">
-      <el-row id="tree-manager">
-        <div id="put" @click="letleftsee"  v-show="leftSee" :title="putMessage"><img src="../img/put.png" /></div>
-        <div id="expand" :title="expandTree"><img src="../img/window-icon.png" /></div>
-        <div id="collapse" :title="collapseTree"><img src="../img/window-icon.png" /></div>
+        <span id="arrow-left" :title="leftView"><img src="../img/left.png" /></span>
+        <span id="arrow-right" :title="rightView"><img src="../img/right.png" /></span>
+        <span id="return" :title="upView"><img src="../img/up.png" /></span>
+        <span id="icons-view" :title="iconsView" @click="iconsFile"><img src="../img/ViewGallery.png" /></span>
+        <span id="table-view" :title="tableView" @click="tableFlie"><img src="../img/Viewlist.png" /></span>
       </el-row>
-      <el-row id="tree">
-        <el-tree
-          class="filter-tree"
-          :data="data"
-          :props="defaultProps"
-          indent="14"
-          node-key="id"
-          :filter-node-method="filterNode"
-          :render-content="renderContent"
-          ref="tree2">
-        </el-tree>
+      <el-input
+        icon="search"
+        v-model="filterText"
+        class="search"
+        size="small"
+        rows="1">
+      </el-input>
+      <el-popover
+        ref="popover"
+        placement="bottom-start"
+        width="180"
+        trigger="click">
+        <el-row @click="copy" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Copy</el-row>
+        <el-row @click="cut" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Cut</el-row>
+        <el-row @click="paste" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Paste</el-row>
+        <el-row @click="create-file" class="createFolder fileFunction"><i class="el-icon-document"></i>&nbsp;Create Folder</el-row>
+        <el-row @click="cut-off" class="fileFunction"><i class="el-icon-delete2"></i>&nbsp;Delete</el-row>
+        <el-row @click="rename" class="fileFunction"><i class="el-icon-edit"></i>&nbsp;Rename</el-row>
+        <el-row @click="upload" class="fileFunction"><i class="el-icon-upload2"></i>&nbsp;Upload</el-row>
+      </el-popover>
+      <el-row
+        v-popover:popover
+        id="el-dropdown-link"
+        :title="actions">
+        <i class="el-icon-setting"></i>
       </el-row>
+      <div id="file-window-left" v-show="leftSee">
+        <el-row id="tree-manager">
+          <div id="put" @click="letleftsee"  v-show="leftSee" :title="putMessage"><img src="../img/put.png" /></div>
+          <div id="expand" :title="expandTree"><img src="../img/window-icon.png" /></div>
+          <div id="collapse" :title="collapseTree"><img src="../img/window-icon.png" /></div>
+        </el-row>
+        <el-row id="tree">
+          <el-tree
+            class="filter-tree"
+            :data="data"
+            :props="defaultProps"
+            indent="14"
+            node-key="id"
+            :filter-node-method="filterNode"
+            :render-content="renderContent"
+            ref="tree2">
+          </el-tree>
+        </el-row>
+      </div>
+      <div id="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px;"/></div>
+      <div id="file-window-tableView" v-show="viewTable" :style="viewObject">
+        <el-table
+          :data="tableData"
+          border
+          height="string"
+          fit="false"
+          style="width: 100%">
+          <el-table-column
+            prop="Name"
+            label="Name"
+            width="150%">
+          </el-table-column>
+          <el-table-column
+            prop="Date"
+            label="Date"
+            width="185%">
+          </el-table-column>
+          <el-table-column
+            prop="Type"
+            label="Type"
+            width="100%">
+          </el-table-column>
+          <el-table-column
+            prop="city"
+            label="Size"
+            width="100%">
+          </el-table-column>
+        </el-table>
+      </div>
+      <div id="file-window-iconsView" v-show="viewIcons" :style="viewObject">
+        <span class="demonstration">Click 指示器触发</span>
+        <el-carousel trigger="click" height="150px">
+          <el-carousel-item v-for="item in 4" :key="item">
+            <h3>{{ item }}</h3>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
     </div>
-    <div id="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px; "></div>
-    <div id="file-window-tableView" v-show="viewTable" :style="viewObject">
-      <el-table
-        :data="tableData3"
-        border
-        height="string"
-        fit="false"
-        style="width: 100%">
-        <el-table-column
-          prop="date"
-          label="Name"
-          width="150%">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="Date"
-          width="185%">
-        </el-table-column>
-        <el-table-column
-          prop="province"
-          label="Type"
-          width="100%">
-        </el-table-column>
-        <el-table-column
-          prop="city"
-          label="Size"
-          width="100%">
-        </el-table-column>
-      </el-table>
+    <div v-show="revision">
+
     </div>
-    <div id="file-window-iconsView" v-show="viewIcons" :style="viewObject"></div>
   </div>
 </template>
+<script>
+  let id = 1000
+  import ElRow from 'element-ui/packages/row/src/row'
+  import ElPopover from '../../node_modules/element-ui/packages/popover/src/main'
+  document.oncontextmenu = function () {
+    return false
+  }
+  export default{
+    components: {
+      ElPopover,
+      ElRow},
+    watch: {
+      filterText (val) {
+        this.$refs.tree2.filter(val)
+      }
+    },
+    data () {
+      return {
+        seen: true,
+        leftSee: true,
+        putOnSee: false,
+        viewTable: true,
+        viewIcons: false,
+        seenFunction: false,
+        original: true,
+        revision: false,
+        input2: '',
+        putMessage: 'Hide Tree',
+        putOnMessage: 'Show Tree',
+        actions: 'Actions',
+        iconsView: 'Icons View',
+        tableView: 'Table View',
+        leftView: 'Back',
+        rightView: 'Forward',
+        upView: 'Level up',
+        expandTree: 'Expand Tree',
+        collapseTree: 'Collapse Tree',
+        filterText: '',
+        treeMessage: 'Files',
+        viewObject: {
+          width: '68%'
+        },
+        data: [{
+          id: 1,
+          label: 'Files',
+          children: [{
+            id: 2,
+            label: 'Documents',
+            children: [{
+              id: 5,
+              label: 'Presentations'
+            }, {
+              id: 6,
+              label: 'Reports',
+              children: [{
+                id: 9,
+                label: 'China'
+              }, {
+                id: 10,
+                label: 'USA'
+              }]
+            }]
+          }, {
+            id: 3,
+            label: 'Images',
+            children: [{
+              id: 7,
+              label: 'Thumbnails'
+            }, {
+              id: 8,
+              label: 'Base images'
+            }]
+          }, {
+            id: 4,
+            label: 'Video'
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      }
+    },
+    methods: {
+      change () {
+        this.original = !this.original
+        this.revision = !this.revision
+      },
+      showWindow () {
+        this.seen = true
+      },
+      closeWindow () {
+        this.seen = false
+      },
+      letleftsee () {
+        this.leftSee = !this.leftSee
+        this.putOnSee = !this.putOnSee
+        if (this.putOnSee === true) {
+          this.viewObject = {
+            width: '97.5%'
+          }
+        } else {
+          this.viewObject = {
+            width: '68%'
+          }
+        }
+      },
+      showFunction () {
+        this.seenFunction = !this.seenFunction
+      },
+      showFunctions () {
+        if (event.button === 2) {
+          this.seenFunction = !this.seenFunction
+        }
+      },
+      tableFlie () {
+        this.viewTable = true
+        this.viewIcons = false
+      },
+      iconsFile () {
+        this.viewTable = false
+        this.viewIcons = true
+      },
+      filterNode (value, data) {
+        if (!value) return true
+        return data.label.indexOf(value) !== -1
+      },
+      append (store, data) {
+        store.append({ id: id++, label: 'newFolder', children: [] }, data)
+      },
+      remove (store, data) {
+        store.remove(data)
+      },
+      renderContent (h, { node, data, store }) {
+        return (
+          <span on-mouseup={ () => this.showFunctions() }>
+      <span>
+        <span>{node.label}</span>
+        </span>
+        <span style="float: right; margin-right: 20px">
+          <el-button size="mini" on-click={ () => this.append(store, data) }>A</el-button>
+        <el-button size="mini" on-click={ () => this.remove(store, data) }>D</el-button>
+        </span>
+        </span>)
+      }
+    }
+  }
+</script>
+
 <style scoped>
   #file-window{
     width: 800px;
     height: 450px;
     background-color: white;
-    border: solid 1px black;
-    position: relative;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: solid 1px #6b6a6c;
+    position: absolute;
     left: 350px;
+    top: 50px;
     overflow-y: scroll;
     overflow-x: hidden;
     resize: both;
@@ -104,6 +283,11 @@
     width: 5px;
     height: 80%;
     bottom: 0;
+  }
+
+  #change{
+    position: absolute;
+    right: 120px;
   }
 
   #file-title{
@@ -121,9 +305,6 @@
   }
   .el-row {
     margin-bottom: 0;
-    &:last-child {
-     margin-bottom: 0;
-    }
   }
 
   .grid-content {
@@ -173,34 +354,20 @@
     left: 10px;
   }
 
-  #arrow-left{ position: absolute;left: 142px; }
-  #arrow-right{ position: absolute;left: 174px; }
-  #return{ position: absolute;left: 220px; }
-  #icons-view{ position: absolute;right: 40px }
-  #table-view{ position: absolute;right: 8px; }
+  #arrow-left{ position: absolute; left: 142px; }
+  #arrow-right{ position: absolute; left: 174px; }
+  #return{ position: absolute; left: 220px; }
+  #icons-view{ position: absolute; right: 40px }
+  #table-view{ position: absolute; right: 8px; }
 
   .fileFunction{
-    border: 1px solid gainsboro;
-    width: 200px;
-    height: 252px;
-    background-color: white;
-    position: absolute;
-    left: 20px;
-    top: 60px;
-    z-index: 9999;
+    height: 35px;
+    line-height: 35px;
+    font-size: 15px;
   }
-
-  .fileFunction div{
-    width: 200px;
-    height: 36px;
-    text-align: left;
-    text-indent: 5px;
-    line-height: 36px;
-  }
-  .fileFunction div:hover{
+  .fileFunction:hover{
     background-color: #f3f1f5;
   }
-
   .createFolder{
     border-top: solid 1px gainsboro;
   }
@@ -299,16 +466,14 @@
 
   .filter-tree{
     height: 340px;
-    width: 240px;
+    width: 250px;
     border: none;
     position: absolute;
     background-color: #f3f1f5;
+    float: left;
   }
-
   .filter-tree div{
     float: left;
-    width: 250px;
-    text-align: left;
   }
 
   #tree-title{
@@ -333,8 +498,6 @@
   }
   #file-window-tableView div{
     height: 30px;
-    text-align: left;
-    line-height: 20px;
   }
 
   #file-window-iconsView{
@@ -344,127 +507,19 @@
     right: 0;
     bottom: 0;
   }
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
 
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
 </style>
-<script>
-  let id = 1000
-  import ElRow from 'element-ui/packages/row/src/row'
-  document.oncontextmenu = function () {
-    return false
-  }
-  export default{
-    components: {ElRow},
-    watch: {
-      filterText (val) {
-        this.$refs.tree2.filter(val)
-      }
-    },
-    data () {
-      return {
-        seen: true,
-        leftSee: true,
-        putOnSee: false,
-        viewTable: true,
-        viewIcons: false,
-        seenFunction: false,
-        input2: '',
-        putMessage: 'Hide Tree',
-        putOnMessage: 'Show Tree',
-        actions: 'Actions',
-        iconsView: 'Icons View',
-        tableView: 'Table View',
-        leftView: 'Back',
-        rightView: 'Forward',
-        upView: 'Level up',
-        expandTree: 'Expand Tree',
-        collapseTree: 'Collapse Tree',
-        filterText: '',
-        treeMessage: 'Files',
-        viewObject: {
-          width: '68%'
-        },
-        data: [{
-          id: 1,
-          label: 'Files',
-          children: [{
-            id: 2,
-            label: 'Documents',
-            children: [{
-              id: 5,
-              label: 'Presentations'
-            }, {
-              id: 6,
-              label: 'Reports',
-              children: [{
-                id: 9,
-                label: 'China'
-              }, {
-                id: 10,
-                label: 'USA'
-              }]
-            }]
-          }, {
-            id: 3,
-            label: 'Images',
-            children: [{
-              id: 7,
-              label: 'Thumbnails'
-            }, {
-              id: 8,
-              label: 'Base images'
-            }]
-          }, {
-            id: 4,
-            label: 'Video'
-          }]
-        }],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
-        }
-      }
-    },
-    methods: {
-      showWindow () {
-        this.seen = true
-      },
-      closeWindow () {
-        this.seen = false
-      },
-      letleftsee () {
-        this.leftSee = !this.leftSee
-        this.putOnSee = !this.putOnSee
-        if (this.putOnSee === true) {
-          this.viewObject = {
-            width: '97.5%'
-          }
-        } else {
-          this.viewObject = {
-            width: '68%'
-          }
-        }
-      },
-      showFunction () {
-        this.seenFunction = !this.seenFunction
-      },
-      tableFlie () {
-        this.viewTable = true
-        this.viewIcons = false
-      },
-      iconsFile () {
-        this.viewTable = false
-        this.viewIcons = true
-      },
-      filterNode (value, data) {
-        if (!value) return true
-        return data.label.indexOf(value) !== -1
-      },
-      append (store, data) {
-        store.append({ id: id++, label: 'testtest', children: [] }, data)
-      },
-      remove (store, data) {
-        store.remove(data)
-      }
-    }
-  }
-</script>
