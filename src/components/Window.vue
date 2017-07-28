@@ -1,4 +1,5 @@
-<template xmlns="http://www.w3.org/1999/html" xmlns:v-drag="http://www.w3.org/1999/xhtml">
+<template xmlns="http://www.w3.org/1999/html" xmlns:v-drag="http://www.w3.org/1999/xhtml"
+          xmlns="http://www.w3.org/1999/html">
   <div id="Window">
     <router-view></router-view>
     <div id="footer" v-if="footerVisible">
@@ -25,7 +26,7 @@
     <div id="DtmlScheduler" v-on:dblclick="showDtmlxScheduler" v-if="dtmlVisible">
       <div id="Dtml-icon" class="icon">
         <img src="../img/scheduler.png">
-        <p class="icon-name">DtmlxScheduler</p>
+        <p class="icon-name">Dtmlx<br>Scheduler</p>
       </div>
       <dtmlx-scheduler v-if="seen_dtmlx"></dtmlx-scheduler>
     </div>
@@ -505,6 +506,9 @@
     overflow: hidden;
     min-width: 1520px;
     min-height: 1080px;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
   }
 
   #file-icon{
@@ -513,7 +517,6 @@
     position: absolute;
     left: 10px;
     top: 100px;
-    cursor: pointer;
   }
 
   #Dhtml-icon{
@@ -522,7 +525,6 @@
     position: absolute;
     left: 10px;
     top: 200px;
-    cursor: pointer;
   }
 
   #Dtml-icon{
@@ -531,7 +533,6 @@
     position: absolute;
     left: 10px;
     top: 300px;
-    cursor: pointer;
   }
 
   .icon-name{
