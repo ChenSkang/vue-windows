@@ -5,13 +5,13 @@
       <el-row id="file-title"><img src="../img/window-icon.png"/> Filemanager</el-row>
       <el-row id="file-show" type="flex" justify="between">
         <el-col :span="8">
-          <div class="grid-content" @click="closeWindow"><img src="../img/hide_button.png" /></div>
+          <div class="grid" @click="closeWindow"><img src="../img/hide_button.png" /></div>
         </el-col>
         <el-col :span="8">
-          <div class="grid-content"><img src="../img/resize_button.png" /></div>
+          <div class="grid"><img src="../img/resize_button.png" /></div>
         </el-col>
         <el-col :span="8">
-          <div class="grid-content closed" @click="closeWindow"><img src="../img/close_button.png" /></div>
+          <div class="grid closed" @click="closeWindow"><img src="../img/close_button.png" /></div>
         </el-col>
       </el-row>
       <el-row class="file-button">
@@ -74,42 +74,79 @@
         <el-table
           :data="tableData"
           border
-          height="string"
+          highlight-current-row
           fit="false"
           style="width: 100%">
           <el-table-column
-            prop="Name"
             label="Name"
-            width="150%">
+            width="150">
+            <template scope="scope">
+              <el-icon name="document"></el-icon>
+              <span style="margin-left: 10px">{{ scope.row.name }}</span>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="Date"
             label="Date"
-            width="185%">
+            width="175">
+            <template scope="scope">
+              <el-icon name="time"></el-icon>
+              <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="Type"
+            prop="type"
             label="Type"
-            width="100%">
+            width="100">
           </el-table-column>
           <el-table-column
-            prop="city"
+            prop="size"
             label="Size"
-            width="100%">
+            sortable
+            width="100">
           </el-table-column>
         </el-table>
       </div>
       <div id="file-window-iconsView" v-show="viewIcons" :style="viewObject">
         <span class="demonstration">Click 指示器触发</span>
         <el-carousel trigger="click" height="150px">
-          <el-carousel-item v-for="item in 4" :key="item">
+          <el-carousel-item v-for="item in 5">
             <h3>{{ item }}</h3>
           </el-carousel-item>
         </el-carousel>
       </div>
     </div>
     <div v-show="revision">
-
+      <el-row id="header">
+        <el-col :span="24">
+          <div class="noteTitle" :style="theme">
+            <span class="note-title">Notebook</span>
+            <el-button size="mini" class="title-button" @click="showTools = !showTools"><i class="el-icon-menu"></i></el-button>
+          </div>
+        </el-col>
+      </el-row>
+      <div class="tools" v-show="showTools">
+        <ul class="tools-sidebar ">
+          <li>
+            <el-button class="tools-btn" @click="openTheme" :style="theme">切换主题</el-button>
+          </li>
+          <li>
+            <el-button class="tools-btn" @click="openTable" :style="theme">编辑数据</el-button>
+          </li>
+          <li>
+            <el-button class="tools-btn" @click="showDialog" :style="theme">清空数据</el-button>
+          </li>
+        </ul>
+      </div>
+      <div class="table">
+        <el-row :gutter="20" style="padding-top: 10px">
+          <el-col :span="12" offset="3">
+            <el-input></el-input>
+          </el-col>
+          <el-col :span="4">
+            <el-button>提交</el-button>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>
@@ -117,11 +154,17 @@
   let id = 1000
   import ElRow from 'element-ui/packages/row/src/row'
   import ElPopover from '../../node_modules/element-ui/packages/popover/src/main'
+  import ElButton from '../../node_modules/element-ui/packages/button/src/button'
+  import ElCol from 'element-ui/packages/col/src/col'
+  import ElInput from '../../node_modules/element-ui/packages/input/src/input'
   document.oncontextmenu = function () {
     return false
   }
   export default{
     components: {
+      ElInput,
+      ElCol,
+      ElButton,
       ElPopover,
       ElRow},
     watch: {
@@ -139,6 +182,7 @@
         seenFunction: false,
         original: true,
         revision: false,
+        showTools: false,
         input2: '',
         putMessage: 'Hide Tree',
         putOnMessage: 'Show Tree',
@@ -154,6 +198,9 @@
         treeMessage: 'Files',
         viewObject: {
           width: '68%'
+        },
+        theme: {
+          background: '#58B7FF'
         },
         data: [{
           id: 1,
@@ -193,7 +240,28 @@
         defaultProps: {
           children: 'children',
           label: 'label'
-        }
+        },
+        tableData: [{
+          name: 'chao',
+          date: '1998/9/12',
+          type: 'excel',
+          size: '101KB'
+        }, {
+          name: 'feng',
+          date: '2016/7/29',
+          type: 'avi',
+          size: '15GB'
+        }, {
+          name: 'chen',
+          date: '2017/7/29',
+          type: 'document',
+          size: '101MB'
+        }, {
+          name: 'shi',
+          date: '2013/7/29',
+          type: 'mp3',
+          size: '66MB'
+        }]
       }
     },
     methods: {
@@ -223,11 +291,6 @@
       showFunction () {
         this.seenFunction = !this.seenFunction
       },
-      showFunctions () {
-        if (event.button === 2) {
-          this.seenFunction = !this.seenFunction
-        }
-      },
       tableFlie () {
         this.viewTable = true
         this.viewIcons = false
@@ -248,15 +311,15 @@
       },
       renderContent (h, { node, data, store }) {
         return (
-          <span on-mouseup={ () => this.showFunctions() }>
-      <span>
-        <span>{node.label}</span>
-        </span>
-        <span style="float: right; margin-right: 20px">
-          <el-button size="mini" on-click={ () => this.append(store, data) }>A</el-button>
-        <el-button size="mini" on-click={ () => this.remove(store, data) }>D</el-button>
-        </span>
-        </span>)
+          <span>
+            <span>
+              <span>{node.label}</span>
+            </span>
+            <span style="float: right; margin-right: 20px">
+              <el-button size="mini" on-click={ () => this.append(store, data) }>A</el-button>
+              <el-button size="mini" on-click={ () => this.remove(store, data) }>D</el-button>
+            </span>
+          </span>)
       }
     }
   }
@@ -274,20 +337,13 @@
     position: absolute;
     left: 350px;
     top: 50px;
-    overflow-y: scroll;
     overflow-x: hidden;
-    resize: both;
-  }
-
-  #file-window::-webkit-scrollbar {
-    width: 5px;
-    height: 80%;
-    bottom: 0;
   }
 
   #change{
     position: absolute;
     right: 120px;
+    z-index: 9999;
   }
 
   #file-title{
@@ -307,13 +363,13 @@
     margin-bottom: 0;
   }
 
-  .grid-content {
+  .grid {
     min-width: 40px;
     min-height: 25px;
     line-height: 25px;
   }
 
-  .grid-content:hover{
+  .grid:hover{
     background-color: #f3f1f5;
   }
 
@@ -472,12 +528,8 @@
     background-color: #f3f1f5;
     float: left;
   }
-  .filter-tree div{
-    float: left;
-  }
 
   #tree-title{
-    width: 200px;
     border: none;
     position: absolute;
     left: 280px;
@@ -495,9 +547,6 @@
     position: absolute;
     right: 0;
     bottom: 0;
-  }
-  #file-window-tableView div{
-    height: 30px;
   }
 
   #file-window-iconsView{
@@ -521,5 +570,49 @@
 
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
+  }
+
+  .noteTitle{
+    height: 50px;
+  }
+
+  .note-title{
+    font-size: 30px;
+    line-height: 50px;
+    color: #ffffff;
+  }
+
+  .title-button{
+    position: absolute;
+    top: 16px;
+    right: 290px;
+  }
+
+  .tools{
+    width: 150px;
+    height: 400px;
+    background: rgba(0,0,0,.5);
+    position: absolute;
+    bottom:0;
+    left: 0;
+  }
+
+  .tools li{
+    padding: 20px;
+  }
+
+  .tools-btn{
+    color: white;
+    font-family: inherit;
+    cursor: pointer;
+    font-size: inherit;
+  }
+
+  .table{
+    width: 700px;
+    height: 400px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
   }
 </style>
