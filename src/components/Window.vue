@@ -1,5 +1,5 @@
 <template xmlns="http://www.w3.org/1999/html" xmlns:v-drag="http://www.w3.org/1999/xhtml"
-          xmlns="http://www.w3.org/1999/html">
+           xmlns="http://www.w3.org/1999/html">
   <div id="Window">
     <router-view></router-view>
     <div id="footer" v-if="footerVisible">
@@ -131,6 +131,18 @@
         </div>
         <div id="Mostused">
           <span id="Mostuesd_title">Most used</span>
+          <el-button type="text" @click="showFilemanager" class="Mostused_content" id="Mostuesd_content_File">
+            <img class="Mostused_content_img" src="../img/filemanager.png"/>
+            <p class="Mostused_content_name">Filemanager</p>
+          </el-button>
+          <el-button type="text" @click="showDhtmlxGantt" class="Mostused_content" id="Mostuesd_content_Gantt">
+            <img  class="Mostused_content_img" src="../img/gantt.png"/>
+            <p class="Mostused_content_name">DhtmlxGantt</p>
+          </el-button>
+          <el-button type="text" @click="showDtmlxScheduler" class="Mostused_content" id="Mostuesd_content_Scheduler">
+            <img class="Mostused_content_img" src="../img/scheduler.png"/>
+            <p class="Mostused_content_name">DtmlxScheduler</p>
+          </el-button>
         </div>
         <el-button type="text" @click="signOut" id="SignOut">
           <img src="../img/signout.png"/>
@@ -283,7 +295,7 @@
   import fileManager from './Filemanager.vue'
   import dtmlxScheduler from './DtmlxScheduler.vue'
   import dhtmlxGantt from './DhtmlxGantt.vue'
-
+  import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
   function setTime () {
     var time = new Date()
     var hour = time.getHours()
@@ -301,6 +313,7 @@
     document.getElementById('Date').innerHTML = date
   }
   setInterval(setDate, 1000)
+
   export default{
     data () {
       return {
@@ -331,6 +344,7 @@
       }
     },
     components: {
+      ElButton,
       fileManager,
       dtmlxScheduler,
       dhtmlxGantt
@@ -467,12 +481,15 @@
       },
       showFilemanager () {
         this.seen_filemanager = true
+        this.seen = false
       },
       showDtmlxScheduler () {
         this.seen_dtmlx = true
+        this.seen = false
       },
       showDhtmlxGantt () {
         this.seen_dhtmlxGantt = true
+        this.seen = false
       },
       signOut () {
         this.footerVisible = false
@@ -578,12 +595,11 @@
   }
 
   #Menu{
-    background-color: black;
+    background-color:
     width: 850px;
     height: 380px;
     position: absolute;
     bottom: 41px;
-    opacity: 0.8;
   }
 
   #User_logo{
@@ -604,10 +620,51 @@
     position: absolute;
     top: 80px;
     left: 20px;
+    width: 150px;
+    height: 200px;
   }
 
   #Mostuesd_title{
     color: #8c939d;
+  }
+
+  .Mostused_content{
+    width: 150px;
+    height: 40px;
+    position: relative;
+  }
+
+  .Mostused_content_img{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 5px;
+    left: 0px;
+  }
+
+  .Mostused_content_name{
+    position: absolute;
+    left: 50px;
+    top: 15px;
+    color: white;
+  }
+
+  #Mostuesd_content_File{
+    position: absolute;
+    left: 1px;
+    top: 15px;
+  }
+
+  #Mostuesd_content_Gantt{
+    position: absolute;
+    left: -10px;
+    top: 45px;
+  }
+
+  #Mostuesd_content_Scheduler{
+    position: absolute;
+    left: -10px;
+    top: 75px;
   }
 
   #SignOut{
