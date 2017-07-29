@@ -595,8 +595,8 @@
   }
 
   #Menu{
-    background-color:
-    width: 850px;
+    background-color: rgba(0,0,0,.8);
+    width:850px;
     height: 380px;
     position: absolute;
     bottom: 41px;
