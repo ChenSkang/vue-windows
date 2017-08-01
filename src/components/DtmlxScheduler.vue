@@ -1,6 +1,6 @@
 <template>
   <div id="Scheduler">
-    <div id="scheduler-window" v-show="seen">
+    <div id="scheduler-window" v-show="seen" v-drag>
       <div id="scheduler-title"><img src="../img/window-icon.png"><span>&nbsp;&nbsp;Scheduler</span></div>
       <el-row id="scheduler-show" type="flex" justify="between">
         <el-col :span="8">
@@ -19,16 +19,17 @@
           <el-button id="dmonth" v-on:click="turnOnmTable"><span>Month</span></el-button>
       </el-button-group>
       <el-button-group id="changeDateGroup" class="someButtons">
-        <el-button><i class="el-icon-caret-left"></i></el-button>
-        <el-button><i class="el-icon-caret-right"></i></el-button>
+        <el-button v-on:click="backward()"><i class="el-icon-caret-left"></i></el-button>
+        <el-button v-on:click="forward()"><i class="el-icon-caret-right"></i></el-button>
       </el-button-group>
       <label class="date-show" v-show="ddateShow"><span>{{showDdate}}</span></label>
       <label class="date-show" v-show="wdateShow"><span>{{showWdate}}</span></label>
       <label class="date-show" v-show="mdateShow"><span>{{showMdate}}</span></label>
-      <el-button id="today" class="someButtons" v-on:click="getDate()"><span>Today</span></el-button>
+      <el-button id="today" class="someButtons" v-on:click=""><span>Today</span></el-button>
+      <template id="tableGroup">
       <el-table :data="dtableData" max-height="360" :border="true" style="width:100%" id="ddayTable" class="dateTable" v-show="viewdTable">
         <el-table-column prop="time" label="" width="100%" :resizable="false"></el-table-column>
-        <el-table-column prop="plans" label=""  width=""  :resizable="false"></el-table-column>
+        <el-table-column prop="plans" label="showDdate" width="" :resizable="false"></el-table-column>
       </el-table>
       <el-table :data="wtableData" max-height="360" :border="true" style="width:100%" id="dweekTable" class="dateTable" v-show="viewwTable">
         <el-table-column
@@ -80,7 +81,7 @@
           :resizable="false"
         ></el-table-column>
       </el-table>
-      <el-table :data="mtableData" max-height="360" :border="true" style="width:100%"  id="dmonthTable" class="dateTable" v-show="viewmTable">
+      <el-table :data="mtableData" max-height="360" :border="true" style="width:100%" id="dmonthTable" class="dateTable" v-show="viewmTable">
         <el-table-column
           prop="Monday"
           label="Mon"
@@ -101,7 +102,7 @@
         ></el-table-column>
         <el-table-column
           prop="Thursday"
-          label="Thursy"
+          label="Thu"
           width=""
           :resizable="false"
         ></el-table-column>
@@ -124,17 +125,24 @@
           :resizable="false"
         ></el-table-column>
       </el-table>
-      <div id="newGroup">
+      </template>
+     <!-- elementUI 功能按钮组
+     <div id="newGroup">
         <el-button-group>
         <el-button type="primary" size="mini" icon="edit"></el-button>
         <el-button type="primary" size="mini" icon="check"></el-button>
         <el-button type="primary" size="mini" icon="close"></el-button>
         </el-button-group>
-      </div>
+      </div>-->
   </div>
   </div>
 </template>
 <style>
+  .el-table th{
+    height:20px;
+    text-align:center;
+    padding-bottom:0;
+  }
   .grid-content {
     min-width: 40px;
     min-height: 25px;
@@ -153,30 +161,29 @@
     margin:0 auto;
     top: 53px;
     width:235px;
-    text-align:center;
   }
+  .dateTable{
+    top:70px;
+    font-size:11px;
+    font-weight:normal;
+   }
   .someButtons{
     position: absolute;
     top:45px;
   }
-  .dateTable{
-    top:70px;
-  }
-  #newGroup{
-    top: 50px;
-    left: 60px;
+  #dmonthTable td{
+    height: 54px;
   }
   #Scheduler{
-    font-weight: bolder;
-    font-family: Helvetica Neue;
     user-select: none;
+    -webkit-font-smoothing: antialiased;
   }
   #scheduler-window {
     width: 800px;
     height: 450px;
     background-color: white;
     border: solid 1px black;
-    position: relative;
+    position: absolute;
     top: 80px;
     left: 350px;
   }
@@ -208,7 +215,6 @@
   }
 </style>
 <script>
-    import ElCol from 'element-ui/packages/col/src/col'
     import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
     import ElButtonGroup from '../../node_modules/element-ui/packages/button/src/button-group.vue'
     var myDate = new Date()
@@ -225,8 +231,8 @@
     export default{
       components: {
         ElButtonGroup,
-        ElButton,
-        ElCol},
+        ElButton
+      },
       data: function () {
         return {
           seen: true,
@@ -524,6 +530,15 @@
           this.viewwTable = false
           this.viewmTable = true
         }
+        /* backward (myDate) {
+         for(var n=0; n<(this.myDate.getTime()/(24 * 3600 * 1000)); n++){
+           var now = myDate.getTime () - 24*3600*1000
+         }
+         showdDate = now.get
+       },
+       forward () {
+
+       } */
       }
     }
 </script>
