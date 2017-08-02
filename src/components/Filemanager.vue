@@ -124,19 +124,21 @@
           </div>
         </el-col>
       </el-row>
-      <div class="tools" v-show="showTools">
-        <ul class="tools-sidebar ">
-          <li>
-            <el-button class="tools-btn" @click="openTheme" :style="theme">切换主题</el-button>
-          </li>
-          <li>
-            <el-button class="tools-btn" @click="openTable" :style="theme">编辑数据</el-button>
-          </li>
-          <li>
-            <el-button class="tools-btn" @click="showDialog" :style="theme">清空数据</el-button>
-          </li>
-        </ul>
-      </div>
+      <transition name="tool">
+        <div class="tools" v-if="showTools">
+          <ul class="tools-sidebar ">
+            <li>
+              <el-button class="tools-btn" @click="openTheme" :style="theme">切换主题</el-button>
+            </li>
+            <li>
+              <el-button class="tools-btn" @click="openTable" :style="theme">编辑数据</el-button>
+            </li>
+            <li>
+              <el-button class="tools-btn" @click="showDialog" :style="theme">清空数据</el-button>
+            </li>
+          </ul>
+        </div>
+      </transition>
       <div class="table">
         <el-row :gutter="20" style="padding-top: 10px">
           <el-col :span="12" offset="3">
@@ -144,6 +146,30 @@
           </el-col>
           <el-col :span="4">
             <el-button>提交</el-button>
+          </el-col>
+        </el-row>
+        <el-row style="padding-top: 12px">
+          <el-col :span="13" offset="4">
+            <div class="todo" :style="theme">
+              <span class="todoFont">未完成</span>
+              <div class="close-span"></div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row style="padding-top: 2px">
+          <el-col :span="13" offset="4">
+            <div class="todo" :style="theme">
+              <span class="todoFont">已完成</span>
+              <div class="close-span"></div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row style="padding-top: 2px">
+          <el-col :span="13" offset="4">
+            <div class="todo" :style="theme">
+              <span class="todoFont">已取消</span>
+              <div class="close-span"></div>
+            </div>
           </el-col>
         </el-row>
       </div>
@@ -588,6 +614,13 @@
     right: 290px;
   }
 
+  .tool-enter, .tool-leave-to{
+    transform: translate3d(-100%,0,0);
+  }
+  .tool-enter-active, .tool-leave-active{
+    transition: all .6s ease;
+  }
+
   .tools{
     width: 150px;
     height: 400px;
@@ -614,5 +647,32 @@
     position: absolute;
     right: 0;
     bottom: 0;
+  }
+
+  .todo{
+    width: 100%;
+    height: 44px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #fff;
+  }
+
+  .todoFont{
+    line-height: 44px;
+    float: left;
+    padding-left: 20px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .close-span{
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin: 15px;
+    border-top: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+    transform: rotate(135deg);
+    transition: transform .3s;
+    cursor: pointer;
   }
 </style>
