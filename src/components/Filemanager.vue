@@ -48,9 +48,9 @@
           </el-col>
         </el-row>
         <el-row class="file-button">
-      <span id="tree-title">
-        <p>{{treeMessage}}</p>
-      </span>
+          <span id="tree-title">
+            <p>{{treeMessage}}</p>
+          </span>
           <span id="arrow-left" :title="leftView"><img src="../img/left.png" /></span>
           <span id="arrow-right" :title="rightView"><img src="../img/right.png" /></span>
           <span id="return" :title="upView"><img src="../img/up.png" /></span>
@@ -80,7 +80,7 @@
         <el-row
           v-popover:popover
           id="el-dropdown-link"
-          :title="actions">
+          :title="actions" style="text-align: center">
           <i class="el-icon-setting"></i>
         </el-row>
         <div id="file-window-left" v-show="leftSee">
@@ -336,11 +336,13 @@
     position: absolute;
     left: 10px;
     top: 100px;
+    text-align: center;
   }
 
   .icon-name{
     font-size: 13px;
     height: auto;
+    text-align: center;
   }
 
   .icon:hover{
@@ -368,6 +370,7 @@
     min-width: 40px;
     min-height: 25px;
     line-height: 25px;
+    text-align: center;
   }
 
   .grid:hover{

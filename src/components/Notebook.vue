@@ -29,11 +29,12 @@
 <div>
   <div v-on:dblclick="noteShow">
     <div class="icon" >
-      <img src="../img/filemanager.png" />
+      <img src="../img/gantt.png" />
       <p class="icon-name">Notebook</p >
     </div>
   </div>
-  <div v-if="seen" class="note-book" v-drag>
+
+  <div v-if="seen" class="note-book">
     <el-row id="header">
       <el-col :span="24">
         <div class="noteTitle" :style="theme">
@@ -42,6 +43,7 @@
         </div>
       </el-col>
     </el-row>
+
     <transition name="tool">
       <div class="tools" v-if="showTools">
         <ul class="tools-sidebar ">
@@ -60,39 +62,57 @@
         </ul>
       </div>
     </transition>
+
     <div class="table">
       <el-row :gutter="20" style="padding-top: 10px">
         <el-col :span="12" offset="3">
-          <el-input></el-input>
+          <el-input v-model="message"></el-input>
         </el-col>
         <el-col :span="4">
-          <el-button>提交</el-button>
+          <el-button @click="hand">提交</el-button>
         </el-col>
       </el-row>
-      <el-row style="padding-top: 12px">
-        <el-col :span="13" offset="4">
-          <div class="todo" :style="theme">
-            <span class="todoFont">未完成</span>
-            <div class="close-span"></div>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row style="padding-top: 2px">
-        <el-col :span="13" offset="4">
-          <div class="todo" :style="theme">
-            <span class="todoFont">已完成</span>
-            <div class="close-span"></div>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row style="padding-top: 2px">
-        <el-col :span="13" offset="4">
-          <div class="todo" :style="theme">
-            <span class="todoFont">已取消</span>
-            <div class="close-span"></div>
-          </div>
-        </el-col>
-      </el-row>
+      <div class="todo">
+        <div class="todo-tab" :style="theme" @click="changeCollapse(0,$event)">未完成
+         <span class="close" :style="theme"></span>
+        </div>
+        <div class="todo-box">
+          <ul>
+            <li class="todo-list" v-for="(value, index) in getToDo">
+              <input type="checkbox">
+              {{value}}
+              <button class="cancel-btn">取消</button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="todo-tab" :style="theme" @click="changeCollapse(1,$event)">已完成
+          <span class="close" :style="theme"></span>
+        </div>
+        <div class="todo-box">
+          <ul>
+            <li class="todo-list" v-for="(value, index) in getDone" :key="value">
+              <input type="checkbox">
+              <div>{{value}}</div>
+              <span class="event-time">{{value.time}}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="todo-tab" :style="theme" @click="changeCollapse(2,$event)">已取消
+          <span class="close" :style="theme"></span>
+        </div>
+        <div class="todo-box">
+          <ul>
+            <li class="todo-list" v-for="(value, index) in getCancle">
+              <input type="checkbox">
+              <div class="event-delete">{{value.content}}</div>
+              <button>恢复</button>
+            </li>
+          </ul>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
@@ -104,21 +124,43 @@ export default{
     return {
       seen: false,
       showTools: false,
+      message: '',
       theme: {
         background: '#58B7FF'
-      }
+      },
+      collapse: [
+        {
+          show: true
+        },
+        {
+          show: true
+        },
+        {
+          show: true
+        }
+      ],
+      getToDo: [],
+      getDone: [],
+      getCancel: []
     }
   },
   methods: {
     noteShow () {
       this.seen = true
       this.showTools = false
+    },
+    hand () {
+      this.getToDo.push(this.message)
+      this.message = ''
     }
   }
 }
 </script>
 
 <style scoped>
+  ul li{
+    list-style: none;
+  }
   .note-book{
     width: 800px;
     height: 450px;
@@ -137,11 +179,13 @@ export default{
     position: absolute;
     left: 10px;
     top: 200px;
+    text-align: center;
   }
 
   .icon-name{
     font-size: 13px;
     height: auto;
+    text-align: center;
   }
 
   .icon:hover{
@@ -150,6 +194,7 @@ export default{
 
   .noteTitle{
     height: 50px;
+    text-align: center;
   }
 
   .note-title{
@@ -193,36 +238,83 @@ export default{
 
   .table{
     width: 700px;
-    height: 400px;
     position: absolute;
     right: 0;
-    bottom: 0;
   }
-
   .todo{
-    width: 100%;
-    height: 44px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #fff;
-  }
-
-  .todoFont{
-    line-height: 44px;
+    width: 500px;
+    position: relative;
+    left: 50px;
+    margin-top: 20px;
     float: left;
-    padding-left: 20px;
+   }
+  .todo-tab{
+    position: relative;
+    height: 44px;
+    width: 500px;
+    padding-left: 15px;
+    line-height: 44px;
+    border-bottom: 1px solid #fff;
+    box-sizing: border-box;
     color: #fff;
     cursor: pointer;
   }
 
-  .close-span{
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
     width: 10px;
     height: 10px;
-    float: right;
-    margin: 15px;
-    border-top: 2px solid #ffffff;
-    border-right: 2px solid #ffffff;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
     transform: rotate(135deg);
     transition: transform .3s;
-    cursor: pointer;
+  }
+
+  .todo-box{
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    transition: height .3s;
+  }
+  .todo-list{
+    position: relative;
+    min-height: 44px;
+    line-height: 25px;
+    padding: 10px 100px 10px 50px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+  }
+  input[type=checkbox] {
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    width: 20px;
+    height: 20px;
+  }
+  .cancel-btn {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    width: 50px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #c0ccda;
+    color: #666;
+    font-size: 12px;
+  }
+  .event-time {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    line-height: 44px;
+    font-size: 12px;
+    color: #aaa;
+  }
+  .event-delete {
+    text-decoration: line-through;
+    color: #999;
   }
 </style>
