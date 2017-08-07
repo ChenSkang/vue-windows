@@ -26,180 +26,188 @@
 *     Initial: 2017/07/19       Chen Shuaikang
 */
 <template>
-  <div id="file-window" v-show="seen" v-drag>
-    <el-button @click="change" id="change" size="mini">Change</el-button>
-    <div v-show="original">
-      <el-row id="file-title"><img src="../img/window-icon.png"/> Filemanager</el-row>
-      <el-row id="file-show" type="flex" justify="between">
-        <el-col :span="8">
-          <div class="grid" @click="closeWindow"><img src="../img/hide_button.png" /></div>
-        </el-col>
-        <el-col :span="8">
-          <div class="grid"><img src="../img/resize_button.png" /></div>
-        </el-col>
-        <el-col :span="8">
-          <div class="grid closed" @click="closeWindow"><img src="../img/close_button.png" /></div>
-        </el-col>
-      </el-row>
-      <el-row class="file-button">
+  <div>
+    <div v-on:dblclick="showWindow">
+      <div class="icon" >
+        <img src="../img/filemanager.png" />
+        <p class="icon-name">Filemanager</p >
+      </div>
+    </div>
+    <div id="file-window" v-show="seen" v-drag>
+      <el-button @click="change" id="change" size="mini">Change</el-button>
+      <div v-show="original">
+        <el-row id="file-title"><img src="../img/window-icon.png"/> Filemanager</el-row>
+        <el-row id="file-show" type="flex" justify="between">
+          <el-col :span="8">
+            <div class="grid" @click="closeWindow"><img src="../img/hide_button.png" /></div>
+          </el-col>
+          <el-col :span="8">
+            <div class="grid"><img src="../img/resize_button.png" /></div>
+          </el-col>
+          <el-col :span="8">
+            <div class="grid closed" @click="closeWindow"><img src="../img/close_button.png" /></div>
+          </el-col>
+        </el-row>
+        <el-row class="file-button">
       <span id="tree-title">
         <p>{{treeMessage}}</p>
       </span>
-        <span id="arrow-left" :title="leftView"><img src="../img/left.png" /></span>
-        <span id="arrow-right" :title="rightView"><img src="../img/right.png" /></span>
-        <span id="return" :title="upView"><img src="../img/up.png" /></span>
-        <span id="icons-view" :title="iconsView" @click="iconsFile"><img src="../img/ViewGallery.png" /></span>
-        <span id="table-view" :title="tableView" @click="tableFlie"><img src="../img/Viewlist.png" /></span>
-      </el-row>
-      <el-input
-        icon="search"
-        v-model="filterText"
-        class="search"
-        size="small"
-        rows="1">
-      </el-input>
-      <el-popover
-        ref="popover"
-        placement="bottom-start"
-        width="180"
-        trigger="click">
-        <el-row @click="copy" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Copy</el-row>
-        <el-row @click="cut" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Cut</el-row>
-        <el-row @click="paste" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Paste</el-row>
-        <el-row @click="create-file" class="createFolder fileFunction"><i class="el-icon-document"></i>&nbsp;Create Folder</el-row>
-        <el-row @click="cut-off" class="fileFunction"><i class="el-icon-delete2"></i>&nbsp;Delete</el-row>
-        <el-row @click="rename" class="fileFunction"><i class="el-icon-edit"></i>&nbsp;Rename</el-row>
-        <el-row @click="upload" class="fileFunction"><i class="el-icon-upload2"></i>&nbsp;Upload</el-row>
-      </el-popover>
-      <el-row
-        v-popover:popover
-        id="el-dropdown-link"
-        :title="actions">
-        <i class="el-icon-setting"></i>
-      </el-row>
-      <div id="file-window-left" v-show="leftSee">
-        <el-row id="tree-manager">
-          <div id="put" @click="letleftsee"  v-show="leftSee" :title="putMessage"><img src="../img/put.png" /></div>
-          <div id="expand" :title="expandTree"><img src="../img/window-icon.png" /></div>
-          <div id="collapse" :title="collapseTree"><img src="../img/window-icon.png" /></div>
+          <span id="arrow-left" :title="leftView"><img src="../img/left.png" /></span>
+          <span id="arrow-right" :title="rightView"><img src="../img/right.png" /></span>
+          <span id="return" :title="upView"><img src="../img/up.png" /></span>
+          <span id="icons-view" :title="iconsView" @click="iconsFile"><img src="../img/ViewGallery.png" /></span>
+          <span id="table-view" :title="tableView" @click="tableFlie"><img src="../img/Viewlist.png" /></span>
         </el-row>
-        <el-row id="tree">
-          <el-tree
-            class="filter-tree"
-            :data="data"
-            :props="defaultProps"
-            indent="14"
-            node-key="id"
-            :filter-node-method="filterNode"
-            :render-content="renderContent"
-            ref="tree2">
-          </el-tree>
+        <el-input
+          icon="search"
+          v-model="filterText"
+          class="search"
+          size="small"
+          rows="1">
+        </el-input>
+        <el-popover
+          ref="popover"
+          placement="bottom-start"
+          width="180"
+          trigger="click">
+          <el-row @click="copy" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Copy</el-row>
+          <el-row @click="cut" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Cut</el-row>
+          <el-row @click="paste" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Paste</el-row>
+          <el-row @click="create-file" class="createFolder fileFunction"><i class="el-icon-document"></i>&nbsp;Create Folder</el-row>
+          <el-row @click="cut-off" class="fileFunction"><i class="el-icon-delete2"></i>&nbsp;Delete</el-row>
+          <el-row @click="rename" class="fileFunction"><i class="el-icon-edit"></i>&nbsp;Rename</el-row>
+          <el-row @click="upload" class="fileFunction"><i class="el-icon-upload2"></i>&nbsp;Upload</el-row>
+        </el-popover>
+        <el-row
+          v-popover:popover
+          id="el-dropdown-link"
+          :title="actions">
+          <i class="el-icon-setting"></i>
         </el-row>
-      </div>
-      <div id="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px;"/></div>
-      <div id="file-window-tableView" v-show="viewTable" :style="viewObject">
-        <el-table
-          :data="tableData"
-          border
-          highlight-current-row
-          fit="false"
-          style="width: 100%">
-          <el-table-column
-            label="Name"
-            width="150">
-            <template scope="scope">
-              <el-icon name="document"></el-icon>
-              <span style="margin-left: 10px">{{ scope.row.name }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="Date"
-            width="175">
-            <template scope="scope">
-              <el-icon name="time"></el-icon>
-              <span style="margin-left: 10px">{{ scope.row.date }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="type"
-            label="Type"
-            width="100">
-          </el-table-column>
-          <el-table-column
-            prop="size"
-            label="Size"
-            sortable
-            width="100">
-          </el-table-column>
-        </el-table>
-      </div>
-      <div id="file-window-iconsView" v-show="viewIcons" :style="viewObject">
-        <span class="demonstration">Click 指示器触发</span>
-        <el-carousel trigger="click" height="150px">
-          <el-carousel-item v-for="item in 5">
-            <h3>{{ item }}</h3>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </div>
-    <div v-show="revision">
-      <el-row id="header">
-        <el-col :span="24">
-          <div class="noteTitle" :style="theme">
-            <span class="note-title">Notebook</span>
-            <el-button size="mini" class="title-button" @click="showTools = !showTools"><i class="el-icon-menu"></i></el-button>
-            <el-button @click="change" id="change" size="mini">Change</el-button>
-          </div>
-        </el-col>
-      </el-row>
-      <transition name="tool">
-        <div class="tools" v-if="showTools">
-          <ul class="tools-sidebar ">
-            <li>
-              <el-button class="tools-btn" @click="openTheme" :style="theme">切换主题</el-button>
-            </li>
-            <li>
-              <el-button class="tools-btn" @click="openTable" :style="theme">编辑数据</el-button>
-            </li>
-            <li>
-              <el-button class="tools-btn" @click="showDialog" :style="theme">清空数据</el-button>
-            </li>
-          </ul>
+        <div id="file-window-left" v-show="leftSee">
+          <el-row id="tree-manager">
+            <div id="put" @click="letleftsee"  v-show="leftSee" :title="putMessage"><img src="../img/put.png" /></div>
+            <div id="expand" :title="expandTree"><img src="../img/window-icon.png" /></div>
+            <div id="collapse" :title="collapseTree"><img src="../img/window-icon.png" /></div>
+          </el-row>
+          <el-row id="tree">
+            <el-tree
+              class="filter-tree"
+              :data="data"
+              :props="defaultProps"
+              indent="14"
+              node-key="id"
+              :filter-node-method="filterNode"
+              :render-content="renderContent"
+              ref="tree2">
+            </el-tree>
+          </el-row>
         </div>
-      </transition>
-      <div class="table">
-        <el-row :gutter="20" style="padding-top: 10px">
-          <el-col :span="12" offset="3">
-            <el-input></el-input>
-          </el-col>
-          <el-col :span="4">
-            <el-button>提交</el-button>
-          </el-col>
-        </el-row>
-        <el-row style="padding-top: 12px">
-          <el-col :span="13" offset="4">
-            <div class="todo" :style="theme">
-              <span class="todoFont">未完成</span>
-              <div class="close-span"></div>
+        <div id="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px;"/></div>
+        <div id="file-window-tableView" v-show="viewTable" :style="viewObject">
+          <el-table
+            :data="tableData"
+            border
+            highlight-current-row
+            fit="false"
+            style="width: 100%">
+            <el-table-column
+              label="Name"
+              width="150">
+              <template scope="scope">
+                <el-icon name="document"></el-icon>
+                <span style="margin-left: 10px">{{ scope.row.name }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="Date"
+              width="175">
+              <template scope="scope">
+                <el-icon name="time"></el-icon>
+                <span style="margin-left: 10px">{{ scope.row.date }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="type"
+              label="Type"
+              width="100">
+            </el-table-column>
+            <el-table-column
+              prop="size"
+              label="Size"
+              sortable
+              width="100">
+            </el-table-column>
+          </el-table>
+        </div>
+        <div id="file-window-iconsView" v-show="viewIcons" :style="viewObject">
+          <span class="demonstration">Click 指示器触发</span>
+          <el-carousel trigger="click" height="150px">
+            <el-carousel-item v-for="item in 5">
+              <h3>{{ item }}</h3>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </div>
+      <div v-show="revision">
+        <el-row id="header">
+          <el-col :span="24">
+            <div class="noteTitle" :style="theme">
+              <span class="note-title">Notebook</span>
+              <el-button size="mini" class="title-button" @click="showTools = !showTools"><i class="el-icon-menu"></i></el-button>
+              <el-button @click="change" id="change" size="mini">Change</el-button>
             </div>
           </el-col>
         </el-row>
-        <el-row style="padding-top: 2px">
-          <el-col :span="13" offset="4">
-            <div class="todo" :style="theme">
-              <span class="todoFont">已完成</span>
-              <div class="close-span"></div>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row style="padding-top: 2px">
-          <el-col :span="13" offset="4">
-            <div class="todo" :style="theme">
-              <span class="todoFont">已取消</span>
-              <div class="close-span"></div>
-            </div>
-          </el-col>
-        </el-row>
+        <transition name="tool">
+          <div class="tools" v-if="showTools">
+            <ul class="tools-sidebar ">
+              <li>
+                <el-button class="tools-btn" @click="openTheme" :style="theme">切换主题</el-button>
+              </li>
+              <li>
+                <el-button class="tools-btn" @click="openTable" :style="theme">编辑数据</el-button>
+              </li>
+              <li>
+                <el-button class="tools-btn" @click="showDialog" :style="theme">清空数据</el-button>
+              </li>
+            </ul>
+          </div>
+        </transition>
+        <div class="table">
+          <el-row :gutter="20" style="padding-top: 10px">
+            <el-col :span="12" offset="3">
+              <el-input></el-input>
+            </el-col>
+            <el-col :span="4">
+              <el-button>提交</el-button>
+            </el-col>
+          </el-row>
+          <el-row style="padding-top: 12px">
+            <el-col :span="13" offset="4">
+              <div class="todo" :style="theme">
+                <span class="todoFont">未完成</span>
+                <div class="close-span"></div>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row style="padding-top: 2px">
+            <el-col :span="13" offset="4">
+              <div class="todo" :style="theme">
+                <span class="todoFont">已完成</span>
+                <div class="close-span"></div>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row style="padding-top: 2px">
+            <el-col :span="13" offset="4">
+              <div class="todo" :style="theme">
+                <span class="todoFont">已取消</span>
+                <div class="close-span"></div>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
       </div>
     </div>
   </div>
@@ -228,7 +236,7 @@
     },
     data () {
       return {
-        seen: true,
+        seen: false,
         leftSee: true,
         putOnSee: false,
         viewTable: true,
@@ -384,14 +392,30 @@
     width: 800px;
     height: 450px;
     background-color: white;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     border: solid 1px #6b6a6c;
     position: absolute;
     left: 350px;
-    top: 50px;
+    top: 100px;
     overflow-x: hidden;
+  }
+
+  .icon{
+    width: 81px;
+    height: 81px;
+    position: absolute;
+    left: 10px;
+    top: 100px;
+  }
+
+  .icon-name{
+    font-size: 13px;
+    height: auto;
+    color: #FFFFFF;
+  }
+
+  .icon:hover{
+    background: url("../img/icon_bg_full.png");
   }
 
   #change{
