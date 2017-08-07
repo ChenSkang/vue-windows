@@ -148,6 +148,7 @@
           <div class="noteTitle" :style="theme">
             <span class="note-title">Notebook</span>
             <el-button size="mini" class="title-button" @click="showTools = !showTools"><i class="el-icon-menu"></i></el-button>
+            <el-button @click="change" id="change" size="mini">Change</el-button>
           </div>
         </el-col>
       </el-row>
@@ -396,7 +397,6 @@
   #change{
     position: absolute;
     right: 120px;
-    z-index: 9999;
   }
 
   #file-title{
