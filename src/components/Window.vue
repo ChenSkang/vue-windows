@@ -38,6 +38,7 @@
       <div id="Date"></div>
     </div>
     <file-manager></file-manager>
+    <notebook></notebook>
     <transition name="el-fade-in-linear">
       <div id="WindowsMenu" v-show="seen">
       <div id="Menu" >
@@ -290,6 +291,7 @@
 <script>
   import fileManager from './Filemanager.vue'
   import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
+  import Notebook from './Notebook.vue'
   function setTime () {
     var time = new Date()
     var hour = time.getHours()
@@ -333,7 +335,8 @@
     },
     components: {
       ElButton,
-      fileManager
+      fileManager,
+      Notebook
     },
     methods: {
       showWindow () {
