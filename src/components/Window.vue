@@ -37,8 +37,8 @@
       <div id="Time"></div>
       <div id="Date"></div>
     </div>
-    <file-manager></file-manager>
-    <notebook></notebook>
+    <file-manager v-show="showFile"></file-manager>
+    <notebook v-show="showNote"></notebook>
     <transition name="el-fade-in-linear">
       <div id="WindowsMenu" v-show="seen">
       <div id="Menu" >
@@ -330,7 +330,9 @@
         seen_travel: false,
         footerVisible: true,
         signinVisible: false,
-        Zindex: 10
+        Zindex: 10,
+        showFile: true,
+        showNote: true
       }
     },
     components: {
@@ -475,6 +477,8 @@
         this.dtmlVisible = false
         this.seen = false
         this.signinVisible = true
+        this.showFile = false
+        this.showNote = false
       },
       signIn () {
         this.footerVisible = true
@@ -482,6 +486,8 @@
         this.fileVisible = true
         this.dtmlVisible = true
         this.signinVisible = false
+        this.showFile = true
+        this.showNote = true
       }
     }
   }
