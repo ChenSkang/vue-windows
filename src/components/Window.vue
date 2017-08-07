@@ -37,13 +37,7 @@
       <div id="Time"></div>
       <div id="Date"></div>
     </div>
-    <div id="Filemanager" v-on:dblclick="showFilemanager" v-if="fileVisible">
-      <div id="file-icon" class="icon" >
-        <img src="../img/filemanager.png">
-        <p class="icon-name">Filemanager</p>
-        <file-manager v-if="seen_filemanager"></file-manager>
-      </div>
-    </div>
+    <file-manager></file-manager>
     <transition name="el-fade-in-linear">
       <div id="WindowsMenu" v-show="seen">
       <div id="Menu" >
@@ -332,13 +326,7 @@
         seen_store: false,
         seen_money: false,
         seen_travel: false,
-        seen_filemanager: false,
-        seen_dtmlx: false,
-        seen_dhtmlxGantt: false,
         footerVisible: true,
-        dhtmlVisible: true,
-        fileVisible: true,
-        dtmlVisible: true,
         signinVisible: false,
         Zindex: 10
       }
@@ -477,10 +465,6 @@
       closeTravel () {
         this.seen_travel = false
       },
-      showFilemanager () {
-        this.seen_filemanager = true
-        this.seen = false
-      },
       signOut () {
         this.footerVisible = false
         this.dhtmlVisible = false
@@ -516,40 +500,6 @@
     -ms-user-select: none;
     -moz-user-select: none;
     user-select: none;
-  }
-
-  #file-icon{
-    width: 81px;
-    height: 81px;
-    position: absolute;
-    left: 10px;
-    top: 100px;
-  }
-
-  #Dhtml-icon{
-    width: 81px;
-    height: 81px;
-    position: absolute;
-    left: 10px;
-    top: 200px;
-  }
-
-  #Dtml-icon{
-    width: 81px;
-    height: 81px;
-    position: absolute;
-    left: 10px;
-    top: 300px;
-  }
-
-  .icon-name{
-    font-size: 13px;
-    height: auto;
-    color: #FFFFFF;
-  }
-
-  .icon:hover{
-    background: url("../img/icon_bg_full.png");
   }
 
   #footer{
@@ -645,28 +595,10 @@
     top: 15px;
   }
 
-  #Mostuesd_content_Gantt{
-    position: absolute;
-    left: -10px;
-    top: 45px;
-  }
-
-  #Mostuesd_content_Scheduler{
-    position: absolute;
-    left: -10px;
-    top: 75px;
-  }
-
   #SignOut{
     position: absolute;
     top: 330px;
     left: 20px;
-  }
-
-  #FullScreen{
-    position: absolute;
-    top: 300px;
-    left: 9px;
   }
 
   .buttonText{
