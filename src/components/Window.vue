@@ -1,7 +1,7 @@
 /*
 * MIT License
 *
-* Copyright (c) 2017 Shichao Inc.
+* Copyright (c) 2017 TechCatsLab
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -37,26 +37,12 @@
       <div id="Time"></div>
       <div id="Date"></div>
     </div>
-    <div id="DhtmlxGantt" v-on:dblclick="showDhtmlxGantt" v-if="dhtmlVisible">
-      <div id="Dhtml-icon" class="icon">
-        <img src="../img/gantt.png">
-        <p class="icon-name">DhtmlxGantt</p>
-        <dhtmlx-gantt v-if="seen_dhtmlxGantt"></dhtmlx-gantt>
-      </div>
-    </div>
     <div id="Filemanager" v-on:dblclick="showFilemanager" v-if="fileVisible">
       <div id="file-icon" class="icon" >
         <img src="../img/filemanager.png">
         <p class="icon-name">Filemanager</p>
         <file-manager v-if="seen_filemanager"></file-manager>
       </div>
-    </div>
-    <div id="DtmlScheduler" v-on:dblclick="showDtmlxScheduler" v-if="dtmlVisible">
-      <div id="Dtml-icon" class="icon">
-        <img src="../img/scheduler.png">
-        <p class="icon-name">Dtmlx<br>Scheduler</p>
-      </div>
-      <dtmlx-scheduler v-if="seen_dtmlx"></dtmlx-scheduler>
     </div>
     <transition name="el-fade-in-linear">
       <div id="WindowsMenu" v-show="seen">
@@ -163,27 +149,15 @@
             <img class="Mostused_content_img" src="../img/filemanager.png"/>
             <p class="Mostused_content_name">Filemanager</p>
           </el-button>
-          <el-button type="text" @click="showDhtmlxGantt" class="Mostused_content" id="Mostuesd_content_Gantt">
-            <img  class="Mostused_content_img" src="../img/gantt.png"/>
-            <p class="Mostused_content_name">DhtmlxGantt</p>
-          </el-button>
-          <el-button type="text" @click="showDtmlxScheduler" class="Mostused_content" id="Mostuesd_content_Scheduler">
-            <img class="Mostused_content_img" src="../img/scheduler.png"/>
-            <p class="Mostused_content_name">DtmlxScheduler</p>
-          </el-button>
         </div>
         <el-button type="text" @click="signOut" id="SignOut">
           <img src="../img/signout.png"/>
           <span class="buttonText">sign out</span>
         </el-button>
-        <el-button type="text" @click="requestFullscreen('Window')" id="FullScreen">
-          <img src="../img/fullscreen.png"/>
-          <span class="buttonText">Full screen</span>
-        </el-button>
       </div>
     </div>
     </transition>
-    <div id="Calendar_content" v-show="seen_calendar" v-drag>
+    <div id="Calendar_content" class="content" v-show="seen_calendar" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeCalendar">
           <img class="close_png" src="../img/close_button.png" />
@@ -192,7 +166,7 @@
       </div>
       <img class="content_body" id="content" src="../img/calendar.png" />
     </div>
-    <div id="Email_content" v-show="seen_email" v-drag>
+    <div id="Email_content" class="content" v-show="seen_email" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeEmail">
           <img class="close_png" src="../img/close_button.png" />
@@ -201,7 +175,7 @@
       </div>
       <img class="content_body" src="../img/20.png" />
     </div>
-    <div id="Photos_content" v-show="seen_photos" v-drag>
+    <div id="Photos_content" class="content" v-show="seen_photos" v-drag>
       <div class="title">
         <div class="close" v-on:click="closePhotos">
           <img class="close_png" src="../img/close_button.png" />
@@ -210,7 +184,7 @@
         <img class="content_body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Friend_content" v-show="seen_friend" v-drag>
+    <div id="Friend_content" class="content" v-show="seen_friend" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeFriend">
           <img class="close_png" src="../img/close_button.png"/>
@@ -219,7 +193,7 @@
       </div>
       <img class="content_body" src="../img/34.png"/>
     </div>
-    <div id="Install_content" v-show="seen_install" v-drag>
+    <div id="Install_content" class="content" v-show="seen_install" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeInstall">
           <img class="close_png" src="../img/close_button.png"/>
@@ -228,7 +202,7 @@
       </div>
       <img class="content_body" src="../img/06.png"/>
     </div>
-    <div id="Video_content" v-show="seen_video" v-drag>
+    <div id="Video_content" class="content" v-show="seen_video" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeVideo">
           <img class="close_png" src="../img/close_button.png"/>
@@ -238,7 +212,7 @@
         <img class="content_body" src="../img/video.png"/>
       </div>
     </div>
-    <div id="Game_content" v-show="seen_game" v-drag>
+    <div id="Game_content" class="content" v-show="seen_game" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeGame">
           <img class="close_png" src="../img/close_button.png"/>
@@ -248,7 +222,7 @@
         <img class="content_body" src="../img/games.png"/>
       </div>
     </div>
-    <div id="Music_content" v-show="seen_music" v-drag>
+    <div id="Music_content" class="content" v-show="seen_music" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeMusic">
           <img class="close_png" src="../img/close_button.png"/>
@@ -257,7 +231,7 @@
         </div>
       <img class="content_body" src="../img/music.png"/>
     </div>
-    <div id="Camera_content" v-show="seen_camera" v-drag>
+    <div id="Camera_content" class="content" v-show="seen_camera" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeCamera">
           <img class="close_png" src="../img/close_button.png"/>
@@ -266,7 +240,7 @@
         <img class="content_body" src="../img/camera.png"/>
       </div>
     </div>
-    <div id="Sports_content" v-show="seen_sports" v-drag>
+    <div id="Sports_content" class="content" v-show="seen_sports" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeSports">
           <img class="close_png" src="../img/close_button.png" />
@@ -275,7 +249,7 @@
         <img class="content_body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="News_content" v-show="seen_news" v-drag>
+    <div id="News_content" class="content" v-show="seen_news" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeNews">
           <img class="close_png" src="../img/close_button.png" />
@@ -284,7 +258,7 @@
         <img class="content_body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Store_content" v-show="seen_store" v-drag>
+    <div id="Store_content" class="content" v-show="seen_store" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeStore">
           <img class="close_png" src="../img/close_button.png"/>
@@ -293,7 +267,7 @@
         <img class="content_body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Money_content" v-show="seen_money" v-drag>
+    <div id="Money_content" class="content" v-show="seen_money" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeMoney">
           <img class="close_png" src="../img/close_button.png"/>
@@ -302,7 +276,7 @@
       </div>
         <img class="content_body" src="../img/graph.png"/>
     </div>
-    <div id="Travel_content" v-show="seen_travel" v-drag>
+    <div id="Travel_content" class="content" v-show="seen_travel" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeTravel">
           <img class="close_png" src="../img/close_button.png"/>
@@ -321,8 +295,6 @@
 
 <script>
   import fileManager from './Filemanager.vue'
-  import dtmlxScheduler from './DtmlxScheduler.vue'
-  import dhtmlxGantt from './DhtmlxGantt.vue'
   import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
   function setTime () {
     var time = new Date()
@@ -373,9 +345,7 @@
     },
     components: {
       ElButton,
-      fileManager,
-      dtmlxScheduler,
-      dhtmlxGantt
+      fileManager
     },
     methods: {
       showWindow () {
@@ -509,14 +479,6 @@
       },
       showFilemanager () {
         this.seen_filemanager = true
-        this.seen = false
-      },
-      showDtmlxScheduler () {
-        this.seen_dtmlx = true
-        this.seen = false
-      },
-      showDhtmlxGantt () {
-        this.seen_dhtmlxGantt = true
         this.seen = false
       },
       signOut () {
@@ -1053,19 +1015,25 @@
     background-color: #00b1f0;
   }
 
+  .content{
+    position: absolute;
+    top: 100px;
+    left: 400px;
+  }
+
   #UserLogo{
     border-radius: 100px;
     width: 70px;
     height: 70px;
     position: absolute;
     top: 250px;
-    left: 850px;
+    left: 750px;
   }
 
   #UserName{
     position: absolute;
     top: 340px;
-    left: 835px;
+    left: 735px;
     color: white;
     font-size: 20px;
   }
@@ -1073,11 +1041,6 @@
   #SigninButton{
     position: absolute;
     top: 390px;
-    left: 850px;
-  }
-
-  #Three{
-    width: 1000px;
-    height: 1000px;
+    left: 750px;
   }
 </style>

@@ -3,7 +3,7 @@
 /*
 * MIT License
 *
-* Copyright (c) 2017 Shichao Inc.
+* Copyright (c) 2017 TechCatsLab
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -34,15 +34,11 @@ import router from './router'
 import ElementUI from 'element-ui'
 import fileManager from './components/Filemanager'
 import 'element-ui/lib/theme-default/index.css'
-import dtmlxScheduler from './components/DtmlxScheduler.vue'
-import dhtmlxGantt from './components/DhtmlxGantt.vue'
 import vueDrag from 'vue-dragging'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(fileManager)
-Vue.use(dtmlxScheduler)
 Vue.use(vueDrag)
-Vue.use(dhtmlxGantt)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
