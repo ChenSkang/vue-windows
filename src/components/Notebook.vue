@@ -94,10 +94,11 @@
         </div>
         <div class="todo-box" v-show="collapse[0].show">
           <ul>
-            <li class="todo-list" v-for="(value, index) in getToDo">
-              <input type="checkbox" @click="haveDone(index)">
+            <li class="todo-list" v-for="(value, index) in getToDo" @dblclick="edit(index)">
+              <input type="checkbox" @click="haveDone(index)"/>
               {{value}}
               <button class="cancel-btn" @click="cancelDone(index)">取消</button>
+              <input v-if="editInput" v-model="editValue" @keyup.enter="edited(index)"/>
             </li>
           </ul>
         </div>
@@ -141,6 +142,8 @@ export default{
       showTools: false,
       message: '',
       openTheme: false,
+      editInput: false,
+      editValue: '',
       theme: {
         background: '#00B0F0'
       },
@@ -194,6 +197,15 @@ export default{
     },
     changeCollapse (num) {
       this.collapse[0] = !this.collapse[num]
+    },
+    edit (index) {
+      this.editInput = true
+      this.editValue = this.getToDo[index]
+      this.getToDo[index] = ''
+    },
+    edited (index) {
+      this.editInput = false
+      this.getToDo[index] = this.editValue
     },
     haveDone (index) {
       let str = this.getToDo[index]
