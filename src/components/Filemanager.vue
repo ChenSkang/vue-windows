@@ -33,10 +33,10 @@
         <p class="icon-name">Filemanager</p >
       </div>
     </div>
-    <div id="file-window" v-show="seen" v-drag>
+    <div class="file-window" v-show="seen" v-drag>
       <div>
-        <el-row id="file-title"><img src="../img/window-icon.png"/> Filemanager</el-row>
-        <el-row id="file-show" type="flex" justify="between">
+        <el-row class="file-title"><img src="../img/window-icon.png"/> Filemanager</el-row>
+        <el-row class="file-show" type="flex" justify="between">
           <el-col :span="8">
             <div class="grid" @click="closeWindow"><img src="../img/hide_button.png" /></div>
           </el-col>
@@ -48,14 +48,14 @@
           </el-col>
         </el-row>
         <el-row class="file-button">
-          <span id="tree-title">
+          <span class="tree-title">
             <p>{{treeMessage}}</p>
           </span>
-          <span id="arrow-left" :title="leftView"><img src="../img/left.png" /></span>
-          <span id="arrow-right" :title="rightView"><img src="../img/right.png" /></span>
-          <span id="return" :title="upView"><img src="../img/up.png" /></span>
-          <span id="icons-view" :title="iconsView" @click="iconsFile"><img src="../img/ViewGallery.png" /></span>
-          <span id="table-view" :title="tableView" @click="tableFlie"><img src="../img/Viewlist.png" /></span>
+          <span class="arrow-left" :title="leftView"><img src="../img/left.png" /></span>
+          <span class="arrow-right" :title="rightView"><img src="../img/right.png" /></span>
+          <span class="return" :title="upView"><img src="../img/up.png" /></span>
+          <span class="icons-view" :title="iconsView" @click="iconsFile"><img src="../img/ViewGallery.png" /></span>
+          <span class="table-view" :title="tableView" @click="tableFlie"><img src="../img/Viewlist.png" /></span>
         </el-row>
         <el-input
           icon="search"
@@ -79,17 +79,15 @@
         </el-popover>
         <el-row
           v-popover:popover
-          id="el-dropdown-link"
+          class="el-dropdown-link"
           :title="actions" style="text-align: center">
           <i class="el-icon-setting"></i>
         </el-row>
-        <div id="file-window-left" v-show="leftSee">
-          <el-row id="tree-manager">
-            <div id="put" @click="letleftsee"  v-show="leftSee" :title="putMessage"><img src="../img/put.png" /></div>
-            <div id="expand" :title="expandTree"><img src="../img/window-icon.png" /></div>
-            <div id="collapse" :title="collapseTree"><img src="../img/window-icon.png" /></div>
+        <div class="file-window-left" v-show="leftSee">
+          <el-row class="tree-manager">
+            <div class="put" @click="letleftsee"  v-show="leftSee" :title="putMessage"><img src="../img/put.png" /></div>
           </el-row>
-          <el-row id="tree">
+          <el-row class="tree">
             <el-tree
               class="filter-tree"
               :data="data"
@@ -102,8 +100,8 @@
             </el-tree>
           </el-row>
         </div>
-        <div id="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px;"/></div>
-        <div id="file-window-tableView" v-show="viewTable" :style="viewObject">
+        <div class="puton" v-on:click="letleftsee" v-show="putOnSee" :title="putOnMessage"><img src="../img/puton.png" style="width: 13px; height: 13px;"/></div>
+        <div class="file-window-tableView" v-show="viewTable" :style="viewObject">
           <el-table
             :data="tableData"
             border
@@ -139,7 +137,7 @@
             </el-table-column>
           </el-table>
         </div>
-        <div id="file-window-iconsView" v-show="viewIcons" :style="viewObject">
+        <div class="file-window-iconsView" v-show="viewIcons" :style="viewObject">
           <span class="demonstration">Click 指示器触发</span>
           <el-carousel trigger="click" height="150px">
             <el-carousel-item v-for="item in 5">
@@ -191,8 +189,6 @@
         leftView: 'Back',
         rightView: 'Forward',
         upView: 'Level up',
-        expandTree: 'Expand Tree',
-        collapseTree: 'Collapse Tree',
         filterText: '',
         treeMessage: 'Files',
         viewObject: {
@@ -318,7 +314,7 @@
 </script>
 
 <style scoped>
-  #file-window{
+  .file-window{
     width: 800px;
     height: 450px;
     background-color: white;
@@ -349,7 +345,7 @@
     background: url("../img/icon_bg_full.png");
   }
 
-  #file-title{
+  .file-title{
     height: auto;
     font-size: 13px;
     position: absolute;
@@ -357,7 +353,7 @@
     top: 5px;
   }
 
-  #file-show{
+  .file-show{
     position: absolute;
     right: 0;
     top: 0;
@@ -402,7 +398,7 @@
     height: 18px;
   }
 
-  #el-dropdown-link{
+  .el-dropdown-link{
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -414,11 +410,11 @@
     left: 10px;
   }
 
-  #arrow-left{ position: absolute; left: 142px; }
-  #arrow-right{ position: absolute; left: 174px; }
-  #return{ position: absolute; left: 220px; }
-  #icons-view{ position: absolute; right: 40px }
-  #table-view{ position: absolute; right: 8px; }
+  .arrow-left{ position: absolute; left: 142px; }
+  .arrow-right{ position: absolute; left: 174px; }
+  .return{ position: absolute; left: 220px; }
+  .icons-view{ position: absolute; right: 40px }
+  .table-view{ position: absolute; right: 8px; }
 
   .fileFunction{
     height: 35px;
@@ -440,7 +436,7 @@
     cursor: pointer;
   }
 
-  #file-window-left{
+  .file-window-left{
     background-color: #f3f1f5;
     border: solid 1px gainsboro;
     height: 370px;
@@ -449,7 +445,7 @@
     bottom: 0;
   }
 
-  #tree-manager{
+  .tree-manager{
     border-bottom: solid 1px gainsboro;
     width: 250px;
     height: 30px;
@@ -462,16 +458,21 @@
     height: 13px;
   }
 
-  #put{
+  .put{
     width: 20px;
     height: 20px;
     position: absolute;
     top: 5px;
     cursor: pointer;
   }
-  #put:hover img{ box-shadow: inset 2px 2px 0 0 aqua; }
+  .put img{
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 1px;
+  }
 
-  #puton{
+  .puton{
     border-top: solid 1px gainsboro;
     width: 20px;
     height: 370px;
@@ -481,36 +482,15 @@
     background-color: #f3f1f5;
     cursor: pointer;
   }
-  #puton img{
+  .puton img{
+    width: 15px;
+    height: 15px;
     position: absolute;
     left: 1px;
     top: 7px;
   }
 
-  #puton:hover{ box-shadow: inset 2px 2px 0 0 aqua; }
-
-  #expand{
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    top: 7px;
-    right: 40px;
-    cursor: pointer;
-  }
-
-  #expand:hover{ box-shadow: inset 1px 1px 0 0 aqua; }
-
-  #collapse{
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    top: 7px;
-    right: 10px;
-    cursor: pointer;
-  }
-  #collapse:hover{ box-shadow: inset 1px 1px 0 0 aqua; }
-
-  #tree{
+  .tree{
     height: 339px;
     width: 250px;
     position: absolute;
@@ -518,7 +498,7 @@
     overflow-x: hidden;
   }
 
-  #tree::-webkit-scrollbar {
+  .tree::-webkit-scrollbar {
     width: 10px;
     height: 80%;
     bottom: 0;
@@ -533,19 +513,19 @@
     float: left;
   }
 
-  #tree-title{
+  .tree-title{
     border: none;
     position: absolute;
     left: 280px;
   }
 
-  #tree-title p{
+  .tree-title p{
     font-size: 15px;
     line-height: 30px;
     float: left;
   }
 
-  #file-window-tableView{
+  .file-window-tableView{
     border: solid 1px gainsboro;
     height: 370px;
     position: absolute;
@@ -553,7 +533,7 @@
     bottom: 0;
   }
 
-  #file-window-iconsView{
+  .file-window-iconsView{
     border: solid 1px gainsboro;
     height: 370px;
     position: absolute;

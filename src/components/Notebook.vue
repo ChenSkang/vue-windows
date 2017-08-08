@@ -49,11 +49,8 @@
     <transition name="tool">
       <div class="tools" v-if="showTools">
         <ul>
-          <li>
+          <li style="margin-top: 40px">
             <el-button class="tools-btn" @click="openTheme = true, showTools = false" :style="theme">切换主题</el-button>
-          </li>
-          <li>
-            <el-button class="tools-btn" @click="openTable" :style="theme">编辑数据</el-button>
           </li>
           <li>
             <el-button class="tools-btn" @click="showDialog" :style="theme">清空数据</el-button>
@@ -68,15 +65,15 @@
       <div class="color-list" v-if="openTheme">
         <ul>
           <li>&nbsp点击切换主题</li>
-          <li><el-button class="colors-btn" @click="">
+          <li><el-button class="colors-btn" @click="colorChange(0)">
             <span style="background-color: #00b0f0" class="color-span"></span>&&nbsp#00b0f0</el-button></li>
-          <li><el-button class="colors-btn" @click="">
+          <li><el-button class="colors-btn" @click="colorChange(1)">
             <span style="background-color: #00d1b2" class="color-span"></span>&&nbsp#00d1b2</el-button></li>
-          <li><el-button class="colors-btn" @click="">
+          <li><el-button class="colors-btn" @click="colorChange(2)">
             <span style="background-color: #f4b976" class="color-span"></span>&&nbsp#f4b976</el-button></li>
-          <li><el-button class="colors-btn" @click="">
+          <li><el-button class="colors-btn" @click="colorChange(3)">
             <span style="background-color: #f39894" class="color-span"></span>&&nbsp#f39894</el-button></li>
-          <li><el-button class="colors-btn" @click="">
+          <li><el-button class="colors-btn" @click="colorChange(4)">
             <span style="background-color: #26b6be" class="color-span"></span>&&nbsp#26b6be</el-button></li>
         </ul>
       </div>
@@ -160,10 +157,20 @@ export default{
       ],
       getToDo: [],
       getDone: [],
-      getCancel: []
+      getCancel: [],
+      colors: [
+        '#00b0f0',
+        '#00d1b2',
+        '#f4b976',
+        '#f39894',
+        '#26b6be'
+      ]
     }
   },
   methods: {
+    colorChange (num) {
+      this.theme.background = this.colors[num]
+    },
     menuShow () {
       if (this.openTheme === false) {
         this.showTools = !this.showTools
@@ -279,7 +286,7 @@ export default{
   .tools{
     width: 140px;
     height: 400px;
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.4);
     position: absolute;
     bottom:0;
     left: 0;
