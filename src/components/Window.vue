@@ -29,6 +29,7 @@
 <template xmlns="http://www.w3.org/1999/html" xmlns:v-drag="http://www.w3.org/1999/xhtml"
            xmlns="http://www.w3.org/1999/html">
   <div id="Window">
+    <img id="Background" v-on:click="menuVisible" src="../img/background.jpeg"/>
     <router-view></router-view>
     <div id="footer" v-if="footerVisible">
       <div id="start" v-on:click="showWindow">
@@ -37,10 +38,10 @@
       <div id="Time"></div>
       <div id="Date"></div>
     </div>
-    <file-manager v-show="showFile"></file-manager>
+    <file-manager v-show="showFile" @showFilemanager="showFilemanager" ></file-manager>
     <notebook v-show="showNote"></notebook>
     <transition name="el-fade-in-linear">
-      <div id="WindowsMenu" v-show="seen">
+      <div id="WindowsMenu" v-show="seen" >
       <div id="Menu" >
         <div id="User">
           <img  id="User_logo" src="../img/user_logo.png" />
@@ -140,17 +141,13 @@
         </div>
         <div id="Mostused">
           <span id="Mostuesd_title">Most used</span>
-          <el-button type="text" @click="showFilemanager" class="Mostused_content" id="Mostuesd_content_File">
-            <img class="Mostused_content_img" src="../img/filemanager.png"/>
-            <p class="Mostused_content_name">Filemanager</p>
-          </el-button>
         </div>
         <el-button type="text" @click="signOut" id="SignOut">
           <img src="../img/signout.png"/>
           <span class="buttonText">sign out</span>
         </el-button>
       </div>
-    </div>
+      </div>
     </transition>
     <div id="Calendar_content" class="content" v-show="seen_calendar" v-drag>
       <div class="title">
@@ -292,7 +289,9 @@
   import fileManager from './Filemanager.vue'
   import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
   import Notebook from './Notebook.vue'
+  import ElDialog from '../../node_modules/element-ui/packages/dialog/src/component.vue'
   function setTime () {
+    document.getElementById('Time').innerHTML = 0
     var time = new Date()
     var hour = time.getHours()
     if (hour <= 9) { hour = '0' + hour }
@@ -305,11 +304,11 @@
   }
   setInterval(setTime, 1000)
   function setDate () {
+    document.getElementById('Date').innerHTML = 0
     var date = new Date().toLocaleDateString()
     document.getElementById('Date').innerHTML = date
   }
   setInterval(setDate, 1000)
-
   export default{
     data () {
       return {
@@ -336,6 +335,7 @@
       }
     },
     components: {
+      ElDialog,
       ElButton,
       fileManager,
       Notebook
@@ -488,6 +488,14 @@
         this.signinVisible = false
         this.showFile = true
         this.showNote = true
+      },
+      showFilemanager () {
+        this.seen = !this.seen
+      },
+      menuVisible () {
+        if (this.seen === true) {
+          this.seen = false
+        }
       }
     }
   }
@@ -501,14 +509,20 @@
   }
 
   body{
-    background-image: url("../img/background.jpeg");
-    background-size: cover;
     overflow: hidden;
     min-width: 1520px;
-    min-height: 1080px;
+    min-height: 1440px;
     -ms-user-select: none;
     -moz-user-select: none;
     user-select: none;
+  }
+
+  #Background{
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
   }
 
   #footer{
@@ -532,7 +546,8 @@
     color: white;
     font-size: 15px;
     position: absolute;
-    right: 20px;
+    right: 14px;
+    top: 2px;
   }
 
   #Date{
@@ -575,33 +590,6 @@
 
   #Mostuesd_title{
     color: #8c939d;
-  }
-
-  .Mostused_content{
-    width: 150px;
-    height: 40px;
-    position: relative;
-  }
-
-  .Mostused_content_img{
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 5px;
-    left: 0px;
-  }
-
-  .Mostused_content_name{
-    position: absolute;
-    left: 50px;
-    top: 15px;
-    color: white;
-  }
-
-  #Mostuesd_content_File{
-    position: absolute;
-    left: 1px;
-    top: 15px;
   }
 
   #SignOut{
