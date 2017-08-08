@@ -39,16 +39,18 @@
       <el-col :span="24">
         <div class="noteTitle" :style="theme">
           <span class="note-title">Notebook</span>
-          <el-button size="mini" class="title-button" @click="showTools = !showTools"><i class="el-icon-menu"></i></el-button>
+          <el-button size="mini" class="title-button" @click="menuShow">
+            <i class="el-icon-menu"></i>
+          </el-button>
         </div>
       </el-col>
     </el-row>
 
     <transition name="tool">
       <div class="tools" v-if="showTools">
-        <ul class="tools-sidebar ">
+        <ul>
           <li>
-            <el-button class="tools-btn" @click="openTheme" :style="theme">切换主题</el-button>
+            <el-button class="tools-btn" @click="openTheme = true, showTools = false" :style="theme">切换主题</el-button>
           </li>
           <li>
             <el-button class="tools-btn" @click="openTable" :style="theme">编辑数据</el-button>
@@ -62,52 +64,68 @@
         </ul>
       </div>
     </transition>
+    <transition name="tool">
+      <div class="color-list" v-if="openTheme">
+        <ul>
+          <li>&nbsp点击切换主题</li>
+          <li><el-button class="colors-btn" @click="">
+            <span style="background-color: #00b0f0" class="color-span"></span>&&nbsp#00b0f0</el-button></li>
+          <li><el-button class="colors-btn" @click="">
+            <span style="background-color: #00d1b2" class="color-span"></span>&&nbsp#00d1b2</el-button></li>
+          <li><el-button class="colors-btn" @click="">
+            <span style="background-color: #f4b976" class="color-span"></span>&&nbsp#f4b976</el-button></li>
+          <li><el-button class="colors-btn" @click="">
+            <span style="background-color: #f39894" class="color-span"></span>&&nbsp#f39894</el-button></li>
+          <li><el-button class="colors-btn" @click="">
+            <span style="background-color: #26b6be" class="color-span"></span>&&nbsp#26b6be</el-button></li>
+        </ul>
+      </div>
+    </transition>
 
     <div class="table">
       <el-row :gutter="20" style="padding-top: 10px">
         <el-col :span="12" offset="3">
-          <el-input v-model="message"></el-input>
+          <el-input v-model="message" placeholder="代办事项"></el-input>
         </el-col>
         <el-col :span="4">
-          <el-button @click="hand">提交</el-button>
+          <el-button @click="hand" :plain="true">提交</el-button>
         </el-col>
       </el-row>
       <div class="todo">
-        <div class="todo-tab" :style="theme" @click="changeCollapse(0,$event)">未完成
-         <span class="close" :style="theme"></span>
+        <div class="todo-tab" :style="theme" @click="changeCollapse(0)">未完成
+         <span class="close" :style="theme" :class="{open:!collapse[0]}"></span>
         </div>
-        <div class="todo-box">
+        <div class="todo-box" v-show="collapse[0].show">
           <ul>
             <li class="todo-list" v-for="(value, index) in getToDo">
-              <input type="checkbox">
+              <input type="checkbox" @click="haveDone(index)">
               {{value}}
-              <button class="cancel-btn">取消</button>
+              <button class="cancel-btn" @click="cancelDone(index)">取消</button>
             </li>
           </ul>
         </div>
 
-        <div class="todo-tab" :style="theme" @click="changeCollapse(1,$event)">已完成
-          <span class="close" :style="theme"></span>
+        <div class="todo-tab" :style="theme" @click="changeCollapse(1)">已完成
+          <span class="close" :style="theme" :class="{open:!collapse[1]}"></span>
         </div>
-        <div class="todo-box">
+        <div class="todo-box"  v-show="collapse[1].show">
           <ul>
             <li class="todo-list" v-for="(value, index) in getDone" :key="value">
-              <input type="checkbox">
+              <input type="checkbox" checked @click="notDone(index)">
               <div>{{value}}</div>
               <span class="event-time">{{value.time}}</span>
             </li>
           </ul>
         </div>
 
-        <div class="todo-tab" :style="theme" @click="changeCollapse(2,$event)">已取消
-          <span class="close" :style="theme"></span>
+        <div class="todo-tab" :style="theme" @click="changeCollapse(2)">已取消
+          <span class="close" :style="theme" :class="{open:!collapse[2]}"></span>
         </div>
-        <div class="todo-box">
+        <div class="todo-box"  v-show="collapse[2].show">
           <ul>
-            <li class="todo-list" v-for="(value, index) in getCancle">
-              <input type="checkbox">
-              <div class="event-delete">{{value.content}}</div>
-              <button>恢复</button>
+            <li class="todo-list" v-for="(value, index) in getCancel">
+              <div class="event-delete">{{value}}</div>
+              <button @click="returnDone(index)" class="cancel-btn">恢复</button>
             </li>
           </ul>
         </div>
@@ -125,8 +143,9 @@ export default{
       seen: false,
       showTools: false,
       message: '',
+      openTheme: false,
       theme: {
-        background: '#58B7FF'
+        background: '#00B0F0'
       },
       collapse: [
         {
@@ -145,13 +164,54 @@ export default{
     }
   },
   methods: {
+    menuShow () {
+      if (this.openTheme === false) {
+        this.showTools = !this.showTools
+      } else {
+        this.openTheme = false
+      }
+    },
     noteShow () {
       this.seen = true
       this.showTools = false
     },
     hand () {
-      this.getToDo.push(this.message)
-      this.message = ''
+      if (this.message.length) {
+        this.getToDo.push(this.message)
+        this.message = ''
+      } else {
+        this.$message({
+          message: '请输入待办事项'
+        })
+      }
+    },
+    changeCollapse (num) {
+      this.collapse[0] = !this.collapse[num]
+    },
+    haveDone (index) {
+      let str = this.getToDo[index]
+      this.getToDo.splice(index, 1)
+      this.getDone.push(str)
+    },
+    notDone (index) {
+      let str = this.getDone[index]
+      this.getDone.splice(index, 1)
+      this.getToDo.push(str)
+    },
+    cancelDone (index) {
+      let cel = this.getToDo[index]
+      this.getToDo.splice(index, 1)
+      this.getCancel.push(cel)
+    },
+    returnDone (index) {
+      let ret = this.getCancel[index]
+      this.getCancel.splice(index, 1)
+      this.getToDo.push(ret)
+    },
+    showDialog () {
+      this.getCancel = []
+      this.getToDo = []
+      this.getDone = []
     }
   }
 }
@@ -217,7 +277,7 @@ export default{
   }
 
   .tools{
-    width: 150px;
+    width: 140px;
     height: 400px;
     background: rgba(0,0,0,.5);
     position: absolute;
@@ -228,14 +288,41 @@ export default{
   .tools li{
     padding: 20px;
   }
+  .color-list{
+    width: 140px;
+    height: 400px;
+    position: absolute;
+    bottom:0;
+    left: 0;
+    background: #f8f8f8
+  }
+  .color-list li{
+    padding: 10px;
+  }
 
   .tools-btn{
     color: white;
-    font-family: inherit;
     cursor: pointer;
     font-size: inherit;
   }
 
+  .colors-btn{
+    width: 108px;
+    height: 38px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    background: #fff;
+    position: relative;
+    font-size: inherit;
+  }
+
+  .color-span{
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 20px;
+    height: 20px;
+  }
   .table{
     width: 700px;
     position: absolute;
@@ -260,7 +347,7 @@ export default{
     cursor: pointer;
   }
 
-  .close {
+  .close{
     position: absolute;
     right: 20px;
     top: 15px;
@@ -270,6 +357,10 @@ export default{
     border-right: 2px solid #fff;
     transform: rotate(135deg);
     transition: transform .3s;
+  }
+
+  .open{
+    transform: rotate(45deg);
   }
 
   .todo-box{
