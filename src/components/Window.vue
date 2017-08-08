@@ -948,6 +948,7 @@
     position: absolute;
     top: 100px;
     left: 400px;
+    text-align: center;
   }
 
   #UserLogo{
