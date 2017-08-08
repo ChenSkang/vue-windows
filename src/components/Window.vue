@@ -31,8 +31,8 @@
   <div id="Window">
     <img id="Background" v-on:click="menuVisible" src="../img/background.jpeg"/>
     <router-view></router-view>
-    <div id="footer" v-if="footerVisible">
-      <div id="start" v-on:click="showWindow">
+    <div id="Footer" v-if="footerVisible">
+      <div id="Start" v-on:click="showWindow">
         <img src="../img/start.png"  style="float: left">
       </div>
       <div id="Time"></div>
@@ -44,103 +44,103 @@
       <div id="WindowsMenu" v-show="seen" >
       <div id="Menu" >
         <div id="User">
-          <img  id="User_logo" src="../img/user_logo.png" />
-          <div id="User_name">Yan Tsishko</div>
+          <img  id="Userlogo" src="../img/user_logo.png" />
+          <div id="Username">Yan Tsishko</div>
         </div>
         <div id="Life">
-          <div id="Life_title">Life at a glance</div>
-          <div id="Life_content">
+          <div id="Lifetitle">Life at a glance</div>
+          <div id="Lifecontent">
             <el-row :gutter="5">
               <el-col :span="8">
                 <div class="grid-content border text" id="Calendar" v-on:click="showCalendar('Calendar_content')">
-                  <span class="content_title">Calendar</span>
+                  <span class="content-title">Calendar</span>
                 </div>
               </el-col>
               <el-col :span="16">
                 <div class="grid-content border text" id="Email" v-on:click="showEmail('Email_content')">
-                  <span class="content_title">E-mail</span>
+                  <span class="content-title">E-mail</span>
                 </div>
               </el-col>
             </el-row>
             <el-row :gutter="5">
               <el-col :span="16">
                 <div class="grid-content border text" id="Photos" v-on:click="showPhotos('Photos_content')">
-                  <span class="content_title">Photos</span>
+                  <span class="content-title">Photos</span>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content border text" id="Friend" v-on:click="showFriend('Friend_content')">
-                  <span class="content_title">Friend</span>
+                  <span class="content-title">Friend</span>
                 </div>
               </el-col>
             </el-row>
             <el-row :gutter="5">
               <el-col :span="8">
                 <div class="grid-content border text" id="Install" v-on:click="showInstall('Install_content')">
-                  <span class="content_title">Install</span>
+                  <span class="content-title">Install</span>
                 </div>
               </el-col>
               <el-col :span="16">
                 <div class="grid-content border text" id="Video" v-on:click="showVideo('Video_content')">
-                  <span class="content_title">Video</span>
+                  <span class="content-title">Video</span>
                 </div>
               </el-col>
             </el-row>
           </div>
         </div>
         <div id="Play">
-          <div id="Play_title">Play and Explore</div>
-          <div id="Play_content">
+          <div id="Playtitle">Play and Explore</div>
+          <div id="Playcontent">
           <el-row :gutter="5">
             <el-col :span="8">
               <div class="grid-content border text" id="Game" v-on:click="showGame('Game_content')">
-                <span class="content_title">Game</span>
+                <span class="content-title">Game</span>
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content border text" id="Music" v-on:click="showMusic('Music_content')">
-                <span class="content_title">Music</span>
+                <span class="content-title">Music</span>
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content border text" id="Camera" v-on:click="showCamera('Camera_content')">
-                <span class="content_title">Camera</span>
+                <span class="content-title">Camera</span>
               </div>
             </el-col>
           </el-row>
           <el-row :gutter="5">
             <el-col :span="8">
               <div class="grid-content border text" id="Sports" v-on:click="showSports('Sports_content')">
-                <span class="content_title">Sports</span>
+                <span class="content-title">Sports</span>
               </div>
             </el-col>
             <el-col :span="16">
               <div class="grid-content border text" id="News" v-on:click="showNews('News_content')">
-                <span class="content_title">News</span>
+                <span class="content-title">News</span>
               </div>
             </el-col>
           </el-row>
           <el-row :gutter="5">
             <el-col :span="8">
               <div class="grid-content border text" id="Store" v-on:click="showStore('Store_content')">
-                <span class="content_title">Store</span>
+                <span class="content-title">Store</span>
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content border text" id="Money" v-on:click="showMoney('Money_content')">
-                <span class="content_title">Money</span>
+                <span class="content-title">Money</span>
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content border text" id="Travel" v-on:click="showTravel('Travel_content')">
-                <span class="content_title">Travel</span>
+                <span class="content-title">Travel</span>
               </div>
             </el-col>
           </el-row>
           </div>
         </div>
         <div id="Mostused">
-          <span id="Mostuesd_title">Most used</span>
+          <span id="Mostuesdtitle">Most used</span>
         </div>
         <el-button type="text" @click="signOut" id="SignOut">
           <img src="../img/signout.png"/>
@@ -149,135 +149,135 @@
       </div>
       </div>
     </transition>
-    <div id="Calendar_content" class="content" v-show="seen_calendar" v-drag>
+    <div id="Calendarcontent" class="content" v-show="seen_calendar" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeCalendar">
-          <img class="close_png" src="../img/close_button.png" />
+          <img class="close-png" src="../img/close_button.png" />
         </div>
         <div class="name">Calendar</div>
       </div>
-      <img class="content_body" id="content" src="../img/calendar.png" />
+      <img class="content-body" id="content" src="../img/calendar.png" />
     </div>
-    <div id="Email_content" class="content" v-show="seen_email" v-drag>
+    <div id="Emailcontent" class="content" v-show="seen_email" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeEmail">
-          <img class="close_png" src="../img/close_button.png" />
+          <img class="close-png" src="../img/close_button.png" />
         </div>
         <div class="name">Email</div>
       </div>
-      <img class="content_body" src="../img/20.png" />
+      <img class="content-body" src="../img/20.png" />
     </div>
-    <div id="Photos_content" class="content" v-show="seen_photos" v-drag>
+    <div id="Photoscontent" class="content" v-show="seen_photos" v-drag>
       <div class="title">
         <div class="close" v-on:click="closePhotos">
-          <img class="close_png" src="../img/close_button.png" />
+          <img class="close-png" src="../img/close_button.png" />
         </div>
         <div class="name">Photos</div>
-        <img class="content_body" src="../img/shop.png"/>
+        <img class="content-body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Friend_content" class="content" v-show="seen_friend" v-drag>
+    <div id="Friendcontent" class="content" v-show="seen_friend" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeFriend">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Friend</div>
       </div>
-      <img class="content_body" src="../img/34.png"/>
+      <img class="content-body" src="../img/34.png"/>
     </div>
-    <div id="Install_content" class="content" v-show="seen_install" v-drag>
+    <div id="Installcontent" class="content" v-show="seen_install" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeInstall">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Install</div>
       </div>
-      <img class="content_body" src="../img/06.png"/>
+      <img class="content-body" src="../img/06.png"/>
     </div>
-    <div id="Video_content" class="content" v-show="seen_video" v-drag>
+    <div id="Videocontent" class="content" v-show="seen_video" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeVideo">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Video/div>
         </div>
-        <img class="content_body" src="../img/video.png"/>
+        <img class="content-body" src="../img/video.png"/>
       </div>
     </div>
-    <div id="Game_content" class="content" v-show="seen_game" v-drag>
+    <div id="Gamecontent" class="content" v-show="seen_game" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeGame">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Games/div>
         </div>
-        <img class="content_body" src="../img/games.png"/>
+        <img class="content-body" src="../img/games.png"/>
       </div>
     </div>
-    <div id="Music_content" class="content" v-show="seen_music" v-drag>
+    <div id="Musiccontent" class="content" v-show="seen_music" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeMusic">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Music</div>
         </div>
-      <img class="content_body" src="../img/music.png"/>
+      <img class="content-body" src="../img/music.png"/>
     </div>
-    <div id="Camera_content" class="content" v-show="seen_camera" v-drag>
+    <div id="Cameracontent" class="content" v-show="seen_camera" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeCamera">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Camera</div>
-        <img class="content_body" src="../img/camera.png"/>
+        <img class="content-body" src="../img/camera.png"/>
       </div>
     </div>
-    <div id="Sports_content" class="content" v-show="seen_sports" v-drag>
+    <div id="Sportscontent" class="content" v-show="seen_sports" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeSports">
-          <img class="close_png" src="../img/close_button.png" />
+          <img class="close-png" src="../img/close_button.png" />
         </div>
         <div class="name">Sports</div>
-        <img class="content_body" src="../img/shop.png"/>
+        <img class="content-body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="News_content" class="content" v-show="seen_news" v-drag>
+    <div id="Newscontent" class="content" v-show="seen_news" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeNews">
-          <img class="close_png" src="../img/close_button.png" />
+          <img class="close-png" src="../img/close_button.png" />
         </div>
         <div class="name">News</div>
-        <img class="content_body" src="../img/shop.png"/>
+        <img class="content-body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Store_content" class="content" v-show="seen_store" v-drag>
+    <div id="Storecontent" class="content" v-show="seen_store" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeStore">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Store</div>
-        <img class="content_body" src="../img/shop.png"/>
+        <img class="content-body" src="../img/shop.png"/>
       </div>
     </div>
-    <div id="Money_content" class="content" v-show="seen_money" v-drag>
+    <div id="Moneycontent" class="content" v-show="seen_money" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeMoney">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Money</div>
       </div>
-        <img class="content_body" src="../img/graph.png"/>
+        <img class="content-body" src="../img/graph.png"/>
     </div>
-    <div id="Travel_content" class="content" v-show="seen_travel" v-drag>
+    <div id="Travelcontent" class="content" v-show="seen_travel" v-drag>
       <div class="title">
         <div class="close" v-on:click="closeTravel">
-          <img class="close_png" src="../img/close_button.png"/>
+          <img class="close-png" src="../img/close_button.png"/>
         </div>
         <div class="name">Travel</div>
-        <img class="content_body" src="../img/24.png"/>
+        <img class="content-body" src="../img/24.png"/>
       </div>
     </div>
-    <div id="SignIn" v-if="signinVisible">
+    <div id="Signin" v-if="signinVisible">
       <img id="UserLogo" src="../img/user_logo.png"/>
       <span id="UserName">Yan Tsishko</span>
       <el-button type="success" id="SigninButton" v-on:click="signIn">Sign In</el-button>
@@ -525,7 +525,7 @@
     top: 0px;
   }
 
-  #footer{
+  #Footer{
     width: 100%;
     background-color: black;
     opacity: 0.85;
@@ -534,11 +534,11 @@
     z-index: 1000;
   }
 
-  #start{
+  #Start{
     width: 50px;
   }
 
-  #start:hover{
+  #Start:hover{
     opacity: 0.6;
   }
 
@@ -564,16 +564,17 @@
     height: 380px;
     position: absolute;
     bottom: 41px;
+    z-index: 400;
   }
 
-  #User_logo{
+  #Userlogo{
     border-radius: 50px;
     float: left;
     margin-left: 10px;
     margin-top: 10px;
   }
 
-  #User_name{
+  #Username{
     color: white;
     float: left;
     margin-top: 25px;
@@ -588,7 +589,7 @@
     height: 200px;
   }
 
-  #Mostuesd_title{
+  #Mostuesdtitle{
     color: #8c939d;
   }
 
@@ -613,7 +614,7 @@
     margin-top: 20px;
   }
 
-  #Life_content{
+  #Lifecontent{
     width: 310px;
     height: 280px;
     position: absolute;
@@ -639,14 +640,14 @@
     background-color: #f9fafc;
   }
 
-  #Life_title{
+  #Lifetitle{
     margin-left: 0;
     position: absolute;
     margin-top: 5px;
     color: white;
   }
 
-  .content_title{
+  .content-title{
     position: absolute;
     bottom: 3px;
   }
@@ -720,14 +721,14 @@
     margin-top: -300px;
   }
 
-  #Play_content{
+  #Playcontent{
     width: 310px;
     height: 280px;
     position: absolute;
     margin-top: 30px;
   }
 
-  #Play_title{
+  #Playtitle{
     margin-left: 0;
     position: absolute;
     margin-top: 5px;
@@ -823,7 +824,7 @@
     margin-left: 726px;
   }
 
-  .close_png{
+  .close-png{
     width: 10px;
     height: 10px;
     position: absolute;
@@ -831,7 +832,7 @@
     margin-left: -5px;
   }
 
-  .content_body{
+  .content-body{
     margin-top: 150px;
     margin-left: -50px;
   }
@@ -844,7 +845,7 @@
     box-shadow: inset 0px 0px 2px 2px rgba(255,255,255,0.8);
   }
 
-  #Calendar_content{
+  #Calendarcontent{
     width: 750px;
     height: 450px;
     left: 400px;
@@ -853,91 +854,91 @@
     background-color: #107c10;
   }
 
-  #Email_content{
+  #Emailcontent{
     width: 750px;
     height: 450px;
     position: absolute;
     background-color: #00b1f0;
   }
 
-  #Photos_content{
+  #Photoscontent{
     width: 750px;
     height: 450px;
     position: absolute;
     background-color: #00b1f0;
   }
 
-  #Friend_content{
+  #Friendcontent{
     width: 750px;
     height: 450px;
     position: absolute;
     background-color: #00b1f0;
   }
 
-  #Install_content{
+  #Installcontent{
     width: 750px;
     height: 450px;
     position: absolute;
     background-color: #2143af ;
   }
 
-  #Video_content{
+  #Videocontent{
     background-color: #90228a;
     width: 750px;
     height: 450px;
     position: absolute;
   }
 
-  #Game_content{
+  #Gamecontent{
     width: 750px;
     height: 450px;
     position:absolute;
     background-color: #2143af ;
   }
 
-  #Music_content{
+  #Musiccontent{
      width: 750px;
      height: 450px;
      position: absolute;
      background-color: #e12429 ;
    }
 
-  #Camera_content{
+  #Cameracontent{
     width: 750px;
     height: 450px;
     position: absolute;
     background-color: #90228a;
   }
 
-  #Sports_content{
+  #Sportscontent{
     width: 750px;
     height: 450px;
     position:absolute;
     background-color: #00b1f0;
   }
 
-  #News_content{
+  #Newscontent{
     width: 750px;
     height: 450px;
     position: absolute;
     background-color: #00b1f0;
   }
 
-  #Store_content{
+  #Storecontent{
     width: 750px;
     height: 450px;
     position: absolute;
     background-color: #107c10;
   }
 
-  #Money_content{
+  #Moneycontent{
     width: 750px;
     height: 450px;
     position: absolute;
     background-color: #2143af;
   }
 
-  #Travel_content{
+  #Travelcontent{
     width: 750px;
     height: 450px;
     position: absolute;
