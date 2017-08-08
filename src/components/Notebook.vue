@@ -82,10 +82,10 @@
     <div class="table">
       <el-row :gutter="20" style="padding-top: 10px">
         <el-col :span="12" offset="3">
-          <el-input v-model="message" placeholder="代办事项"></el-input>
+          <el-input v-model="message" placeholder="代办事项" :disabled="tasks"></el-input>
         </el-col>
         <el-col :span="4">
-          <el-button @click="hand" :plain="true">提交</el-button>
+          <el-button @click="hand" :plain="true" :disabled="tasks">提交</el-button>
         </el-col>
       </el-row>
       <div class="todo">
@@ -144,6 +144,7 @@ export default{
       openTheme: false,
       editInput: false,
       editValue: '',
+      tasks: false,
       theme: {
         background: '#00B0F0'
       },
@@ -194,9 +195,14 @@ export default{
           message: '请输入待办事项'
         })
       }
+      let leng = this.getToDo.length + this.getDone.length + this.getCancel.length
+      if (leng === 4) {
+        this.tasks = true
+        this.message = '请清除数据后输入'
+      }
     },
     changeCollapse (num) {
-      this.collapse[0] = !this.collapse[num]
+      this.collapse[num].show = !this.collapse[num].show
     },
     edit (index) {
       this.editInput = true
@@ -231,6 +237,8 @@ export default{
       this.getCancel = []
       this.getToDo = []
       this.getDone = []
+      this.tasks = false
+      this.message = ''
     }
   }
 }
