@@ -62,7 +62,7 @@
       </div>
     </transition>
     <transition name="tool">
-      <div class="color-list" v-if="openTheme">
+      <div class="color-list" v-if="openTheme" @click="showTools = true, openTheme = false">
         <ul>
           <li>&nbsp点击切换主题</li>
           <li><el-button class="colors-btn" @click="colorChange(0)">

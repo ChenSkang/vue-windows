@@ -141,7 +141,7 @@
           <span class="demonstration">Click 指示器触发</span>
           <el-carousel trigger="click" height="150px">
             <el-carousel-item v-for="item in 5">
-              <h3>{{ item }}</h3>
+              {{ item }}
             </el-carousel-item>
           </el-carousel>
         </div>
