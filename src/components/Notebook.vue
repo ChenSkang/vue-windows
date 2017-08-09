@@ -90,21 +90,23 @@
       </el-row>
       <div class="todo">
         <div class="todo-tab" :style="theme" @click="changeCollapse(0)">未完成
-         <span class="close" :style="theme" :class="{open:!collapse[0]}"></span>
+         <span class="close" :style="theme" :class="{open:!collapse[0].show}"></span>
         </div>
         <div class="todo-box" v-show="collapse[0].show">
           <ul>
-            <li class="todo-list" v-for="(value, index) in getToDo" @dblclick="edit(index)">
-              <input type="checkbox" @click="haveDone(index)"/>
-              {{value}}
+            <li class="todo-list" v-for="(value, index) in getToDo">
+              <input type="checkbox" @click="haveDone(index)" :disabled="editType"/>
+              <div @dblclick="edit(index)">{{value}}
+                <input v-if="editInput" v-model="editValue" @keyup.enter="edited(index)" @keyup.esc='editCancel(index)'/>
+              </div>
               <button class="cancel-btn" @click="cancelDone(index)">取消</button>
-              <input v-if="editInput" v-model="editValue" @keyup.enter="edited(index)"/>
+
             </li>
           </ul>
         </div>
 
         <div class="todo-tab" :style="theme" @click="changeCollapse(1)">已完成
-          <span class="close" :style="theme" :class="{open:!collapse[1]}"></span>
+          <span class="close" :style="theme" :class="{open:!collapse[1].show}"></span>
         </div>
         <div class="todo-box"  v-show="collapse[1].show">
           <ul>
@@ -117,7 +119,7 @@
         </div>
 
         <div class="todo-tab" :style="theme" @click="changeCollapse(2)">已取消
-          <span class="close" :style="theme" :class="{open:!collapse[2]}"></span>
+          <span class="close" :style="theme" :class="{open:!collapse[2].show}"></span>
         </div>
         <div class="todo-box"  v-show="collapse[2].show">
           <ul>
@@ -141,10 +143,12 @@ export default{
       seen: false,
       showTools: false,
       message: '',
+      editType: false,
       openTheme: false,
       editInput: false,
       editValue: '',
       tasks: false,
+      beforeValue: '',
       theme: {
         background: '#00B0F0'
       },
@@ -187,7 +191,7 @@ export default{
       this.showTools = false
     },
     hand () {
-      if (this.message.length) {
+      if (this.message.replace(/(^\s*)|(\s*$)/g, '').length !== 0) {
         this.getToDo.push(this.message)
         this.message = ''
       } else {
@@ -205,13 +209,25 @@ export default{
       this.collapse[num].show = !this.collapse[num].show
     },
     edit (index) {
+      this.editType = true
       this.editInput = true
       this.editValue = this.getToDo[index]
+      this.beforeValue = this.getToDo[index]
       this.getToDo[index] = ''
     },
     edited (index) {
+      if (this.editValue.replace(/(^\s*)|(\s*$)/g, '').length !== 0) {
+        this.editType = false
+        this.editInput = false
+        this.getToDo[index] = this.editValue
+      } else {
+        alert('事件不能为空')
+      }
+    },
+    editCancel (index) {
+      this.editType = false
+      this.getToDo[index] = this.beforeValue
       this.editInput = false
-      this.getToDo[index] = this.editValue
     },
     haveDone (index) {
       let str = this.getToDo[index]
@@ -224,9 +240,13 @@ export default{
       this.getToDo.push(str)
     },
     cancelDone (index) {
-      let cel = this.getToDo[index]
-      this.getToDo.splice(index, 1)
-      this.getCancel.push(cel)
+      if (this.getToDo[index].replace(/(^\s*)|(\s*$)/g, '').length !== 0) {
+        let cel = this.getToDo[index]
+        this.getToDo.splice(index, 1)
+        this.getCancel.push(cel)
+      } else {
+        alert('请先完成编辑')
+      }
     },
     returnDone (index) {
       let ret = this.getCancel[index]
