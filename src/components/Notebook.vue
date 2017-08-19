@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <div v-if="seen" class="note-book" v-drag>
+  <div v-if="seen" class="note-book">
     <el-row id="header">
       <el-col :span="24">
         <div class="noteTitle" :style="theme">
@@ -94,13 +94,13 @@
         </div>
         <div class="todo-box" v-show="collapse[0].show">
           <ul>
-            <li class="todo-list" v-for="(value, index) in getToDo">
-              <input type="checkbox" @click="haveDone(index)" :disabled="editType"/>
-              <div @dblclick="edit(index)">{{value}}
-                <input v-if="editInput" v-model="editValue" @keyup.enter="edited(index)" @keyup.esc='editCancel(index)'/>
+            <li class="todo-list" v-for="(value, index) in getToDo" v-bind:class="{editing: editInput}">
+              <div @dblclick="edit(index)" class="view">
+                <input type="checkbox" @click="haveDone(index)" :disabled="editType" :checked="false"/>
+                {{value}}
               </div>
+              <input class="edit" v-model="editValue" @keyup.enter="edited(index)" @blur="edited(index)" @keyup.esc='editCancel(index)'/>
               <button class="cancel-btn" @click="cancelDone(index)">取消</button>
-
             </li>
           </ul>
         </div>
@@ -111,7 +111,7 @@
         <div class="todo-box"  v-show="collapse[1].show">
           <ul>
             <li class="todo-list" v-for="(value, index) in getDone" :key="value">
-              <input type="checkbox" checked @click="notDone(index)">
+              <input type="checkbox"  :checked="true" @click="notDone(index)">
               <div>{{value}}</div>
               <span class="event-time">{{value.time}}</span>
             </li>
@@ -230,28 +230,24 @@ export default{
       this.editInput = false
     },
     haveDone (index) {
-      let str = this.getToDo[index]
+      this.getDone.push(this.getToDo[index])
       this.getToDo.splice(index, 1)
-      this.getDone.push(str)
     },
     notDone (index) {
-      let str = this.getDone[index]
+      this.getToDo.push(this.getDone[index])
       this.getDone.splice(index, 1)
-      this.getToDo.push(str)
     },
     cancelDone (index) {
       if (this.getToDo[index].replace(/(^\s*)|(\s*$)/g, '').length !== 0) {
-        let cel = this.getToDo[index]
+        this.getCancel.push(this.getToDo[index])
         this.getToDo.splice(index, 1)
-        this.getCancel.push(cel)
       } else {
         alert('请先完成编辑')
       }
     },
     returnDone (index) {
-      let ret = this.getCancel[index]
+      this.getToDo.push(this.getCancel[index])
       this.getCancel.splice(index, 1)
-      this.getToDo.push(ret)
     },
     showDialog () {
       this.getCancel = []
@@ -415,6 +411,7 @@ export default{
     border-right: 1px solid #eee;
     transition: height .3s;
   }
+
   .todo-list{
     position: relative;
     min-height: 44px;
@@ -423,6 +420,7 @@ export default{
     box-sizing: border-box;
     border-bottom: 1px solid #eee;
   }
+
   input[type=checkbox] {
     position: absolute;
     left: 15px;
@@ -430,6 +428,22 @@ export default{
     width: 20px;
     height: 20px;
   }
+
+  input.edit {
+    display: none;
+    height: 20px;
+  }
+  .editing {
+    text-align: center;
+  }
+  .editing div.view {
+    display: none;
+  }
+  .editing .edit {
+    display: block;
+    text-align: center;
+  }
+
   .cancel-btn {
     position: absolute;
     right: 10px;
@@ -443,6 +457,7 @@ export default{
     color: #666;
     font-size: 12px;
   }
+
   .event-time {
     position: absolute;
     right: 10px;
@@ -451,6 +466,7 @@ export default{
     font-size: 12px;
     color: #aaa;
   }
+
   .event-delete {
     text-decoration: line-through;
     color: #999;
