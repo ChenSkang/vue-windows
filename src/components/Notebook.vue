@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <div v-if="seen" class="note-book">
+  <div v-if="seen" class="note-book" v-drag>
     <el-row id="header">
       <el-col :span="24">
         <div class="noteTitle" :style="theme">
