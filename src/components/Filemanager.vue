@@ -48,9 +48,6 @@
           </el-col>
         </el-row>
         <el-row class="file-button">
-          <span class="tree-title">
-            <p>{{treeMessage}}</p>
-          </span>
           <span class="arrow-left" :title="leftView"><img src="../img/left.png" /></span>
           <span class="arrow-right" :title="rightView"><img src="../img/right.png" /></span>
           <span class="return" :title="upView"><img src="../img/up.png" /></span>
@@ -61,21 +58,20 @@
           icon="search"
           v-model="filterText"
           class="search"
-          size="small"
-          rows="1">
+          size="small">
         </el-input>
         <el-popover
           ref="popover"
           placement="bottom-start"
           width="180"
           trigger="click">
-          <el-row @click="copy" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Copy</el-row>
-          <el-row @click="cut" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Cut</el-row>
-          <el-row @click="paste" class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Paste</el-row>
-          <el-row @click="create-file" class="createFolder fileFunction"><i class="el-icon-document"></i>&nbsp;Create Folder</el-row>
-          <el-row @click="cut-off" class="fileFunction"><i class="el-icon-delete2"></i>&nbsp;Delete</el-row>
-          <el-row @click="rename" class="fileFunction"><i class="el-icon-edit"></i>&nbsp;Rename</el-row>
-          <el-row @click="upload" class="fileFunction"><i class="el-icon-upload2"></i>&nbsp;Upload</el-row>
+          <el-row class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Copy</el-row>
+          <el-row class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Cut</el-row>
+          <el-row class="fileFunction"><i class="el-icon-setting"></i>&nbsp;Paste</el-row>
+          <el-row class="createFolder fileFunction"><i class="el-icon-document"></i>&nbsp;Create Folder</el-row>
+          <el-row class="fileFunction"><i class="el-icon-delete2"></i>&nbsp;Delete</el-row>
+          <el-row class="fileFunction"><i class="el-icon-edit"></i>&nbsp;Rename</el-row>
+          <el-row class="fileFunction"><i class="el-icon-upload2"></i>&nbsp;Upload</el-row>
         </el-popover>
         <el-row
           v-popover:popover
@@ -92,10 +88,8 @@
               class="filter-tree"
               :data="data"
               :props="defaultProps"
-              indent="14"
               node-key="id"
               :filter-node-method="filterNode"
-              :render-content="renderContent"
               ref="tree2">
             </el-tree>
           </el-row>
@@ -106,7 +100,6 @@
             :data="tableData"
             border
             highlight-current-row
-            fit="false"
             style="width: 100%">
             <el-table-column
               label="Name"
@@ -138,19 +131,12 @@
           </el-table>
         </div>
         <div class="file-window-iconsView" v-show="viewIcons" :style="viewObject">
-          <span class="demonstration">Click 指示器触发</span>
-          <el-carousel trigger="click" height="150px">
-            <el-carousel-item v-for="item in 5">
-              {{ item }}
-            </el-carousel-item>
-          </el-carousel>
         </div>
       </div>
       </div>
   </div>
 </template>
 <script>
-  let id = 1000
   import ElRow from 'element-ui/packages/row/src/row'
   import ElPopover from '../../node_modules/element-ui/packages/popover/src/main'
   import ElButton from '../../node_modules/element-ui/packages/button/src/button'
@@ -190,7 +176,6 @@
         rightView: 'Forward',
         upView: 'Level up',
         filterText: '',
-        treeMessage: 'Files',
         viewObject: {
           width: '68%'
         },
@@ -290,24 +275,6 @@
       filterNode (value, data) {
         if (!value) return true
         return data.label.indexOf(value) !== -1
-      },
-      append (store, data) {
-        store.append({ id: id++, label: 'newFolder', children: [] }, data)
-      },
-      remove (store, data) {
-        store.remove(data)
-      },
-      renderContent (h, { node, data, store }) {
-        return (
-          <span>
-            <span>
-              <span>{node.label}</span>
-            </span>
-            <span style="float: right; margin-right: 20px">
-              <el-button size="mini" on-click={ () => this.append(store, data) }>A</el-button>
-              <el-button size="mini" on-click={ () => this.remove(store, data) }>D</el-button>
-            </span>
-          </span>)
       }
     }
   }
@@ -510,18 +477,6 @@
     border: none;
     position: absolute;
     background-color: #f3f1f5;
-    float: left;
-  }
-
-  .tree-title{
-    border: none;
-    position: absolute;
-    left: 280px;
-  }
-
-  .tree-title p{
-    font-size: 15px;
-    line-height: 30px;
     float: left;
   }
 

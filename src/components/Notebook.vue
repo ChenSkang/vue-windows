@@ -80,8 +80,8 @@
     </transition>
 
     <div class="table">
-      <el-row :gutter="20" style="padding-top: 10px">
-        <el-col :span="12" offset="3">
+      <el-row :gutter="20" style="padding-top: 10px;margin-left: 100px">
+        <el-col :span="12">
           <el-input v-model="message" placeholder="代办事项" :disabled="tasks"></el-input>
         </el-col>
         <el-col :span="4">
