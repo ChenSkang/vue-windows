@@ -94,7 +94,7 @@
         </div>
         <div class="todo-box" v-show="collapse[0].show">
           <ul>
-            <li class="todo-list" v-for="(value, index) in getToDo" v-bind:class="{editing: editInput}">
+            <li class="todo-list" v-for="(value, index) in getToDo" v-bind:class="{editing: editInput}" :key="index">
               <div @dblclick="edit(index)" class="view">
                 <input type="checkbox" @click="haveDone(index)" :disabled="editType" :checked="false"/>
                 {{value}}
